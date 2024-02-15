@@ -6,7 +6,7 @@ const images = [
   require('../assets/xxx.png'),
 ];
 
-export function loadImages() {
+function loadImages() {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
     const cacheResources = async () => {
@@ -28,3 +28,5 @@ export function loadImages() {
 
     return isLoaded;
 }
+
+export default loadImages;

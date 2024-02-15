@@ -10,13 +10,9 @@ import { ThemeContext} from '../kits/AppTheme';
 import { loadImages } from '../props/ImageLoader';
 
 
-/*
-  The common part for the Bluetooth scan, QR code scan, Manage course, Clicker, Profile pages
-*/
-
 const ios = Platform.OS == 'ios';
 
-export function CommonPart({components, title}) {
+function CommonPart({components, title}) {
   const themedStyles = ThemedStyles();
 
   const MemoizedDivider = React.memo(function Divider() {
@@ -75,3 +71,5 @@ function ThemedStyles() {
     ]),
   }));
 }
+
+export default CommonPart;

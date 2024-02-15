@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
 
-export function loadFont() {
+function loadFont() {
     const [fontsLoaded] = Font.useFonts({
         'BalooBhai-Regular': require('../assets/fonts/BalooBhai-Regular.ttf'),
     });
@@ -17,3 +17,5 @@ export function loadFont() {
 
     return fontsLoaded;
 }
+
+export default loadFont;
