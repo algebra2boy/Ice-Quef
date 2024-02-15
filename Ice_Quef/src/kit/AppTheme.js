@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createContext } from 'react';
 
+
 const palette = {
   colorDodgerblue: "#2596ff",
   colorWhite: "#fff",
@@ -87,10 +88,10 @@ const yellowTheme = {
 }
 
 /* Remember to add the theme you created to this array */
-export const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
+const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
 
-export const ThemeContext = createContext(themes);
-export const ThemeProvider = ({ children }) => {
+const ThemeContext = createContext(themes);
+const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = React.useState(themes[0]);
 
   const changeTheme = (themeIndex) => {
@@ -103,3 +104,5 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
+
+export {themes, ThemeContext, ThemeProvider};
