@@ -14,6 +14,7 @@ import ThemeContext from './AppTheme';
 import { SpringButton } from './SpringButton';
 import Title from '../../assets/images/3D_Logo.png';
 
+
 const { width } = Dimensions.get('window');
 
 /* The icon & title image */
