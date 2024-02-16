@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Asset } from 'expo-asset';
 
-const images = [require('../assets/xxx.png')];
+
+const images = [require('../../assets/images/3D_Logo.png')];
 
 function loadImages() {
   const [isLoaded, setIsLoaded] = React.useState(false);
