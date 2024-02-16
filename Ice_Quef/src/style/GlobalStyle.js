@@ -1,6 +1,6 @@
 /* fonts */
 export const FontFamily = {
-  mainFont: "BalooBhai-Regular",
+  mainFont: 'BalooBhai-Regular',
 };
 
 /* font sizes */
@@ -14,9 +14,8 @@ export const FontSize = {
 
 /* Colors */
 export const Color = {
-  colorDodgerblue: "#2596ff",
-  colorWhite: "#fff",
-  colorGainsboro: "#d9d9d9",
-  colorBlack: "#000",
+  colorDodgerblue: '#2596ff',
+  colorWhite: '#fff',
+  colorGainsboro: '#d9d9d9',
+  colorBlack: '#000',
 };
-

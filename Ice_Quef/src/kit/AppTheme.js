@@ -1,24 +1,24 @@
 import * as React from 'react';
 import { createContext } from 'react';
 
-
 const palette = {
-  colorDodgerblue: "#2596ff",
-  colorWhite: "#fff",
-  colorGainsboro: "#d9d9d9",
-  colorBlack: "#000",
-  colorEmeraldGreen: "#02c262",
-  colorScarletRed: "#eb4034",
-  colorVioletPurple: "#9370DB",
-  colorSunshineYellow: "#fcffc7",
-  colorGoldenrodOrange: "#fcdb44",
+  colorDodgerblue: '#2596ff',
+  colorWhite: '#fff',
+  colorGainsboro: '#d9d9d9',
+  colorBlack: '#000',
+  colorEmeraldGreen: '#02c262',
+  colorScarletRed: '#eb4034',
+  colorVioletPurple: '#9370DB',
+  colorSunshineYellow: '#fcffc7',
+  colorGoldenrodOrange: '#fcdb44',
 };
 
 const fontFamily = {
-  balooBhai: "BalooBhai-Regular",
+  balooBhai: 'BalooBhai-Regular',
+  quenda: 'Quenda-Medium',
 };
 
-const balooBhaiFontSize = {
+const myFontSize = {
   large: 30,
   casual: 24,
   medium: 20,
@@ -28,16 +28,16 @@ const balooBhaiFontSize = {
 
 /* You can create a new theme below */
 const defaultTheme = {
-  mainColor: palette.colorDodgerblue,
+  mainColor: palette.colorEmeraldGreen,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
-  fontSizes: balooBhaiFontSize,
+  mainFont: fontFamily.quenda,
+  fontSizes: myFontSize,
   index: 0,
-}
+};
 
 const greenTheme = {
   mainColor: palette.colorEmeraldGreen,
@@ -47,9 +47,9 @@ const greenTheme = {
   checkBoxColor: palette.colorBlack,
   errorColor: palette.colorScarletRed,
   mainFont: fontFamily.balooBhai,
-  fontSizes: balooBhaiFontSize,
+  fontSizes: myFontSize,
   index: 1,
-}
+};
 
 const redTheme = {
   mainColor: palette.colorScarletRed,
@@ -59,9 +59,9 @@ const redTheme = {
   checkBoxColor: palette.colorBlack,
   errorColor: palette.colorEmeraldGreen,
   mainFont: fontFamily.balooBhai,
-  fontSizes: balooBhaiFontSize,
-  index: 2
-}
+  fontSizes: myFontSize,
+  index: 2,
+};
 
 const purpleTheme = {
   mainColor: palette.colorVioletPurple,
@@ -71,9 +71,9 @@ const purpleTheme = {
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
   mainFont: fontFamily.balooBhai,
-  fontSizes: balooBhaiFontSize,
-  index: 3
-}
+  fontSizes: myFontSize,
+  index: 3,
+};
 
 const yellowTheme = {
   mainColor: palette.colorGoldenrodOrange,
@@ -83,26 +83,20 @@ const yellowTheme = {
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
   mainFont: fontFamily.balooBhai,
-  fontSizes: balooBhaiFontSize,
-  index: 4
-}
-
-/* Remember to add the theme you created to this array */
-const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
-
-const ThemeContext = createContext(themes);
-const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = React.useState(themes[0]);
-
-  const changeTheme = (themeIndex) => {
-    setTheme(themes[themeIndex]);
-  }
-
-  return (
-    <ThemeContext.Provider value={{theme, changeTheme}}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  fontSizes: myFontSize,
+  index: 4,
 };
 
-export {themes, ThemeContext, ThemeProvider};
+/* Remember to add the theme you created to this array */
+export const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
+
+export const ThemeContext = createContext(themes);
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = React.useState(themes[0]);
+
+  const changeTheme = themeIndex => {
+    setTheme(themes[themeIndex]);
+  };
+
+  return <ThemeContext.Provider value={{ theme, changeTheme }}>{children}</ThemeContext.Provider>;
+};

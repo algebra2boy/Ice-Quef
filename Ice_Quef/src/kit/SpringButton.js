@@ -2,7 +2,6 @@ import React from 'react';
 import { Animated } from 'react-native';
 import { Pressable, Text } from 'react-native';
 
-
 //https://www.youtube.com/watch?v=BzqHru-sIXw
 
 export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
@@ -18,7 +17,7 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
       toValue: 1,
       bounciness: 2,
       speed: 0.2,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   };
 
@@ -34,15 +33,9 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
   };
 
   return (
-    <Animated.View style={{transform: [{scale: animatedScale}]}} >
-      <Pressable 
-        style={buttonStyle}
-        onPressIn={handleButtonPress}
-        onPressOut={handleButtonRelease}
-      >
-          <Text style={labelStyle}>
-            {text}
-          </Text>
+    <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
+      <Pressable style={buttonStyle} onPressIn={handleButtonPress} onPressOut={handleButtonRelease}>
+        <Text style={labelStyle}>{text}</Text>
       </Pressable>
     </Animated.View>
   );

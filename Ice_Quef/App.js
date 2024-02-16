@@ -1,9 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeProvider} from './src/kit/AppTheme';
-import { BottomTabNavigator } from './src/screens/BottomTabNav';
-import LoginPage from './src/screens/LoginPage';
-import { StyleSheet } from 'react-native';
+import { ThemeProvider } from './src/kit/AppTheme'
+import { LoginPage } from './src/screens/LoginPage';
 
 
 const Stack = createNativeStackNavigator();
