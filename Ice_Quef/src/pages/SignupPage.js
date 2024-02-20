@@ -5,6 +5,7 @@ import { ThemeContext } from '../kit/AppTheme';
 import { BasePage } from '../kit/BasePage';
 import { KolynButton, KolynTextfield } from '../component';
 
+
 const { width, height } = Dimensions.get('window');
 export function SignupPage({ navigation }) {
   const themedStyles = ThemedStyles();

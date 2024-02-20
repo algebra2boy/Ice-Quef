@@ -2,6 +2,7 @@ import { ThemeContext } from '../kit/AppTheme';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {

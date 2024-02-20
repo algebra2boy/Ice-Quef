@@ -3,6 +3,7 @@ import { View, ScrollView, Dimensions } from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo } from '../component';
 import { BasePage } from '../kit/BasePage';
 
+
 const height = Dimensions.get('window').height;
 
 /**
