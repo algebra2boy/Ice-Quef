@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { createContext } from 'react';
 
+/**
+ * All colors for app theme
+ * @enum { color }
+ */
 const palette = {
   colorDodgerblue: '#2596ff',
   colorWhite: '#fff',
@@ -13,11 +17,19 @@ const palette = {
   colorGoldenrodOrange: '#fcdb44',
 };
 
+/**
+ * All app fonts
+ * @enum { font }
+ */
 const fontFamily = {
   balooBhai: 'BalooBhai-Regular',
   quenda: 'Quenda-Medium',
 };
 
+/**
+ * All font sizes
+ * @enum { int }
+ */
 const myFontSize = {
   large: 30,
   casual: 24,
@@ -26,7 +38,7 @@ const myFontSize = {
   tiny: 12,
 };
 
-/* You can create a new theme below */
+/* --- Official themes --- */
 const defaultTheme = {
   mainColor: palette.colorEmeraldGreen,
   subColor: palette.colorBlack,
@@ -86,11 +98,27 @@ const yellowTheme = {
   fontSizes: myFontSize,
   index: 4,
 };
+/* --- End of Official themes --- */
 
-/* Remember to add the theme you created to this array */
-export const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
+/**
+ * All themes included in the release.
+ * After you have created a new theme, remember to
+ * add the theme you created to this array
+ * @array { Theme }
+ */
+const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
 
+/**
+ * Tracks the current theme
+ * @Context { Theme }
+ */
 export const ThemeContext = createContext(themes);
+
+/**
+ *
+ * @param { ReactElement } components
+ * @return { ReactElement } component wrapped with theme context
+ */
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = React.useState(themes[0]);
 

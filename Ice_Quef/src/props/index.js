@@ -1,1 +1,4 @@
-export { default } from './FontLoader';
+import { loadFont } from './FontLoader';
+import { loadImage } from './ImageLoader';
+
+export { loadFont, loadImage };

@@ -4,10 +4,16 @@ import { ThemeContext } from '../kit/AppTheme';
 import * as KolynStyle from '../kit/KolynStyleKit';
 import { SpringButton } from '../kit/SpringButton';
 
-
+/**
+ * Resembles an animated button
+ *
+ * @param { string } text: The button's text label
+ * @param { func } onPress: Function to be exected after animation finishes
+ * @return { ReactElement } The button
+ */
 export function KolynButton({ text, onPress }) {
   const themedStyles = ThemedStyles();
-  
+
   return (
     <SpringButton
       text={text}
@@ -23,18 +29,18 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-
     casualButton: StyleSheet.flatten([
-        { height: 40, width: 200, backgroundColor: currentTheme.mainColor, alignSelf: 'center' },
-        KolynStyle.kolynButton(currentTheme.mainColor),
-      ]),
-  
+      { height: 40, width: 200, backgroundColor: currentTheme.mainColor, alignSelf: 'center' },
+      KolynStyle.kolynButton(currentTheme.mainColor),
+    ]),
+
     casualButtonLabel: StyleSheet.flatten([
       { backgroundColor: currentTheme.mainColor },
       KolynStyle.kolynLabel(
         currentTheme.fontSizes.casual,
         currentTheme.mainFont,
-        currentTheme.primaryColor),
-    ])
+        currentTheme.primaryColor,
+      ),
+    ]),
   });
 }

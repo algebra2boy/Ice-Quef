@@ -2,6 +2,12 @@ import * as Font from 'expo-font';
 import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
+/**
+ * Loads fonts from bundles
+ *
+ * @return { boolean } Returns true if all fonts were successfully loaded,
+ * returns false otherwise.
+ */
 function loadFont() {
   const [fontsLoaded] = Font.useFonts({
     'BalooBhai-Regular': require('../../assets/fonts/BalooBhai-Regular.ttf'),
