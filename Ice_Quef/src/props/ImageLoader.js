@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { Asset } from 'expo-asset';
 
-
+/**
+ * Loads and caches images from bundles
+ *
+ * @return { boolean } Returns true if all images were successfully loaded,
+ * returns false otherwise.
+ */
 const images = [require('../../assets/images/3D_Logo.png')];
 
 function loadImages() {

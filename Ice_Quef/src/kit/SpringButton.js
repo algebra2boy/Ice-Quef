@@ -4,6 +4,15 @@ import { Pressable, Text } from 'react-native';
 
 //https://www.youtube.com/watch?v=BzqHru-sIXw
 
+/**
+ * Resembles an animated button
+ *
+ * @param { string } text: The text label for button
+ * @param { func } onPress: Function to be executed after animation finishes
+ * @param { StyleSheet } buttonStyle: The button's style
+ * @param { StyleSheet } labelStyle: The label's style
+ * @returns { ReactElement } The button
+ */
 export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
   const animatedScale = React.useRef(new Animated.Value(0)).current;
 
