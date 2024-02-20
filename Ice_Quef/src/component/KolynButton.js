@@ -4,6 +4,7 @@ import { ThemeContext } from '../kit/AppTheme';
 import * as KolynStyle from '../kit/KolynStyleKit';
 import { SpringButton } from '../kit/SpringButton';
 
+
 /**
  * Resembles an animated button
  *
