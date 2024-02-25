@@ -1,12 +1,105 @@
+import React from 'react';
 import { ThemeContext } from '../kit/AppTheme';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { setNavigatorTabIndex, getNavigatorTabIndex } from '../props/NavigatorTabIndexController';
+import { 
+  HomePage 
+} from './';
 
 
 const Tab = createBottomTabNavigator();
+const images = [
+  require('../../assets/images/calendar.png'),
+  require('../../assets/images/cog.png'),
+  require('../../assets/images/profile.png'),
+];
 
-function BottomTabNavigator() {
+export function BottomTabNavigator() {
   const themedStyles = ThemedStyles();
+  const mainColor = GetMainColor();
+
+  return (
+    <Tab.Navigator
+      screenOptions={() =>({
+        showLabel: false,
+        headerShown: false,
+        tabBarActiveTintColor: mainColor,
+        tabBarInactiveTintColor: mainColor,
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: mainColor,
+          paddingHorizontal: 10,
+          height: 120
+        },
+        gestureEnabled: false,
+      })}
+    >
+      <Tab.Screen name="Calendar" options={{
+        animation: 'none',
+        tabBarIcon:() => (
+          <View>
+            <Image 
+              source={images[0]}
+              style={themedStyles.smallPageIcon}>
+            </Image>
+            {getNavigatorTabIndex() == 0 && <View style={themedStyles.bottomUnderline}/>}
+          </View>
+        )
+      }} 
+      component={HomePage}
+      listeners={{
+        tabPress: () => {
+          setNavigatorTabIndex(0);
+        }
+      }}/>
+
+      <Tab.Screen name="Manage" options={{
+        animation: 'none',
+        tabBarIcon:() => (
+          <View>
+            <Image 
+              source={images[1]}
+              style={themedStyles.smallPageIcon}>
+            </Image>
+            {getNavigatorTabIndex() == 1 && <View style={themedStyles.bottomUnderline}/>}
+          </View>
+        )
+      }} 
+      component={HomePage}
+      listeners={{
+        tabPress: () => {
+          setNavigatorTabIndex(1);
+        }
+      }}/>
+
+      <Tab.Screen name="Profile" options={{
+        animation: 'none',
+        tabBarIcon:() => (
+          <View>
+            <Image 
+              source={images[2]}
+              style={themedStyles.smallPageIcon}>
+            </Image>
+            {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline}/>}
+          </View>
+        )
+      }} 
+      component={HomePage}
+      listeners={{
+        tabPress: () => {
+          setNavigatorTabIndex(3);
+        }
+      }}/>
+
+    </Tab.Navigator>
+  );
+}
+
+function GetMainColor() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  return currentTheme.mainColor;
 }
 
 function ThemedStyles() {
@@ -14,17 +107,8 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-    bottomCircle: {
-      top: -45,
-      width: 80,
-      height: 80,
-      borderRadius: 40,
-      alignSelf: 'center',
-      backgroundColor: currentTheme.mainColor,
-    },
-
     bottomUnderline: {
-      top: -25,
+      top: -15,
       width: 48,
       height: 5,
       borderRadius: 5,
@@ -36,17 +120,7 @@ function ThemedStyles() {
       resizeMode: 'contain',
       width: 56,
       height: 56,
-      top: -30,
-    },
-
-    bigPageIcon: {
-      top: 10,
-      resizeMode: 'contain',
-      width: 64,
-      height: 64,
-      alignSelf: 'center',
+      top: -20,
     },
   });
 }
-
-export default BottomTabNavigator;

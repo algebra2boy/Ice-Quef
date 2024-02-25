@@ -19,6 +19,7 @@ export function LoginPage({ navigation }) {
   const onSignInPressed = () => {
     // validate user
     navigation.navigate('Home');
+    navigation.navigate('BottomTab')
   };
 
   const onSignUpPress = () => {
