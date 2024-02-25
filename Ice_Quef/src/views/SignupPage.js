@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { ThemeContext } from '../kit/AppTheme';
-import { BasePage } from '../kit/BasePage';
+import { ThemeContext } from '../style/AppTheme';
+import { BasePage } from '../style/BasePage';
 import { KolynButton, KolynTextfield } from '../component';
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo } from '../component';
-import { BasePage } from '../kit/BasePage';
+import { BasePage } from '../style/BasePage';
 
 
 const height = Dimensions.get('window').height;

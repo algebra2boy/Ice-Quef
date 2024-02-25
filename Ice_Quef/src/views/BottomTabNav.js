@@ -1,11 +1,13 @@
 import React from 'react';
-import { ThemeContext } from '../kit/AppTheme';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { ThemeContext } from '../style/AppTheme';
+import { StyleSheet, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { setNavigatorTabIndex, getNavigatorTabIndex } from '../props/NavigatorTabIndexController';
-import { 
-  HomePage 
-} from './';
+import {
+  HomePageController,
+  ManagePageController,
+  ProfilePageController
+} from '../controllers'
 
 
 const Tab = createBottomTabNavigator();
@@ -47,7 +49,7 @@ export function BottomTabNavigator() {
           </View>
         )
       }} 
-      component={HomePage}
+      component={HomePageController}
       listeners={{
         tabPress: () => {
           setNavigatorTabIndex(0);
@@ -66,7 +68,7 @@ export function BottomTabNavigator() {
           </View>
         )
       }} 
-      component={HomePage}
+      component={ManagePageController}
       listeners={{
         tabPress: () => {
           setNavigatorTabIndex(1);
@@ -85,7 +87,7 @@ export function BottomTabNavigator() {
           </View>
         )
       }} 
-      component={HomePage}
+      component={ProfilePageController}
       listeners={{
         tabPress: () => {
           setNavigatorTabIndex(3);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { ThemeContext } from '../kit/AppTheme';
-import * as KolynStyle from '../kit/KolynStyleKit';
+import { ThemeContext } from '../style/AppTheme';
+import * as KolynStyle from '../style/KolynStyleKit';
 
 /**
  * Resembles a textfield with pre-existing style
