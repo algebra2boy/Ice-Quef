@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as KolynStyle from './KolynStyleKit';
 import ThemeContext from './AppTheme';
 
+
 /**
  * Resembles a medium size title label
  *

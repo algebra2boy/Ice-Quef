@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { ThemeContext } from '../kit/AppTheme';
-import * as KolynStyle from '../kit/KolynStyleKit';
-import { SpringButton } from '../kit/SpringButton';
+import { ThemeContext } from '../style/AppTheme';
+import * as KolynStyle from '../style/KolynStyleKit';
+import { SpringButton } from '../style/SpringButton';
 
 
 /**

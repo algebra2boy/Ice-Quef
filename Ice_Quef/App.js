@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeProvider } from './src/kit/AppTheme'
+import { ThemeProvider } from './src/style/AppTheme'
 import { 
   LoginPage, 
   SignupPage,
-  HomePage 
-} from './src/pages';
-import { BottomTabNavigator } from './src/pages/BottomTabNav';
+} from './src/views';
+import { BottomTabNavigator } from './src/views/BottomTabNav';
+import { HomePageController } from './src/controllers/HomePageController';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,7 +30,7 @@ function App() {
         >
           <Stack.Screen name="Login" component={LoginPage}/>
           <Stack.Screen name="Signup" component={SignupPage}/>
-          <Stack.Screen name="Home" component={HomePage}/>
+          <Stack.Screen name="Home" component={HomePageController}/>
           <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
         </Stack.Navigator>
       </NavigationContainer>
