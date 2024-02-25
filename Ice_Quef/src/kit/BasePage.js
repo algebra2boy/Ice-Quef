@@ -58,6 +58,6 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-    screen: StyleSheet.flatten([KolynStyle.kolynScreen(currentTheme.backgroundColor)]),
+    screen: StyleSheet.flatten([KolynStyle.kolynScreen()]),
   });
 }

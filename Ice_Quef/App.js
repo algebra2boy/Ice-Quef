@@ -3,8 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from './src/kit/AppTheme'
 import { 
   LoginPage, 
-  SignupPage 
+  SignupPage,
+  HomePage 
 } from './src/pages';
+import { BottomTabNavigator } from './src/pages/BottomTabNav';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,7 +30,8 @@ function App() {
         >
           <Stack.Screen name="Login" component={LoginPage}/>
           <Stack.Screen name="Signup" component={SignupPage}/>
-          
+          <Stack.Screen name="Home" component={HomePage}/>
+          <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
