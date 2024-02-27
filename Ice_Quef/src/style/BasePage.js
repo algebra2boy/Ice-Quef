@@ -8,6 +8,7 @@ import * as KolynStyle from './KolynStyleKit';
 import { ThemeContext } from './AppTheme';
 import loadImages from '../props/ImageLoader';
 
+
 const ios = Platform.OS == 'ios';
 
 /**
@@ -35,11 +36,9 @@ export function BasePage({ components }) {
 
   return (
     <View style={[themedStyles.screen, { height: '100%' }]} onLayout={onLayoutRootView}>
-      <TouchableWithoutFeedback onPress={dismissKeyboard()}>
         <SafeAreaView className={ios ? '-mb-8' : ''} style={{ height: '100%' }}>
           {components}
         </SafeAreaView>
-      </TouchableWithoutFeedback>
     </View>
   );
 }
