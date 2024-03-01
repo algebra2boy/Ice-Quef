@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 import { Pressable, Text } from 'react-native';
 
 //https://www.youtube.com/watch?v=BzqHru-sIXw
-
+var isPressing = false;
 /**
  * Resembles an animated button
  *
@@ -21,6 +21,7 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
   }, []);
 
   const handleButtonPress = () => {
+
     animatedScale.setValue(0.95);
     Animated.spring(animatedScale, {
       toValue: 1,
@@ -31,6 +32,9 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
   };
 
   const handleButtonRelease = () => {
+    if (isPressing)
+      return;
+    isPressing = true;
     Animated.spring(animatedScale, {
       toValue: 1,
       bounciness: 24,
@@ -38,6 +42,7 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
       useNativeDriver: true,
     }).start(() => {
       onPress(); // Callback after the animation completes
+      isPressing = false;
     });
   };
 
