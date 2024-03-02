@@ -2,6 +2,7 @@ import React from 'react';
 import { Animated } from 'react-native';
 import { Pressable, Text } from 'react-native';
 
+
 //https://www.youtube.com/watch?v=BzqHru-sIXw
 var isPressing = false;
 /**
