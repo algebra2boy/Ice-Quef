@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
 import { StyleSheet, View } from 'react-native';
-import { SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { SafeAreaView, Keyboard } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import loadFont from '../props/FontLoader';
 import * as KolynStyle from './KolynStyleKit';

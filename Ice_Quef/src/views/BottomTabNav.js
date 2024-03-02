@@ -47,7 +47,8 @@ export function BottomTabNavigator() {
             </Image>
             {getNavigatorTabIndex() == 0 && <View style={themedStyles.bottomUnderline}/>}
           </View>
-        )
+        ),
+        tabBarLabel: ''
       }} 
       component={HomePageController}
       listeners={{
@@ -66,7 +67,8 @@ export function BottomTabNavigator() {
             </Image>
             {getNavigatorTabIndex() == 1 && <View style={themedStyles.bottomUnderline}/>}
           </View>
-        )
+        ),
+        tabBarLabel: ''
       }} 
       component={ManagePageController}
       listeners={{
@@ -85,7 +87,8 @@ export function BottomTabNavigator() {
             </Image>
             {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline}/>}
           </View>
-        )
+        ),
+        tabBarLabel: ''
       }} 
       component={ProfilePageController}
       listeners={{
