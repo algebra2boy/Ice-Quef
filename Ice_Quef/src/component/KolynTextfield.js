@@ -16,7 +16,7 @@ import * as KolynStyle from '../style/KolynStyleKit';
  */
 export function KolynTextfield({
   value,
-  setValue,
+  setValue: onChangeText,
   placeholder,
   keyboardType,
   isSecure,
@@ -29,7 +29,7 @@ export function KolynTextfield({
     <TextInput
       style={overrideStyle ? overrideStyle : themedStyles.inputTextfield}
       value={value}
-      onChangeText={setValue}
+      onChangeText={onChangeText}
       placeholder={placeholder}
       placeholderTextColor={placeholderColor}
       keyboardType={keyboardType}
