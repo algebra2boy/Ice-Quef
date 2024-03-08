@@ -1,37 +1,55 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import Checkbox from 'expo-checkbox';
 import { ThemeContext } from '../style/AppTheme';
 import { BasePage } from '../style/BasePage';
 import { KolynButton, KolynTextfield } from '../component';
 
 
-const { width, height } = Dimensions.get('window');
+const passwordHint = {
+  0 : "At least one lowercase letter",
+  1 : "At least one uppercase letter",
+  2 : "At least one number",
+  3 : "Minimum 8 characters",
+}
+
+const height = Dimensions.get('window').height;
 export function SignupPage({ navigation }) {
   const themedStyles = ThemedStyles();
-  const checkBoxColor = GetCheckBoxColor();
-  const subColor = GetSubColor();
 
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isChecked, setChecked] = useState(false);
+  const [repassword, setRePassword] = useState('');
+  const [passwordConditions, setPasswordConditions] = useState([false, false, false, false]);
 
   const onRegisterPressed = () => {
-    navigation.navigate('ConfirmEmail');
+    navigation.navigate('');
   };
 
-  const onSignInPress = () => {
-    navigation.navigate('SignIn');
+  const checkPassword = (password) => {
+    const containsLetter = /[a-zA-Z]/;
+    const containsNumber = /[0-9]/;
+    const atLeastOneLowercase = () => {
+      return password !== password.toUpperCase() &&
+            containsLetter.test(password);
+    };
+    const atLeastOneUppercase = () => {
+      return password !== password.toLowerCase() &&
+            containsLetter.test(password);
+    };
+    const atLeastOneNumber = () => {
+      return containsNumber.test(password);
+    };
+    const minimumEightChars = () => {
+      return password.length >= 8;
+    };
+
+    setPasswordConditions([
+      atLeastOneLowercase(), 
+      atLeastOneUppercase(), 
+      atLeastOneNumber(), 
+      minimumEightChars()]);
   };
 
-  const onTermsOfUsePressed = () => {
-    console.warn('onTermsOfUsePressed');
-  };
-
-  const onPrivacyPressed = () => {
-    console.warn('onPrivacyPressed');
-  };
   return (
     <BasePage
       components={
@@ -47,15 +65,6 @@ export function SignupPage({ navigation }) {
             <View style={{ height: height * 0.5 }}>
               <Text style={[themedStyles.title, { alignSelf: 'center' }]}>Create an account</Text>
 
-              <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>User Name</Text>
-              <KolynTextfield
-                value={username}
-                setValue={setUsername}
-                placeholder=""
-                keyboardType="default"
-                isSecure={false}
-              />
-
               <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Email</Text>
               <KolynTextfield
                 value={email}
@@ -68,21 +77,30 @@ export function SignupPage({ navigation }) {
               <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Password</Text>
               <KolynTextfield
                 value={password}
-                setValue={setPassword}
+                setValue={(password) => {
+                  setPassword();
+                  checkPassword(password);
+                }}
                 placeholder=""
                 keyboardType="default"
                 isSecure={true}
               />
 
-              <FacultyInquireMark
-                setChecked={setChecked}
-                isChecked={isChecked}
-                containerStyle={themedStyles.facultyInquire}
-                checkBoxStyle={themedStyles.checkbox}
-                checkBoxColor={checkBoxColor}
-                subColor={subColor}
-                labelStyle={themedStyles.text}
+              <PasswordHintText 
+                themedStyles={themedStyles}
+                passwordHint={passwordHint}
+                passwordConditions={passwordConditions}
               />
+
+              <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Confirm Password</Text>
+              <KolynTextfield
+                value={repassword}
+                setValue={setRePassword}
+                placeholder=""
+                keyboardType="default"
+                isSecure={true}
+              />
+
             </View>
             <View style={{ top: height * 0.1 }}>
               <KolynButton text="Register" onPress={() => {}} />
@@ -96,13 +114,6 @@ export function SignupPage({ navigation }) {
               </View>
             </View>
 
-            <View style={{ top: '25%' }}>
-              <WarningLabel
-                themedStyles={themedStyles}
-                onTermsOfUsePressed={onTermsOfUsePressed}
-                onPrivacyPressed={onPrivacyPressed}
-              />
-            </View>
           </View>
         </ScrollView>
       }
@@ -110,36 +121,21 @@ export function SignupPage({ navigation }) {
   );
 }
 
-function GetCheckBoxColor() {
-  const themeManager = React.useContext(ThemeContext);
-  const currentTheme = themeManager.theme;
-  return currentTheme.checkBoxColor;
-}
-
-function GetSubColor() {
-  const themeManager = React.useContext(ThemeContext);
-  const currentTheme = themeManager.theme;
-  return currentTheme.subColor;
-}
-
-function FacultyInquireMark({
-  setChecked,
-  isChecked,
-  containerStyle,
-  checkBoxStyle,
-  checkBoxColor,
-  subColor,
-  labelStyle,
-}) {
+function PasswordHintText({ themedStyles, passwordHint, passwordConditions }) {
   return (
-    <View style={containerStyle}>
-      <Checkbox
-        style={checkBoxStyle}
-        onValueChange={setChecked}
-        color={isChecked ? checkBoxColor : subColor}
-        value={isChecked}
-      />
-      <Text style={labelStyle}>Are you an instructor?</Text>
+    <View>
+      <Text style={passwordConditions[0] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
+        { passwordHint[0] }
+      </Text>
+      <Text style={passwordConditions[1] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
+        { passwordHint[1] }
+      </Text>
+      <Text style={passwordConditions[2] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
+        { passwordHint[2] }
+      </Text>
+      <Text style={passwordConditions[3] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
+        { passwordHint[3] }
+      </Text>
     </View>
   );
 }
@@ -185,17 +181,19 @@ function ThemedStyles() {
       fontFamily: currentTheme.mainFont,
     },
 
-    link: {
-      color: currentTheme.mainColor,
+    hintTextError: {
+      color: currentTheme.errorColor,
+      marginVertical: 5,
       fontFamily: currentTheme.mainFont,
+      fontSize: currentTheme.fontSizes.tiny
     },
 
-    facultyInquire: {
-      top: 20,
-      flexDirection: 'row',
-      alignSelf: 'center',
-    },
+    hintTextPass: {
+      color: currentTheme.mainColor,
+      marginVertical: 5,
+      fontFamily: currentTheme.mainFont,
+      fontSize: currentTheme.fontSizes.tiny
+    }
 
-    checkbox: { margin: 8 },
   });
 }
