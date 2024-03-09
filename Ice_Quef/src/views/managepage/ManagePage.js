@@ -1,17 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
-import { BasePage } from '../../style/BasePage';
-import { ThemeContext } from '../../style/AppTheme';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ManagePageDefault } from './Default';
 
-
+const Stack = createNativeStackNavigator();
 export function ManagePage() {
   
   return (
-    <BasePage
-      components={
-          <></>
-      }
-    />
+    <Stack.Navigator
+      initialRouteName="ManagePageDefault"
+      screenOptions={{headerShown: false, gestureEnabled: false}}
+    >
+
+      <Stack.Screen name="ManagePageDefault" component={ManagePageDefault}/>
+
+    </Stack.Navigator>
   );
 }
-
