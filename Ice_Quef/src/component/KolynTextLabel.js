@@ -50,7 +50,7 @@ function ThemedStyles() {
     ]),
 
     title: StyleSheet.flatten([
-      { fontWeight: 'bold', margin: 20, alignSelf: 'center' },
+      { fontWeight: 'bold', margin: 20, alignSelf: 'center', textAlign: 'center' },
       KolynStyle.kolynLabel(
         currentTheme.fontSizes.large,
         currentTheme.mainFont,

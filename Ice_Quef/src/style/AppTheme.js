@@ -58,7 +58,7 @@ const greenTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorBlack,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 1,
 };
@@ -70,7 +70,7 @@ const redTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorBlack,
   errorColor: palette.colorEmeraldGreen,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 2,
 };
@@ -82,7 +82,7 @@ const purpleTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 3,
 };
@@ -94,9 +94,21 @@ const yellowTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 4,
+};
+
+const blackGoldenTheme = {
+  mainColor: palette.colorBlack,
+  subColor: palette.colorGoldenrodOrange,
+  primaryColor: palette.colorWhite,
+  disableColor: palette.colorGainsboro,
+  checkBoxColor: palette.colorEmeraldGreen,
+  errorColor: palette.colorScarletRed,
+  mainFont: fontFamily.quenda,
+  fontSizes: myFontSize,
+  index: 5,
 };
 /* --- End of Official themes --- */
 
