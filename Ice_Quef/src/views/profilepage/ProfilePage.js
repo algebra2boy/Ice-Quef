@@ -1,17 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
-import { BasePage } from '../../style/BasePage';
-import { ThemeContext } from '../../style/AppTheme';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ProfilePageDefault } from './Default';
 
 
+const Stack = createNativeStackNavigator();
 export function ProfilePage() {
   
   return (
-    <BasePage
-      components={
-          <></>
-      }
-    />
+    <Stack.Navigator
+      initialRouteName="ProfilePageDefault"
+      screenOptions={{headerShown: false, gestureEnabled: false}}
+    >
+
+      <Stack.Screen name="ProfilePageDefault" component={ProfilePageDefault}/>
+
+    </Stack.Navigator>
   );
 }
-
