@@ -5,12 +5,18 @@ import { BasePage } from '../style/BasePage';
 import { KolynButton, KolynTextfield } from '../component';
 
 
+const emailHint = {
+  0: "Enter your UMass email",
+};
 const passwordHint = {
   0 : "At least one lowercase letter",
   1 : "At least one uppercase letter",
   2 : "At least one number",
   3 : "Minimum 8 characters",
-}
+};
+const confirmPasswordHint = {
+  0: "Enter your password again"
+};
 
 const height = Dimensions.get('window').height;
 export function SignupPage({ navigation }) {
@@ -19,15 +25,29 @@ export function SignupPage({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRePassword] = useState('');
+  const [emailCondition, setEmailCondition] = useState(false);
   const [passwordConditions, setPasswordConditions] = useState([false, false, false, false]);
+  const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
-  const onRegisterPressed = () => {
-    navigation.navigate('');
+  const checkEmail = (email) => {
+    if (email === undefined) return;
+
+    const isEnoughLength = () => {
+      return email.length >= 13;
+    };
+    
+    const isUMass = () => {
+      return email.endsWith("@umass.edu");
+    };
+
+    setEmailCondition(isEnoughLength() && isUMass());
   };
 
   const checkPassword = (password) => {
+    if (password === undefined) return;
     const containsLetter = /[a-zA-Z]/;
     const containsNumber = /[0-9]/;
+
     const atLeastOneLowercase = () => {
       return password !== password.toUpperCase() &&
             containsLetter.test(password);
@@ -50,6 +70,24 @@ export function SignupPage({ navigation }) {
       minimumEightChars()]);
   };
 
+  const checkConfirmPassword = (val, isEnterFromRePassword) => {
+    const isTheSame = () => {
+      if (isEnterFromRePassword) {
+        return val === password;
+      } else {
+        return val === repassword;
+      }
+    };
+
+    setConfirmPasswordCondition(isTheSame());
+  };
+
+  const onRegisterPressed = () => {
+    //console.log("email: " + emailCondition);
+    //console.log("password: " + passwordConditions);
+    //console.log("repassword: " + confirmPasswordCondition);
+  };
+
   return (
     <BasePage
       components={
@@ -68,24 +106,32 @@ export function SignupPage({ navigation }) {
               <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Email</Text>
               <KolynTextfield
                 value={email}
-                setValue={setEmail}
+                setValue={(email) => {
+                  setEmail(email);
+                  checkEmail(email);
+                }}
                 placeholder=""
                 keyboardType="email-address"
                 isSecure={false}
+              />
+              <EmailHintText
+                themedStyles={themedStyles}
+                emailHint={emailHint}
+                emailCondition={emailCondition}
               />
 
               <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Password</Text>
               <KolynTextfield
                 value={password}
                 setValue={(password) => {
-                  setPassword();
+                  setPassword(password);
                   checkPassword(password);
+                  checkConfirmPassword(password, false);
                 }}
                 placeholder=""
                 keyboardType="default"
                 isSecure={true}
               />
-
               <PasswordHintText 
                 themedStyles={themedStyles}
                 passwordHint={passwordHint}
@@ -95,15 +141,28 @@ export function SignupPage({ navigation }) {
               <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Confirm Password</Text>
               <KolynTextfield
                 value={repassword}
-                setValue={setRePassword}
+                setValue={(repassword) => {
+                  setRePassword(repassword);
+                  checkConfirmPassword(repassword, true);
+                }}
                 placeholder=""
                 keyboardType="default"
                 isSecure={true}
               />
+              <ConfirmPasswordHintText
+                themedStyles={themedStyles}
+                confirmPasswordHint={confirmPasswordHint}
+                confirmPasswordCondition={confirmPasswordCondition}
+              />
 
             </View>
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Register" onPress={() => {}} />
+              <KolynButton 
+                text="Register" 
+                onPress={() => {
+                  onRegisterPressed();
+                }} 
+              />
               <View style={{ top: 20 }}>
                 <KolynButton
                   text="Go Back"
@@ -118,6 +177,16 @@ export function SignupPage({ navigation }) {
         </ScrollView>
       }
     />
+  );
+}
+
+function EmailHintText({ themedStyles, emailHint, emailCondition }) {
+  return (
+    <View>
+      <Text style={emailCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}>
+        { emailHint[0] }
+      </Text>
+    </View>
   );
 }
 
@@ -136,6 +205,16 @@ function PasswordHintText({ themedStyles, passwordHint, passwordConditions }) {
       <Text style={passwordConditions[3] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
         { passwordHint[3] }
       </Text>
+    </View>
+  );
+}
+
+function ConfirmPasswordHintText({ themedStyles, confirmPasswordHint, confirmPasswordCondition }) {
+  return (
+    <View>
+        <Text style={confirmPasswordCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}>
+          { confirmPasswordHint[0] }
+        </Text>
     </View>
   );
 }
