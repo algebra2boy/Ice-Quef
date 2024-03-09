@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { ThemeContext } from '../style/AppTheme';
 import { BasePage } from '../style/BasePage';
-import { KolynButton, KolynTextfield } from '../component';
+import { 
+  KolynButton, 
+  KolynTextfield, 
+  KolynTitleLabel,
+  KolynTextLabel 
+} from '../component';
 
 
 const emailHint = {
@@ -100,10 +105,9 @@ export function SignupPage({ navigation }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
-              <Text style={[themedStyles.title, { alignSelf: 'center' }]}>Create an account</Text>
-
-              <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Email</Text>
+            <View style={{ height: height * 0.5}}>
+              <KolynTitleLabel title="Create an account" />
+              <KolynTextLabel text= "Email"/>
               <KolynTextfield
                 value={email}
                 setValue={(email) => {
@@ -120,7 +124,7 @@ export function SignupPage({ navigation }) {
                 emailCondition={emailCondition}
               />
 
-              <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Password</Text>
+              <KolynTextLabel text= "Password"/>
               <KolynTextfield
                 value={password}
                 setValue={(password) => {
@@ -138,7 +142,7 @@ export function SignupPage({ navigation }) {
                 passwordConditions={passwordConditions}
               />
 
-              <Text style={[themedStyles.text, { alignSelf: 'flex-start' }]}>Confirm Password</Text>
+              <KolynTextLabel text= "Confirm Password"/>
               <KolynTextfield
                 value={repassword}
                 setValue={(repassword) => {
@@ -246,20 +250,6 @@ function ThemedStyles() {
       padding: 20,
     },
 
-    title: {
-      fontSize: currentTheme.fontSizes.large,
-      fontWeight: 'bold',
-      color: currentTheme.subColor,
-      margin: 20,
-      fontFamily: currentTheme.mainFont,
-    },
-
-    text: {
-      color: currentTheme.subColor,
-      marginVertical: 10,
-      fontFamily: currentTheme.mainFont,
-    },
-
     hintTextError: {
       color: currentTheme.errorColor,
       marginVertical: 5,
@@ -275,4 +265,4 @@ function ThemedStyles() {
     }
 
   });
-}
+};
