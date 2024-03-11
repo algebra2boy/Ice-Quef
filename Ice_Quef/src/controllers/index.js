@@ -1,6 +1,6 @@
-import { HomePageController } from "./HomePageController";
-import { ManagePageController } from "./ManagePageController";
-import { ProfilePageController } from "./ProfilePageController";
+import { HomePageController } from "./homepage/Controller";
+import { ManagePageController } from "./managepage/Controller";
+import { ProfilePageController } from "./profilepage/Controller";
 
 export { 
   HomePageController, 

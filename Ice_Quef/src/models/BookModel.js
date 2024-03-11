@@ -1,31 +1,31 @@
-import { Book } from "./Book";
+import { Book } from '../dataclass/Book'
 
 
 // stub
-const events = [
-  {
-    title: truncateText('CS 123, Alexandar', 14),
-    start: new Date(2024, 1, 24, 15, 45),
-    end: new Date(2024, 1, 24, 16, 45),
-  },
-  {
-    title: 'CS 555, Sulu',
-    start: new Date(2024, 1, 25, 17, 0),
-    end: new Date(2024, 1, 25, 18, 0),
-  },
-  {
-    title: 'CS 430, Magnet',
-    start: new Date(2024, 1, 26, 17, 0),
-    end: new Date(2024, 1, 26, 18, 0),
-  },
+const books = [
+  new Book(
+    truncateText('CS 123, Alexandar'),
+    new Date(2024, 1, 24, 15, 45),
+    new Date(2024, 1, 24, 16, 45),
+  ),
+  new Book(
+    truncateText('CS 555, Sulu'),
+    new Date(2024, 1, 25, 17, 0),
+    new Date(2024, 1, 25, 18, 0),
+  ),
+  new Book(
+    truncateText('CS 430, Magnet'),
+    new Date(2024, 1, 26, 17, 0),
+    new Date(2024, 1, 26, 18, 0),
+  ),
 ];
 
 export function GetBooks(s_id) {
-  return events;
+  return books;
 }
 
 
-function truncateText(text, length) {
+function truncateText(text, length=14) {
   if (text.length < length) {
     return text;
   }

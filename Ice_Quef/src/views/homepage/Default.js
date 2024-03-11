@@ -7,7 +7,7 @@ import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit'
 
 
-export function HomePage({books}) {
+export function HomePageDefault({ books }) {
   const themedStyles = ThemedStyles();
   const hourStyle = getHourStyle();
 
@@ -16,6 +16,7 @@ export function HomePage({books}) {
 
   const onPressEvent = (event) => {
     setOpenMenu(true);
+    console.log(event);
   };
 
   const determineMessage = () => {
