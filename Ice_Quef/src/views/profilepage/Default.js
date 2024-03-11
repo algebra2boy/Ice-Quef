@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
@@ -7,8 +8,9 @@ import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController'
 
 
 const height = Dimensions.get('window').height;
-export function ProfilePageDefault({navigation}) {
+export function ProfilePageDefault({}) {
   const themedStyles = ThemedStyles();
+  const navigation = useNavigation();
   
   return (
     <BasePage

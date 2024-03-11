@@ -1,17 +1,17 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ManagePageDefault } from './Default';
+import { HomePageDefaultController } from './DefaultController';
 
 const Stack = createNativeStackNavigator();
-export function ManagePage() {
+export function HomePageController() {
   
   return (
     <Stack.Navigator
-      initialRouteName="ManagePageDefault"
+      initialRouteName="HomePageDefault"
       screenOptions={{headerShown: false, gestureEnabled: false}}
     >
 
-      <Stack.Screen name="ManagePageDefault" component={ManagePageDefault}/>
+      <Stack.Screen name="HomePageDefault" component={HomePageDefaultController}/>
 
     </Stack.Navigator>
   );

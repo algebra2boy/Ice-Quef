@@ -1,10 +1,10 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ProfilePageDefault } from './Default';
+import { ProfilePageDefaultController } from './DefaultController';
 
 
 const Stack = createNativeStackNavigator();
-export function ProfilePage() {
+export function ProfilePageController() {
   
   return (
     <Stack.Navigator
@@ -12,7 +12,7 @@ export function ProfilePage() {
       screenOptions={{headerShown: false, gestureEnabled: false}}
     >
 
-      <Stack.Screen name="ProfilePageDefault" component={ProfilePageDefault}/>
+      <Stack.Screen name="ProfilePageDefault" component={ProfilePageDefaultController}/>
 
     </Stack.Navigator>
   );
