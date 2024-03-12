@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { ThemeContext } from '../style/AppTheme';
-import { BasePage } from '../style/BasePage';
+import { ThemeContext } from '../../style/AppTheme';
+import { BasePage } from '../../style/BasePage';
 import { 
   KolynButton, 
   KolynTextfield, 
   KolynTitleLabel,
   KolynTextLabel 
-} from '../component';
+} from '../../component';
 
 
 const emailHint = {
@@ -24,7 +25,8 @@ const confirmPasswordHint = {
 };
 
 const height = Dimensions.get('window').height;
-export function SignupPage({ navigation }) {
+export function SignupPageDefault({}) {
+  const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
   const [email, setEmail] = useState('');

@@ -1,8 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from './src/style/AppTheme'
-import { LoginPage, SignupPage } from './src/views';
-import { BottomTabNavigator } from './src/views/BottomTabNav';
+import { LoginPageDefaultController } from './src/controllers/loginpage/DefaultController';
+import { SignupPageDefaultController } from './src/controllers/signuppage/DefaultController';
+import { BottomTabNavigator } from './src/component/BottomTabNav';
 import { HomePageController } from './src/controllers';
 
 
@@ -25,8 +26,8 @@ function App() {
           initialRouteName="Login"
           screenOptions={{headerShown: false, gestureEnabled: false}}
         >
-          <Stack.Screen name="Login" component={LoginPage}/>
-          <Stack.Screen name="Signup" component={SignupPage}/>
+          <Stack.Screen name="Login" component={LoginPageDefaultController}/>
+          <Stack.Screen name="Signup" component={SignupPageDefaultController}/>
           <Stack.Screen name="Home" component={HomePageController}/>
           <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
         </Stack.Navigator>

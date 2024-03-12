@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions } from 'react-native';
-import { KolynButton, KolynTextfield, KolynLogo } from '../component';
-import { BasePage } from '../style/BasePage';
+import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
+import { BasePage } from '../../style/BasePage';
 
 
 const height = Dimensions.get('window').height;
@@ -12,7 +13,9 @@ const height = Dimensions.get('window').height;
  * @param { Props } { navigation }
  * @return { ReactElement } The login page
  */
-export function LoginPage({ navigation }) {
+export function LoginPageDefault({}) {
+  const navigation = useNavigation();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
