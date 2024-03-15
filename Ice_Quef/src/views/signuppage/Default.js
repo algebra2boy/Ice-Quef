@@ -80,9 +80,6 @@ export function SignupPageDefault({}) {
   };
 
   const checkConfirmPassword = (val, isEnterFromRePassword) => {
-    console.log("email: " + emailCondition);
-    console.log("password: " + passwordConditions);
-    console.log("repassword: " + confirmPasswordCondition);
     const isTheSame = () => {
       if (isEnterFromRePassword) {
         return val === password;
@@ -152,93 +149,93 @@ export function SignupPageDefault({}) {
     };
 
     return (
-        <BasePage
-            components={
-              <ScrollView
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{
-                    flexDirection: 'column',
-                    flexGrow: 1,
-                    justifyContent: 'space-between',
-                  }}
-              >
-                <View style={themedStyles.root}>
-                  <View style={{height: height * 0.5}}>
-                    <KolynTitleLabel title="Create an account"/>
-                    <KolynTextLabel text="Email"/>
-                    <KolynTextfield
-                        value={email}
-                        setValue={(email) => {
-                          setEmail(email);
-                          checkEmail(email);
-                        }}
-                        placeholder=""
-                        keyboardType="email-address"
-                        isSecure={false}
-                    />
-                    <EmailHintText
-                        themedStyles={themedStyles}
-                        emailHint={emailHint}
-                        emailCondition={emailCondition}
-                    />
+      <BasePage
+          components={
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                flexDirection: 'column',
+                flexGrow: 1,
+                justifyContent: 'space-between',
+              }}
+            >
+              <View style={themedStyles.root}>
+                <View style={{height: height * 0.5}}>
+                  <KolynTitleLabel title="Create an account"/>
+                  <KolynTextLabel text="Email"/>
+                  <KolynTextfield
+                      value={email}
+                      setValue={(email) => {
+                        setEmail(email);
+                        checkEmail(email);
+                      }}
+                      placeholder=""
+                      keyboardType="email-address"
+                      isSecure={false}
+                  />
+                  <EmailHintText
+                      themedStyles={themedStyles}
+                      emailHint={emailHint}
+                      emailCondition={emailCondition}
+                  />
 
-                    <KolynTextLabel text="Password"/>
-                    <KolynTextfield
-                        value={password}
-                        setValue={(password) => {
-                          setPassword(password);
-                          checkPassword(password);
-                          checkConfirmPassword(password, false);
-                        }}
-                        placeholder=""
-                        keyboardType="default"
-                        isSecure={true}
-                    />
-                    <PasswordHintText
-                        themedStyles={themedStyles}
-                        passwordHint={passwordHint}
-                        passwordConditions={passwordConditions}
-                    />
+                  <KolynTextLabel text="Password"/>
+                  <KolynTextfield
+                      value={password}
+                      setValue={(password) => {
+                        setPassword(password);
+                        checkPassword(password);
+                        checkConfirmPassword(password, false);
+                      }}
+                      placeholder=""
+                      keyboardType="default"
+                      isSecure={true}
+                  />
+                  <PasswordHintText
+                      themedStyles={themedStyles}
+                      passwordHint={passwordHint}
+                      passwordConditions={passwordConditions}
+                  />
 
-                    <KolynTextLabel text="Confirm Password"/>
-                    <KolynTextfield
-                        value={repassword}
-                        setValue={(repassword) => {
-                          setRePassword(repassword);
-                          checkConfirmPassword(repassword, true);
-                        }}
-                        placeholder=""
-                        keyboardType="default"
-                        isSecure={true}
-                    />
-                    <ConfirmPasswordHintText
-                        themedStyles={themedStyles}
-                        confirmPasswordHint={confirmPasswordHint}
-                        confirmPasswordCondition={confirmPasswordCondition}
-                    />
-
-                  </View>
-                  <View style={{top: height * 0.1}}>
-                    <KolynButton
-                        text="Register"
-                        onPress={() => {
-                          onRegisterPressed();
-                        }}
-                    />
-                    <View style={{top: 20}}>
-                      <KolynButton
-                          text="Go Back"
-                          onPress={() => {
-                            navigation.goBack();
-                          }}
-                      />
-                    </View>
-                  </View>
+                  <KolynTextLabel text="Confirm Password"/>
+                  <KolynTextfield
+                      value={repassword}
+                      setValue={(repassword) => {
+                        setRePassword(repassword);
+                        checkConfirmPassword(repassword, true);
+                      }}
+                      placeholder=""
+                      keyboardType="default"
+                      isSecure={true}
+                  />
+                  <ConfirmPasswordHintText
+                      themedStyles={themedStyles}
+                      confirmPasswordHint={confirmPasswordHint}
+                      confirmPasswordCondition={confirmPasswordCondition}
+                  />
 
                 </View>
-              </ScrollView>
-            }
-        />
+                <View style={{top: height * 0.1}}>
+                  <KolynButton
+                      text="Register"
+                      onPress={() => {
+                        onRegisterPressed();
+                      }}
+                  />
+                  <View style={{top: 20}}>
+                    <KolynButton
+                        text="Go Back"
+                        onPress={() => {
+                          navigation.goBack();
+                        }}
+                    />
+                  </View>
+                </View>
+
+              </View>
+            </ScrollView>
+          }
+      />
     );
   }
 
@@ -277,23 +274,6 @@ function ConfirmPasswordHintText({ themedStyles, confirmPasswordHint, confirmPas
         <Text style={confirmPasswordCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}>
           { confirmPasswordHint[0] }
         </Text>
-    </View>
-  );
-}
-
-function WarningLabel({ themedStyles, onTermsOfUsePressed, onPrivacyPressed }) {
-  return (
-    <View>
-      <Text style={themedStyles.text}>
-        By registering, you confirm that you accept our{' '}
-        <Text style={themedStyles.link} onPress={onTermsOfUsePressed}>
-          Terms of Use
-        </Text>{' '}
-        and{' '}
-        <Text style={themedStyles.link} onPress={onPrivacyPressed}>
-          Privacy Policy
-        </Text>
-      </Text>
     </View>
   );
 }
