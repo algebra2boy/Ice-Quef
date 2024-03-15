@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
-import { KolynButton, KolynTextfield, KolynLogo, KolynTitleLabel } from '../../component';
+import { View, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
+import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
@@ -13,42 +13,7 @@ import { SpringButton } from '../../style/SpringButton';
 const {width, height} = Dimensions.get('window');
 const ohList = GetSampleList();
 
-const RenderItem = (officeHour, themedStyles) => {
-  const day = (num) => {
-    switch (num) {
-      case 0:
-        return 'Sun';
-      case 1:
-        return 'Mon';
-      case 2:
-        return 'Tue';
-      case 3:
-        return 'Wed';
-      case 4:
-        return 'Thu';
-      case 5:
-        return 'Fri';
-      case 6:
-        return 'Sat';
-    }
-  }
-
-  function Bold({ text }) {
-    return (
-      <Text style = {themedStyles.itemLabelL}>
-        {text}
-      </Text>
-    );
-  }
-
-  function NonBold({ text }) {
-    return (
-      <Text style = {themedStyles.itemLabel}>
-        {text}
-      </Text>
-    );
-  }
-
+const RenderItem = (officeHour, themedStyles, navigation) => {
   return (
     <SpringButton 
       text={
@@ -67,7 +32,12 @@ const RenderItem = (officeHour, themedStyles) => {
           />
         </Text>
       }
-      onPress={()=>{}}
+      onPress={()=>{
+        navigation.navigate("ManagePageAddConfirm",
+        {
+          officeHour: officeHour,
+        });
+      }}
       buttonStyle={themedStyles.item}
       labelStyle={themedStyles.itemLabel}
     />
@@ -75,10 +45,9 @@ const RenderItem = (officeHour, themedStyles) => {
 }
 
 /**
- * Resembles the login page
+ * Resembles the add office hour page
  *
- * @param { Props } { navigation }
- * @return { ReactElement } The login page
+ * @return { ReactElement } The add office hour page
  */
 export function ManagePageAddOH({ }) {
   const navigation = useNavigation();
@@ -107,38 +76,78 @@ export function ManagePageAddOH({ }) {
   }
 
   return (
-      <BasePage
-        components={
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={themedStyles.root}>
-              <View style={{height: height * 0.5}}>
-                <KolynTitleLabel title="Add office hours" />
-                <Hint themedStyles={themedStyles}/>
-                <SearchBar
-                  elementState={elementState}
-                  themedStyles={themedStyles}
-                  onRefresh={onRefresh}
-                  isRefreshing={isRefreshing}
+    <BasePage
+      components={
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={themedStyles.root}>
+            <View style={{height: height * 0.5}}>
+              <KolynTitleLabel title="Add office hours" />
+              <Hint themedStyles={themedStyles}/>
+              <SearchBar
+                elementState={elementState}
+                themedStyles={themedStyles}
+                onRefresh={onRefresh}
+                isRefreshing={isRefreshing}
+                navigation={navigation}
+              />
+            </View>
+            <View style={{ top: height * 0.1 }}>
+              <View style={{ top: 60 }}>
+                <KolynButton 
+                  text="Go back" 
+                  onPress={() => {
+                    navigation.goBack();
+                  }} 
                 />
               </View>
-              <View style={{ top: height * 0.1 }}>
-                <View style={{ top: 60 }}>
-                  <KolynButton 
-                    text="Go back" 
-                    onPress={() => {
-                      navigation.goBack();
-                    }} 
-                  />
-                </View>
-              </View>
             </View>
-          </TouchableWithoutFeedback>
-        }
-      />
+          </View>
+        </TouchableWithoutFeedback>
+      }
+    />
   );
 }
 
-function SearchBar({elementState, themedStyles, onRefresh, isRefreshing}) {
+export const day = (num) => {
+  switch (num) {
+    case 0:
+      return 'Sun';
+    case 1:
+      return 'Mon';
+    case 2:
+      return 'Tue';
+    case 3:
+      return 'Wed';
+    case 4:
+      return 'Thu';
+    case 5:
+      return 'Fri';
+    case 6:
+      return 'Sat';
+  }
+};
+
+export function Bold({ text }) {
+  const themedStyles = ThemedStyles();
+
+  return (
+    <Text style = {themedStyles.itemLabelL}>
+      {text}
+    </Text>
+  );
+}
+
+export function NonBold({ text }) {
+  const themedStyles = ThemedStyles();
+
+  return (
+    <Text style = {themedStyles.itemLabel}>
+      {text}
+    </Text>
+  );
+}
+
+function SearchBar({elementState, themedStyles, onRefresh, isRefreshing, navigation}) {
   return (
     <View>
       <KolynTextfield/>
@@ -146,10 +155,11 @@ function SearchBar({elementState, themedStyles, onRefresh, isRefreshing}) {
         <FlatList
           data={elementState}
           showsVerticalScrollIndicator={false}
-          renderItem={item => RenderItem(item, themedStyles)}
+          renderItem={item => RenderItem(item, themedStyles, navigation)}
           keyExtractor={item=>item.id}
           onRefresh={onRefresh}
           refreshing={isRefreshing}
+          contentContainerStyle={themedStyles.flatListView}
         />
       </View>
     </View>
@@ -195,7 +205,7 @@ function ThemedStyles() {
 
     flatListView: {
       alignSelf: 'center', 
-      backgroundColor: currentTheme.primaryColor,
+      width: '100%',
     },
 
     item: StyleSheet.flatten([

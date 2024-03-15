@@ -43,8 +43,6 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
       speed: 20,
       useNativeDriver: true,
     }).start(() => {
-      
-      onPress(); // Callback after the animation completes
       isPressing = false;
     });
     isPressing = true;
@@ -52,7 +50,13 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
 
   return (
     <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
-      <Pressable style={buttonStyle} onPressIn={handleButtonPress} onPressOut={handleButtonRelease}>
+      <Pressable 
+        style={buttonStyle} 
+        onPressIn={handleButtonPress} 
+        onPressOut={handleButtonRelease}
+        onPress={()=>onPress()}
+        onLongPress={()=>{}}
+      >
         { typeof text === 'string' && <Text style={labelStyle}>{text}</Text> }
         { typeof text === 'object' && text }
       </Pressable>
