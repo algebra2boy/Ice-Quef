@@ -36,6 +36,7 @@ export function BottomTabNavigator() {
         },
         gestureEnabled: false,
       })}
+      
     >
       <Tab.Screen name="Calendar" options={{
         animation: 'none',

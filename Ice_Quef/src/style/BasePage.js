@@ -36,9 +36,9 @@ export function BasePage({ components }) {
 
   return (
     <View style={[themedStyles.screen, { height: '100%' }]} onLayout={onLayoutRootView}>
-        <SafeAreaView className={ios ? '-mb-8' : ''} style={{ height: '100%' }}>
-          {components}
-        </SafeAreaView>
+      <SafeAreaView className={ios ? '-mb-8' : ''} style={{ height: '100%' }}>
+        {components}
+      </SafeAreaView>
     </View>
   );
 }
