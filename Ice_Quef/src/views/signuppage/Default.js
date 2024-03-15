@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Alert } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
 import { BasePage } from '../../style/BasePage';
-import { 
-  KolynButton, 
-  KolynTextfield, 
+import {
+  KolynButton,
+  KolynTextfield,
   KolynTitleLabel,
-  KolynTextLabel 
+  KolynTextLabel
 } from '../../component';
+import ServerAddress from "../../props/Server";
 
 
 const emailHint = {
@@ -42,7 +43,7 @@ export function SignupPageDefault({}) {
     const isEnoughLength = () => {
       return email.length >= 13;
     };
-    
+
     const isUMass = () => {
       return email.endsWith("@umass.edu");
     };
@@ -71,13 +72,16 @@ export function SignupPageDefault({}) {
     };
 
     setPasswordConditions([
-      atLeastOneLowercase(), 
-      atLeastOneUppercase(), 
-      atLeastOneNumber(), 
+      atLeastOneLowercase(),
+      atLeastOneUppercase(),
+      atLeastOneNumber(),
       minimumEightChars()]);
   };
 
   const checkConfirmPassword = (val, isEnterFromRePassword) => {
+    console.log("email: " + emailCondition);
+    console.log("password: " + passwordConditions);
+    console.log("repassword: " + confirmPasswordCondition);
     const isTheSame = () => {
       if (isEnterFromRePassword) {
         return val === password;
@@ -89,102 +93,163 @@ export function SignupPageDefault({}) {
     setConfirmPasswordCondition(isTheSame());
   };
 
-  const onRegisterPressed = () => {
-    //console.log("email: " + emailCondition);
-    //console.log("password: " + passwordConditions);
-    //console.log("repassword: " + confirmPasswordCondition);
-  };
+  const onRegisterPressed = async () => {
+    // console.log("email: " + emailCondition);
+    // console.log("password: " + passwordConditions);
+    // console.log("repassword: " + confirmPasswordCondition);
 
-  return (
-    <BasePage
-      components={
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexDirection: 'column',
-            flexGrow: 1,
-            justifyContent: 'space-between',
-          }}
-        >
-          <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5}}>
-              <KolynTitleLabel title="Create an account" />
-              <KolynTextLabel text= "Email"/>
-              <KolynTextfield
-                value={email}
-                setValue={(email) => {
-                  setEmail(email);
-                  checkEmail(email);
-                }}
-                placeholder=""
-                keyboardType="email-address"
-                isSecure={false}
-              />
-              <EmailHintText
-                themedStyles={themedStyles}
-                emailHint={emailHint}
-                emailCondition={emailCondition}
-              />
+    // password match
+    if (!confirmPasswordCondition) {
+      Alert.alert("Error", "Passwords doesn't match!");
+      return;
+    }
 
-              <KolynTextLabel text= "Password"/>
-              <KolynTextfield
-                value={password}
-                setValue={(password) => {
-                  setPassword(password);
-                  checkPassword(password);
-                  checkConfirmPassword(password, false);
-                }}
-                placeholder=""
-                keyboardType="default"
-                isSecure={true}
-              />
-              <PasswordHintText 
-                themedStyles={themedStyles}
-                passwordHint={passwordHint}
-                passwordConditions={passwordConditions}
-              />
+    // package data
+    try {
+      // Encrypt the password
+      const hashedPassword = await encryptPassword(password);
 
-              <KolynTextLabel text= "Confirm Password"/>
-              <KolynTextfield
-                value={repassword}
-                setValue={(repassword) => {
-                  setRePassword(repassword);
-                  checkConfirmPassword(repassword, true);
-                }}
-                placeholder=""
-                keyboardType="default"
-                isSecure={true}
-              />
-              <ConfirmPasswordHintText
-                themedStyles={themedStyles}
-                confirmPasswordHint={confirmPasswordHint}
-                confirmPasswordCondition={confirmPasswordCondition}
-              />
+      // Package data with the hashed password
+      const registrationData = {
+        email: email,
+        password: hashedPassword,
+      };
 
-            </View>
-            <View style={{ top: height * 0.1 }}>
-              <KolynButton 
-                text="Register" 
-                onPress={() => {
-                  onRegisterPressed();
-                }} 
-              />
-              <View style={{ top: 20 }}>
-                <KolynButton
-                  text="Go Back"
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                />
-              </View>
-            </View>
+      // HTTP POST request with the registrationData remains unchanged
+      const response = await fetch(ServerAddress() + 'signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData),
+      });
 
-          </View>
-        </ScrollView>
+      try {
+        // HTTP POST
+        const response = await fetch(ServerAddress() + 'signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registrationData),
+        });
+
+        // get response
+        const serverResponse = await response.json();
+
+        if (response.ok) {
+          // success
+          Alert.alert("Success", "You have been registered successfully!");
+          // navigation.; //TODO: idk which page will be navigated to after a successful registration.
+
+        } else {
+          // edge case
+          Alert.alert("Registration Failed", serverResponse.message || "An error occurred");
+        }
+      } catch (error) {
+        // network error
+        Alert.alert("Error", "Could not connect to the server.");
       }
-    />
-  );
-}
+
+      // The rest of your function remains the same
+    } catch (error) {
+      // Handle errors as before
+      Alert.alert("Error", "Could not connect to the server.");
+    }
+
+
+    };
+
+    return (
+        <BasePage
+            components={
+              <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    flexDirection: 'column',
+                    flexGrow: 1,
+                    justifyContent: 'space-between',
+                  }}
+              >
+                <View style={themedStyles.root}>
+                  <View style={{height: height * 0.5}}>
+                    <KolynTitleLabel title="Create an account"/>
+                    <KolynTextLabel text="Email"/>
+                    <KolynTextfield
+                        value={email}
+                        setValue={(email) => {
+                          setEmail(email);
+                          checkEmail(email);
+                        }}
+                        placeholder=""
+                        keyboardType="email-address"
+                        isSecure={false}
+                    />
+                    <EmailHintText
+                        themedStyles={themedStyles}
+                        emailHint={emailHint}
+                        emailCondition={emailCondition}
+                    />
+
+                    <KolynTextLabel text="Password"/>
+                    <KolynTextfield
+                        value={password}
+                        setValue={(password) => {
+                          setPassword(password);
+                          checkPassword(password);
+                          checkConfirmPassword(password, false);
+                        }}
+                        placeholder=""
+                        keyboardType="default"
+                        isSecure={true}
+                    />
+                    <PasswordHintText
+                        themedStyles={themedStyles}
+                        passwordHint={passwordHint}
+                        passwordConditions={passwordConditions}
+                    />
+
+                    <KolynTextLabel text="Confirm Password"/>
+                    <KolynTextfield
+                        value={repassword}
+                        setValue={(repassword) => {
+                          setRePassword(repassword);
+                          checkConfirmPassword(repassword, true);
+                        }}
+                        placeholder=""
+                        keyboardType="default"
+                        isSecure={true}
+                    />
+                    <ConfirmPasswordHintText
+                        themedStyles={themedStyles}
+                        confirmPasswordHint={confirmPasswordHint}
+                        confirmPasswordCondition={confirmPasswordCondition}
+                    />
+
+                  </View>
+                  <View style={{top: height * 0.1}}>
+                    <KolynButton
+                        text="Register"
+                        onPress={() => {
+                          onRegisterPressed();
+                        }}
+                    />
+                    <View style={{top: 20}}>
+                      <KolynButton
+                          text="Go Back"
+                          onPress={() => {
+                            navigation.goBack();
+                          }}
+                      />
+                    </View>
+                  </View>
+
+                </View>
+              </ScrollView>
+            }
+        />
+    );
+  }
 
 function EmailHintText({ themedStyles, emailHint, emailCondition }) {
   return (
