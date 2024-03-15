@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, StyleSheet, FlatList, Text } from 'react-native';
-import { BasePage } from '../../style/BasePage';
+import { View, ScrollView, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
+import { KolynButton, KolynTextfield, KolynLogo, KolynTitleLabel } from '../../component';
 import { ThemeContext } from '../../style/AppTheme';
-import { KolynButton, KolynTitleLabel } from '../../component';
 import * as KolynStyle from '../../style/KolynStyleKit';
+import { BasePage } from '../../style/BasePage';
+import { GetSampleList } from '../../models/OHListModel';
 import { SpringButton } from '../../style/SpringButton';
 
+
+const {width, height} = Dimensions.get('window');
+const ohList = GetSampleList();
 
 const RenderItem = (officeHour, themedStyles) => {
   const day = (num) => {
@@ -69,9 +74,13 @@ const RenderItem = (officeHour, themedStyles) => {
   );
 }
 
-const {width, height} = Dimensions.get('window');
-
-export function ManagePageDefault({ ohList }) {
+/**
+ * Resembles the login page
+ *
+ * @param { Props } { navigation }
+ * @return { ReactElement } The login page
+ */
+export function ManagePageAddOH({ }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
@@ -98,34 +107,70 @@ export function ManagePageDefault({ ohList }) {
   }
 
   return (
-    <BasePage
-      components={
-        <View>
-          <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
-              <KolynTitleLabel title="Manage office hours" />
-              <FlatList
-                data={elementState}
-                showsVerticalScrollIndicator={false}
-                renderItem={item => RenderItem(item, themedStyles)}
-                keyExtractor={item=>item.id}
-                onRefresh={onRefresh}
-                refreshing={isRefreshing}
-              />
+      <BasePage
+        components={
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={themedStyles.root}>
+              <View style={{height: height * 0.5}}>
+                <KolynTitleLabel title="Add office hours" />
+                <Hint themedStyles={themedStyles}/>
+                <SearchBar
+                  elementState={elementState}
+                  themedStyles={themedStyles}
+                  onRefresh={onRefresh}
+                  isRefreshing={isRefreshing}
+                />
+              </View>
+              <View style={{ top: height * 0.1 }}>
+                <View style={{ top: 60 }}>
+                  <KolynButton 
+                    text="Go back" 
+                    onPress={() => {
+                      navigation.goBack();
+                    }} 
+                  />
+                </View>
+              </View>
             </View>
+          </TouchableWithoutFeedback>
+        }
+      />
+  );
+}
 
-            <View style={{ top: height * 0.1 }}>
-              <KolynButton 
-                text="Add" 
-                onPress={() => {
-                  navigation.navigate("ManagePageAddOH");
-                }} 
-              />
-            </View>
-          </View>
-        </View>
-      }
-    />
+function SearchBar({elementState, themedStyles, onRefresh, isRefreshing}) {
+  return (
+    <View>
+      <KolynTextfield/>
+      <View style={{height: '80%'}}>
+        <FlatList
+          data={elementState}
+          showsVerticalScrollIndicator={false}
+          renderItem={item => RenderItem(item, themedStyles)}
+          keyExtractor={item=>item.id}
+          onRefresh={onRefresh}
+          refreshing={isRefreshing}
+        />
+      </View>
+    </View>
+  );
+}
+
+function Hint({ themedStyles }) {
+  function Label({ text }) {
+    return (
+      <Text style={themedStyles.hintLabel}>
+        {text}
+      </Text>
+    );
+  }
+
+  return (
+    <Text>
+      <Label text={"Please enter office hour information, e.g.\n"}/>
+      <Label text={"By Instructor name (John Doe),\n"}/>
+      <Label text={"By Class (CS 520 / Biology 151)."}/>
+    </Text>
   );
 }
 
@@ -139,9 +184,18 @@ function ThemedStyles() {
       padding: 20,
     },
 
+    hintLabel: StyleSheet.flatten([
+      { marginVertical: 10, textAlign: 'center' },
+      KolynStyle.kolynLabel(
+        currentTheme.fontSizes.tiny,
+        currentTheme.mainFont,
+        currentTheme.subColor,
+      )
+    ]),
+
     flatListView: {
       alignSelf: 'center', 
-      backgroundColor: currentTheme.primaryColor
+      backgroundColor: currentTheme.primaryColor,
     },
 
     item: StyleSheet.flatten([
@@ -173,6 +227,5 @@ function ThemedStyles() {
         currentTheme.subColor,
       )
     ]),
-
   })
 }
