@@ -138,5 +138,9 @@ export const ThemeProvider = ({ children }) => {
     setTheme(themes[themeIndex]);
   };
 
-  return <ThemeContext.Provider value={{ theme, changeTheme }}>{children}</ThemeContext.Provider>;
+  return(
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
