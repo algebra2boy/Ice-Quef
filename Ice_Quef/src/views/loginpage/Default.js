@@ -13,16 +13,21 @@ const height = Dimensions.get('window').height;
  * @param { Props } { navigation }
  * @return { ReactElement } The login page
  */
-export function LoginPageDefault({}) {
+export function LoginPageDefault({ pressLogInButton }) {
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onSignInPressed = () => {
-    // validate user
-    navigation.navigate('Home');
-    navigation.navigate('BottomTab')
+  const onLogInPressed = () => {
+    const isPass = pressLogInButton(email, password);
+
+    if (isPass) {
+      // validate user
+      navigation.navigate('Home');
+      // activate bottom tab navigator
+      navigation.navigate('BottomTab')
+    }
   };
 
   const onSignUpPress = () => {
@@ -48,8 +53,8 @@ export function LoginPageDefault({}) {
 
               <View>
                 <KolynTextfield
-                  value={username}
-                  setValue={setUsername}
+                  value={email}
+                  setValue={setEmail}
                   placeholder="Enter email"
                   keyboardType="email-address"
                   isSecure={false}
@@ -65,7 +70,7 @@ export function LoginPageDefault({}) {
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onSignInPressed} />
+              <KolynButton text="Log In" onPress={onLogInPressed} />
               <View style={{ top: 20 }}>
                 <KolynButton text="Sign Up" onPress={onSignUpPress} />
               </View>

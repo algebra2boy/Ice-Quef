@@ -16,7 +16,6 @@ export function HomePageDefault({ books }) {
 
   const onPressEvent = (event) => {
     setOpenMenu(true);
-    console.log(event);
   };
 
   const determineMessage = () => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Dimensions, StyleSheet, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { View, Dimensions, StyleSheet, FlatList, Text } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
 import { KolynButton, KolynTitleLabel } from '../../component';
@@ -8,18 +9,59 @@ import { SpringButton } from '../../style/SpringButton';
 
 
 const RenderItem = (officeHour, themedStyles) => {
-  const label = 
-    officeHour.item.courseTag +
-    officeHour.item.courseNumber +
-    ", " +
-    officeHour.item.facultyName;
+  const day = (num) => {
+    switch (num) {
+      case 0:
+        return 'Sun';
+      case 1:
+        return 'Mon';
+      case 2:
+        return 'Tue';
+      case 3:
+        return 'Wed';
+      case 4:
+        return 'Thu';
+      case 5:
+        return 'Fri';
+      case 6:
+        return 'Sat';
+    }
+  }
 
-  const truncateLabel = 
-    label.substring(0, 18);
+  function Bold({ text }) {
+    return (
+      <Text style = {themedStyles.itemLabelL}>
+        {text}
+      </Text>
+    );
+  }
+
+  function NonBold({ text }) {
+    return (
+      <Text style = {themedStyles.itemLabel}>
+        {text}
+      </Text>
+    );
+  }
 
   return (
     <SpringButton 
-      text={truncateLabel}
+      text={
+        <Text>
+          <Bold
+            text = { officeHour.item.courseTag + " " + officeHour.item.courseNumber + "\n" }
+          />
+          <NonBold
+            text = { officeHour.item.facultyName + "\n" }
+          />
+          <NonBold
+            text = { day(officeHour.item.day) + " " + 
+                  officeHour.item.startTime + 
+                  " - " + 
+                  officeHour.item.endTime }
+          />
+        </Text>
+      }
       onPress={()=>{}}
       buttonStyle={themedStyles.item}
       labelStyle={themedStyles.itemLabel}
@@ -30,6 +72,7 @@ const RenderItem = (officeHour, themedStyles) => {
 const {width, height} = Dimensions.get('window');
 
 export function ManagePageDefault({ ohList }) {
+  const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
   // The refresh control for the course flat list
@@ -75,7 +118,7 @@ export function ManagePageDefault({ ohList }) {
               <KolynButton 
                 text="Add" 
                 onPress={() => {
-                  
+                  navigation.navigate("ManagePageAddOH");
                 }} 
               />
             </View>
@@ -114,9 +157,18 @@ function ThemedStyles() {
     ]),
 
     itemLabel: StyleSheet.flatten([
-      { marginVertical: 10 },
+      { marginVertical: 10, textAlign: 'center' },
       KolynStyle.kolynLabel(
         currentTheme.fontSizes.small,
+        currentTheme.mainFont,
+        currentTheme.subColor,
+      )
+    ]),
+
+    itemLabelL: StyleSheet.flatten([
+      { marginVertical: 10, textAlign: 'center' },
+      KolynStyle.kolynLabel(
+        currentTheme.fontSizes.casual,
         currentTheme.mainFont,
         currentTheme.subColor,
       )
