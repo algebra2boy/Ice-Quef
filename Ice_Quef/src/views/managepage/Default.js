@@ -8,7 +8,7 @@ import * as KolynStyle from '../../style/KolynStyleKit';
 import { SpringButton } from '../../style/SpringButton';
 
 
-const RenderItem = (officeHour, themedStyles) => {
+const RenderItem = (officeHour, themedStyles, navigation) => {
   const day = (num) => {
     switch (num) {
       case 0:
@@ -49,20 +49,24 @@ const RenderItem = (officeHour, themedStyles) => {
       text={
         <Text>
           <Bold
-            text = { officeHour.item.courseTag + " " + officeHour.item.courseNumber + "\n" }
+            text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
           />
           <NonBold
-            text = { officeHour.item.facultyName + "\n" }
+            text = { officeHour.facultyName + "\n" }
           />
           <NonBold
-            text = { day(officeHour.item.day) + " " + 
-                  officeHour.item.startTime + 
+            text = { day(officeHour.day) + " " + 
+                  officeHour.startTime + 
                   " - " + 
-                  officeHour.item.endTime }
+                  officeHour.endTime }
           />
         </Text>
       }
-      onPress={()=>{}}
+      onPress={()=>{
+        navigation.navigate("ManagePageStatics", {
+          officeHour: officeHour
+        })
+      }}
       buttonStyle={themedStyles.item}
       labelStyle={themedStyles.itemLabel}
     />
@@ -107,7 +111,7 @@ export function ManagePageDefault({ ohList }) {
               <FlatList
                 data={elementState}
                 showsVerticalScrollIndicator={false}
-                renderItem={item => RenderItem(item, themedStyles)}
+                renderItem={item => RenderItem(item.item, themedStyles, navigation)}
                 keyExtractor={item=>item.id}
                 onRefresh={onRefresh}
                 refreshing={isRefreshing}

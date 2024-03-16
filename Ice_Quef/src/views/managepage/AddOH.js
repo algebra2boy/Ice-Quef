@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
+import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
@@ -19,22 +19,21 @@ const RenderItem = (officeHour, themedStyles, navigation) => {
       text={
         <Text>
           <Bold
-            text = { officeHour.item.courseTag + " " + officeHour.item.courseNumber + "\n" }
+            text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
           />
           <NonBold
-            text = { officeHour.item.facultyName + "\n" }
+            text = { officeHour.facultyName + "\n" }
           />
           <NonBold
-            text = { day(officeHour.item.day) + " " + 
-                  officeHour.item.startTime + 
+            text = { day(officeHour.day) + " " + 
+                  officeHour.startTime + 
                   " - " + 
-                  officeHour.item.endTime }
+                  officeHour.endTime }
           />
         </Text>
       }
       onPress={()=>{
-        navigation.navigate("ManagePageAddConfirm",
-        {
+        navigation.navigate("ManagePageAddConfirm", {
           officeHour: officeHour,
         });
       }}
@@ -78,7 +77,12 @@ export function ManagePageAddOH({ }) {
   return (
     <BasePage
       components={
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={() => {
+            if (Platform.OS === 'ios' ||
+                Platform.OS === 'android') {
+              Keyboard.dismiss();
+            }
+          }}>
           <View style={themedStyles.root}>
             <View style={{height: height * 0.5}}>
               <KolynTitleLabel title="Add office hours" />
@@ -151,11 +155,12 @@ function SearchBar({elementState, themedStyles, onRefresh, isRefreshing, navigat
   return (
     <View>
       <KolynTextfield/>
-      <View style={{height: '80%'}}>
+      <View style={{height: Platform.OS === 'ios' || Platform.OS === 'android'
+                    ? '80%' : '60%'}}>
         <FlatList
           data={elementState}
           showsVerticalScrollIndicator={false}
-          renderItem={item => RenderItem(item, themedStyles, navigation)}
+          renderItem={item => RenderItem(item.item, themedStyles, navigation)}
           keyExtractor={item=>item.id}
           onRefresh={onRefresh}
           refreshing={isRefreshing}
