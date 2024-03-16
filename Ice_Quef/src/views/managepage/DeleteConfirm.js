@@ -8,11 +8,13 @@ import { Bold, NonBold, day } from './AddOH';
 
 const height = Dimensions.get('window').height;
 
-export function ManagePageAddSuccess({ route }) {
+export function ManagePageDeleteConfirm({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
   const officeHour = route.params?.officeHour;
+
+  const deleteFromDB = () => {};
 
   return (
     <BasePage
@@ -27,7 +29,7 @@ export function ManagePageAddSuccess({ route }) {
         >
           <View style={themedStyles.root}>
             <View style={{height: height * 0.5}}>
-              <KolynTitleLabel title="Successfully added" />
+              <KolynTitleLabel title="Confirm deleting" />
 
               <Text>
                 <Bold
@@ -47,11 +49,32 @@ export function ManagePageAddSuccess({ route }) {
 
             <View style={{ top: height * 0.1 }}>
               <KolynButton 
-                text="OK"
+                text="Delete"
                 onPress={() => {
-                  navigation.navigate("ManagePageDefault");
-                }} 
+/*
+                  if (Math.floor(Math.random() * 2)) {
+                    navigation.navigate("ManagePageAddSuccess",
+                    {
+                      officeHour: officeHour,
+                    });
+                  }
+                  else {
+                    navigation.navigate("ManagePageAddFail",
+                    {
+                      officeHour: officeHour,
+                    });
+                  }
+*/
+                }}
               />
+              <View style={{top: 20}}>
+                <KolynButton 
+                  text="Go back"
+                  onPress={() => {
+                    navigation.goBack();
+                  }} 
+                />
+              </View>
             </View>
           </View>
         </ScrollView>
