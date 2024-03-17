@@ -51,20 +51,20 @@ export function ManagePageDeleteConfirm({ route }) {
               <KolynButton 
                 text="Delete"
                 onPress={() => {
-/*
+
                   if (Math.floor(Math.random() * 2)) {
-                    navigation.navigate("ManagePageAddSuccess",
+                    navigation.navigate("ManagePageDeleteSuccess",
                     {
                       officeHour: officeHour,
                     });
                   }
                   else {
-                    navigation.navigate("ManagePageAddFail",
+                    navigation.navigate("ManagePageDeleteFail",
                     {
                       officeHour: officeHour,
                     });
                   }
-*/
+
                 }}
               />
               <View style={{top: 20}}>
