@@ -5,6 +5,7 @@ import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme'
 import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit'
+import { UserContext } from '../../props/UserInfo';
 
 
 export function HomePageDefault({ books }) {
@@ -13,6 +14,8 @@ export function HomePageDefault({ books }) {
 
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [message, setMessage] = useState('Press to join waitlist.');
+
+  const userManager = React.useContext(UserContext);
 
   const onPressEvent = (event) => {
     setOpenMenu(true);
