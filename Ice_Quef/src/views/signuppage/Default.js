@@ -10,6 +10,7 @@ import {
   KolynTextLabel
 } from '../../component';
 import ServerAddress from "../../props/Server";
+import encryptPassword from "../../props/encrypt"
 
 
 const emailHint = {
@@ -108,25 +109,16 @@ export function SignupPageDefault({}) {
     try {
       // Encrypt the password
       const hashedPassword = await encryptPassword(password);
-
       // Package data with the hashed password
       const registrationData = {
         email: email,
         password: hashedPassword,
+        isTeacher: false
       };
-
-      // HTTP POST request with the registrationData remains unchanged
-      const response = await fetch(ServerAddress() + 'signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(registrationData),
-      });
 
       try {
         // HTTP POST
-        const response = await fetch(ServerAddress() + 'signup', {
+        const response = await fetch(ServerAddress() + 'api/auth/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -144,17 +136,16 @@ export function SignupPageDefault({}) {
 
         } else {
           // edge case
-          Alert.alert("Registration Failed", serverResponse.message || "An error occurred");
+          Alert.alert("Registration Failed", serverResponse.errors.toString() || "An error occurred");
         }
       } catch (error) {
         // network error
         Alert.alert("Error", "Could not connect to the server.");
       }
 
-      // The rest of your function remains the same
     } catch (error) {
       // Handle errors as before
-      Alert.alert("Error", "Could not connect to the server.");
+      Alert.alert("Error", error.toString());
     }
 
 
