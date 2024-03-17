@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
 import { BasePage } from '../../style/BasePage';
+import { UserContext } from '../../props/UserInfo';
 
 
 const height = Dimensions.get('window').height;
@@ -19,8 +20,12 @@ export function LoginPageDefault({ pressLogInButton }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const userManager = React.useContext(UserContext);
+
   const onLogInPressed = () => {
     const isPass = pressLogInButton(email, password);
+
+    userManager.setUser("i'm a user");
 
     if (isPass) {
       // validate user
