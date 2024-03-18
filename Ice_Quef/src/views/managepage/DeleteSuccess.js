@@ -8,7 +8,7 @@ import { Bold, NonBold, day } from './AddOH';
 
 const height = Dimensions.get('window').height;
 
-export function ManagePageAddSuccess({ route }) {
+export function ManagePageDeleteSuccess({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
@@ -27,7 +27,7 @@ export function ManagePageAddSuccess({ route }) {
         >
           <View style={themedStyles.root}>
             <View style={{height: height * 0.5}}>
-              <KolynTitleLabel title="Successfully added" />
+              <KolynTitleLabel title="Successfully deleted" />
 
               <Text>
                 <Bold

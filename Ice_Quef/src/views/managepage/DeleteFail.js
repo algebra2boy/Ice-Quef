@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
-import { KolynButton, KolynTitleLabel } from '../../component';
+import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { Bold, NonBold, day } from './AddOH';
 
 
 const height = Dimensions.get('window').height;
 
-export function ManagePageAddSuccess({ route }) {
+export function ManagePageDeleteFail({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
@@ -27,7 +27,7 @@ export function ManagePageAddSuccess({ route }) {
         >
           <View style={themedStyles.root}>
             <View style={{height: height * 0.5}}>
-              <KolynTitleLabel title="Successfully added" />
+              <KolynTitleLabel title="Failed to delete" />
 
               <Text>
                 <Bold
@@ -43,6 +43,11 @@ export function ManagePageAddSuccess({ route }) {
                         officeHour.endTime }
                 />
               </Text>
+              <View style={{top: 20, alignSelf: 'center'}}>
+                <KolynTextLabel
+                  text="Please try again later."
+                />
+              </View>
             </View>
 
             <View style={{ top: height * 0.1 }}>

@@ -31,16 +31,16 @@ export function ManagePageAddFail({ route }) {
 
               <Text>
                 <Bold
-                  text = { officeHour.item.courseTag + " " + officeHour.item.courseNumber + "\n" }
+                  text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
                 />
                 <NonBold
-                  text = { officeHour.item.facultyName + "\n" }
+                  text = { officeHour.facultyName + "\n" }
                 />
                 <NonBold
-                  text = { day(officeHour.item.day) + " " + 
-                        officeHour.item.startTime + 
+                  text = { day(officeHour.day) + " " + 
+                        officeHour.startTime + 
                         " - " + 
-                        officeHour.item.endTime }
+                        officeHour.endTime }
                 />
               </Text>
               <View style={{top: 20, alignSelf: 'center'}}>
