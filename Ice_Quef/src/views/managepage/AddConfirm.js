@@ -40,16 +40,16 @@ export function ManagePageAddConfirm({ route }) {
 
               <Text>
                 <Bold
-                  text = { officeHour.item.courseTag + " " + officeHour.item.courseNumber + "\n" }
+                  text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
                 />
                 <NonBold
-                  text = { officeHour.item.facultyName + "\n" }
+                  text = { officeHour.facultyName + "\n" }
                 />
                 <NonBold
-                  text = { day(officeHour.item.day) + " " + 
-                        officeHour.item.startTime + 
+                  text = { day(officeHour.day) + " " + 
+                        officeHour.startTime + 
                         " - " + 
-                        officeHour.item.endTime }
+                        officeHour.endTime }
                 />
               </Text>
             </View>
@@ -60,14 +60,12 @@ export function ManagePageAddConfirm({ route }) {
                 onPress={() => {
 
                   if (Math.floor(Math.random() * 2)) {
-                    navigation.navigate("ManagePageAddSuccess",
-                    {
+                    navigation.navigate("ManagePageAddSuccess", {
                       officeHour: officeHour,
                     });
                   }
                   else {
-                    navigation.navigate("ManagePageAddFail",
-                    {
+                    navigation.navigate("ManagePageAddFail", {
                       officeHour: officeHour,
                     });
                   }

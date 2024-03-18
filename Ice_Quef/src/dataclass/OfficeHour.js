@@ -5,7 +5,7 @@ export class OfficeHour {
               endTime,
               initialDate,
               terminalDate,
-              courseTag,
+              courseDepartment,
               courseNumber,
               id) {
     this.facultyName = facultyName;
@@ -20,7 +20,7 @@ export class OfficeHour {
     // mm:dd:yy
     this.terminalDate = terminalDate;
     // eg. CS, Bio, Chem
-    this.courseTag = courseTag;
+    this.courseDepartment = courseDepartment;
     // eg. 520, 320, 326
     this.courseNumber= courseNumber;
     this.id = id;
