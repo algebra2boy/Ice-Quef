@@ -35,6 +35,7 @@ async function LogInButtonPressed(email, password) {
         // success
         Alert.alert("Success", "You have been login successfully!");
         // TODO: navigate to calendar
+        return true;
 
       }
       else if (serverResponse.status){
@@ -44,14 +45,17 @@ async function LogInButtonPressed(email, password) {
         // edge case
         Alert.alert("Login Failed", serverResponse.errors.toString() || "An error occurred");
       }
+      return false;
     } catch (error) {
       // network error
       Alert.alert("Error", "Could not connect to the server.");
+      // return false;
     }
 
   } catch (error) {
     // Handle errors as before
     Alert.alert("Error", error.toString());
+    // return false;
   }
 
   // Also expecting different errors
