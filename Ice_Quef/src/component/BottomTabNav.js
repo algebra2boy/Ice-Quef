@@ -3,7 +3,7 @@ import { ThemeContext } from '../style/AppTheme';
 import { StyleSheet, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { setNavigatorTabIndex, getNavigatorTabIndex } from '../props/NavigatorTabIndexController';
-import { HomePageController, ManagePageController, ProfilePageController } from '../controllers';
+import { CalendarPageController, ManagePageController, ProfilePageController } from '../controllers';
 
 const Tab = createBottomTabNavigator();
 const images = [
@@ -44,7 +44,7 @@ export function BottomTabNavigator() {
           ),
           tabBarLabel: '',
         }}
-        component={HomePageController}
+        component={CalendarPageController}
         listeners={{
           tabPress: () => {
             setNavigatorTabIndex(0);

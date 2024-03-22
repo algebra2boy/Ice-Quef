@@ -27,7 +27,7 @@ export function LoginPageDefault({ pressLogInButton }) {
 
     if (isPass) {
       // validate user
-      navigation.navigate('Home');
+      navigation.navigate('Calendar');
       // activate bottom tab navigator
       navigation.navigate('BottomTab');
     }

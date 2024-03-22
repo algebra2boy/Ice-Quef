@@ -1,15 +1,15 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomePageDefaultController } from './DefaultController';
+import { CalendarPageDefaultController } from './DefaultController';
 
 const Stack = createNativeStackNavigator();
-export function HomePageController() {
+export function CalendarPageController() {
   return (
     <Stack.Navigator
-      initialRouteName="HomePageDefault"
+      initialRouteName="CalendarPageDefault"
       screenOptions={{ headerShown: false, gestureEnabled: false }}
     >
-      <Stack.Screen name="HomePageDefault" component={HomePageDefaultController} />
+      <Stack.Screen name="CalendarPageDefault" component={CalendarPageDefaultController} />
     </Stack.Navigator>
   );
 }

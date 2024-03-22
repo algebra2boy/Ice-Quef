@@ -5,7 +5,7 @@ import { UserProvider } from './src/props/UserInfo';
 import { LoginPageDefaultController } from './src/controllers/login_page/DefaultController';
 import { SignupPageDefaultController } from './src/controllers/signup_page/DefaultController';
 import { BottomTabNavigator } from './src/component/BottomTabNav';
-import { HomePageController } from './src/controllers';
+import { CalendarPageController } from './src/controllers';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,7 +30,7 @@ function App() {
           >
             <Stack.Screen name="Login" component={LoginPageDefaultController}/>
             <Stack.Screen name="Signup" component={SignupPageDefaultController}/>
-            <Stack.Screen name="Home" component={HomePageController}/>
+            <Stack.Screen name="Calendar" component={CalendarPageController}/>
             <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
           </Stack.Navigator>
         </NavigationContainer>
