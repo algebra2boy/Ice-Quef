@@ -30,9 +30,11 @@ export function ProfilePageDefault({}) {
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
                   <KolynTextLabel text="Email " />
+                  {/*
                   <EditIcon
                     onPress={()=>{}}
                   />
+                  */}
                 </View>
                 <KolynTextLabel 
                   text="jianxinlin@umass.edu" 
@@ -41,12 +43,12 @@ export function ProfilePageDefault({}) {
               </View>
 
               <View style={{height: '10%'}}/>
-
+{/*
               <KolynButton 
                 text="Change password"
                 onPress={()=>{}}
               />
-
+*/}
             </View>
 
             <View style={{ top: height * 0.1 }}>
