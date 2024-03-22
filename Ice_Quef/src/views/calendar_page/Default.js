@@ -7,7 +7,8 @@ import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { UserContext } from '../../props/UserInfo';
 
-export function HomePageDefault({ books }) {
+
+export function CalendarPageDefault({ books }) {
   const themedStyles = ThemedStyles();
   const hourStyle = getHourStyle();
 

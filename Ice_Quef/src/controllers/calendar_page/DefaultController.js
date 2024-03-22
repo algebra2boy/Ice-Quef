@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { GetBooks } from '../../models/BookModel';
-import { HomePageDefault } from '../../views/calendar_page/Default';
+import { CalendarPageDefault } from '../../views/calendar_page/Default';
 
-export function HomePageDefaultController() {
+export function CalendarPageDefaultController() {
   const events = GetBooks(1234);
   const [books] = useState(events);
 
-  return <HomePageDefault books={books} />;
+  return <CalendarPageDefault books={books} />;
 }
