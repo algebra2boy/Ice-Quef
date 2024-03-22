@@ -1,9 +1,5 @@
-import { ProfilePageDefault } from "../../views/profilepage/Default";
-
+import { ProfilePageDefault } from '../../views/profilepage/Default';
 
 export function ProfilePageDefaultController() {
-  
-  return (
-    <ProfilePageDefault />
-  );
+  return <ProfilePageDefault />;
 }

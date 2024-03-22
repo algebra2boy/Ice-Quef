@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Alert } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
 import { BasePage } from '../../style/BasePage';
-import { 
-  KolynButton, 
-  KolynTextfield, 
-  KolynTitleLabel,
-  KolynTextLabel 
-} from '../../component';
-
+import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '../../component';
+import ServerAddress from '../../props/Server';
+import encryptPassword from '../../props/encrypt';
 
 const emailHint = {
-  0: "Enter your UMass email",
+  0: 'Enter your UMass email',
 };
 const passwordHint = {
-  0 : "At least one lowercase letter",
-  1 : "At least one uppercase letter",
-  2 : "At least one number",
-  3 : "Minimum 8 characters",
+  0: 'At least one lowercase letter',
+  1: 'At least one uppercase letter',
+  2: 'At least one number',
+  3: 'Minimum 8 characters',
 };
 const confirmPasswordHint = {
-  0: "Enter your password again"
+  0: 'Enter your password again',
 };
 
 const height = Dimensions.get('window').height;
@@ -36,32 +32,30 @@ export function SignupPageDefault({}) {
   const [passwordConditions, setPasswordConditions] = useState([false, false, false, false]);
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
-  const checkEmail = (email) => {
+  const checkEmail = email => {
     if (email === undefined) return;
 
     const isEnoughLength = () => {
       return email.length >= 13;
     };
-    
+
     const isUMass = () => {
-      return email.endsWith("@umass.edu");
+      return email.endsWith('@umass.edu');
     };
 
     setEmailCondition(isEnoughLength() && isUMass());
   };
 
-  const checkPassword = (password) => {
+  const checkPassword = password => {
     if (password === undefined) return;
     const containsLetter = /[a-zA-Z]/;
     const containsNumber = /[0-9]/;
 
     const atLeastOneLowercase = () => {
-      return password !== password.toUpperCase() &&
-            containsLetter.test(password);
+      return password !== password.toUpperCase() && containsLetter.test(password);
     };
     const atLeastOneUppercase = () => {
-      return password !== password.toLowerCase() &&
-            containsLetter.test(password);
+      return password !== password.toLowerCase() && containsLetter.test(password);
     };
     const atLeastOneNumber = () => {
       return containsNumber.test(password);
@@ -71,10 +65,11 @@ export function SignupPageDefault({}) {
     };
 
     setPasswordConditions([
-      atLeastOneLowercase(), 
-      atLeastOneUppercase(), 
-      atLeastOneNumber(), 
-      minimumEightChars()]);
+      atLeastOneLowercase(),
+      atLeastOneUppercase(),
+      atLeastOneNumber(),
+      minimumEightChars(),
+    ]);
   };
 
   const checkConfirmPassword = (val, isEnterFromRePassword) => {
@@ -89,10 +84,60 @@ export function SignupPageDefault({}) {
     setConfirmPasswordCondition(isTheSame());
   };
 
-  const onRegisterPressed = () => {
-    //console.log("email: " + emailCondition);
-    //console.log("password: " + passwordConditions);
-    //console.log("repassword: " + confirmPasswordCondition);
+  const onRegisterPressed = async () => {
+    // console.log("email: " + emailCondition);
+    // console.log("password: " + passwordConditions);
+    // console.log("repassword: " + confirmPasswordCondition);
+
+    // password match
+    if (!confirmPasswordCondition) {
+      Alert.alert('Error', "Passwords doesn't match!");
+      return;
+    }
+
+    // package data
+    try {
+      // Encrypt the password
+      const hashedPassword = await encryptPassword(password);
+      // Package data with the hashed password
+      const registrationData = {
+        email: email,
+        password: hashedPassword,
+        isTeacher: false,
+      };
+
+      try {
+        // HTTP POST
+        const response = await fetch(ServerAddress() + 'api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registrationData),
+        });
+
+        // get response
+        const serverResponse = await response.json();
+
+        if (response.ok) {
+          // success
+          Alert.alert('Success', 'You have been registered successfully!');
+          // navigation.; //TODO: idk which page will be navigated to after a successful registration.
+        } else {
+          // edge case
+          Alert.alert(
+            'Registration Failed',
+            serverResponse.errors.toString() || 'An error occurred',
+          );
+        }
+      } catch (error) {
+        // network error
+        Alert.alert('Error', 'Could not connect to the server.');
+      }
+    } catch (error) {
+      // Handle errors as before
+      Alert.alert('Error', error.toString());
+    }
   };
 
   return (
@@ -107,12 +152,12 @@ export function SignupPageDefault({}) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5}}>
+            <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Create an account" />
-              <KolynTextLabel text= "Email"/>
+              <KolynTextLabel text="Email" />
               <KolynTextfield
                 value={email}
-                setValue={(email) => {
+                setValue={email => {
                   setEmail(email);
                   checkEmail(email);
                 }}
@@ -126,10 +171,10 @@ export function SignupPageDefault({}) {
                 emailCondition={emailCondition}
               />
 
-              <KolynTextLabel text= "Password"/>
+              <KolynTextLabel text="Password" />
               <KolynTextfield
                 value={password}
-                setValue={(password) => {
+                setValue={password => {
                   setPassword(password);
                   checkPassword(password);
                   checkConfirmPassword(password, false);
@@ -138,16 +183,16 @@ export function SignupPageDefault({}) {
                 keyboardType="default"
                 isSecure={true}
               />
-              <PasswordHintText 
+              <PasswordHintText
                 themedStyles={themedStyles}
                 passwordHint={passwordHint}
                 passwordConditions={passwordConditions}
               />
 
-              <KolynTextLabel text= "Confirm Password"/>
+              <KolynTextLabel text="Confirm Password" />
               <KolynTextfield
                 value={repassword}
-                setValue={(repassword) => {
+                setValue={repassword => {
                   setRePassword(repassword);
                   checkConfirmPassword(repassword, true);
                 }}
@@ -160,14 +205,13 @@ export function SignupPageDefault({}) {
                 confirmPasswordHint={confirmPasswordHint}
                 confirmPasswordCondition={confirmPasswordCondition}
               />
-
             </View>
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
-                text="Register" 
+              <KolynButton
+                text="Register"
                 onPress={() => {
                   onRegisterPressed();
-                }} 
+                }}
               />
               <View style={{ top: 20 }}>
                 <KolynButton
@@ -178,7 +222,6 @@ export function SignupPageDefault({}) {
                 />
               </View>
             </View>
-
           </View>
         </ScrollView>
       }
@@ -190,7 +233,7 @@ function EmailHintText({ themedStyles, emailHint, emailCondition }) {
   return (
     <View>
       <Text style={emailCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        { emailHint[0] }
+        {emailHint[0]}
       </Text>
     </View>
   );
@@ -200,16 +243,16 @@ function PasswordHintText({ themedStyles, passwordHint, passwordConditions }) {
   return (
     <View>
       <Text style={passwordConditions[0] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        { passwordHint[0] }
+        {passwordHint[0]}
       </Text>
       <Text style={passwordConditions[1] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        { passwordHint[1] }
+        {passwordHint[1]}
       </Text>
       <Text style={passwordConditions[2] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        { passwordHint[2] }
+        {passwordHint[2]}
       </Text>
       <Text style={passwordConditions[3] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        { passwordHint[3] }
+        {passwordHint[3]}
       </Text>
     </View>
   );
@@ -218,25 +261,10 @@ function PasswordHintText({ themedStyles, passwordHint, passwordConditions }) {
 function ConfirmPasswordHintText({ themedStyles, confirmPasswordHint, confirmPasswordCondition }) {
   return (
     <View>
-        <Text style={confirmPasswordCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-          { confirmPasswordHint[0] }
-        </Text>
-    </View>
-  );
-}
-
-function WarningLabel({ themedStyles, onTermsOfUsePressed, onPrivacyPressed }) {
-  return (
-    <View>
-      <Text style={themedStyles.text}>
-        By registering, you confirm that you accept our{' '}
-        <Text style={themedStyles.link} onPress={onTermsOfUsePressed}>
-          Terms of Use
-        </Text>{' '}
-        and{' '}
-        <Text style={themedStyles.link} onPress={onPrivacyPressed}>
-          Privacy Policy
-        </Text>
+      <Text
+        style={confirmPasswordCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}
+      >
+        {confirmPasswordHint[0]}
       </Text>
     </View>
   );
@@ -256,15 +284,14 @@ function ThemedStyles() {
       color: currentTheme.errorColor,
       marginVertical: 5,
       fontFamily: currentTheme.mainFont,
-      fontSize: currentTheme.fontSizes.tiny
+      fontSize: currentTheme.fontSizes.tiny,
     },
 
     hintTextPass: {
       color: currentTheme.mainColor,
       marginVertical: 5,
       fontFamily: currentTheme.mainFont,
-      fontSize: currentTheme.fontSizes.tiny
-    }
-
+      fontSize: currentTheme.fontSizes.tiny,
+    },
   });
-};
+}

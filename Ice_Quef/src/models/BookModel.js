@@ -1,5 +1,4 @@
-import { Book } from '../dataclass/Book'
-
+import { Book } from '../dataclass/Book';
 
 // stub
 const books = [
@@ -24,8 +23,7 @@ export function GetBooks(s_id) {
   return books;
 }
 
-
-function truncateText(text, length=14) {
+function truncateText(text, length = 14) {
   if (text.length < length) {
     return text;
   }

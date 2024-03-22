@@ -5,7 +5,6 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { Bold, NonBold, day } from './AddOH';
 
-
 const height = Dimensions.get('window').height;
 
 export function ManagePageAddSuccess({ route }) {
@@ -26,31 +25,26 @@ export function ManagePageAddSuccess({ route }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{height: height * 0.5}}>
+            <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Successfully added" />
 
               <Text>
-                <Bold
-                  text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
-                />
+                <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
+                <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold
-                  text = { officeHour.facultyName + "\n" }
-                />
-                <NonBold
-                  text = { day(officeHour.day) + " " + 
-                        officeHour.startTime + 
-                        " - " + 
-                        officeHour.endTime }
+                  text={
+                    day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime
+                  }
                 />
               </Text>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
+              <KolynButton
                 text="OK"
                 onPress={() => {
-                  navigation.navigate("ManagePageDefault");
-                }} 
+                  navigation.navigate('ManagePageDefault');
+                }}
               />
             </View>
           </View>
@@ -61,12 +55,10 @@ export function ManagePageAddSuccess({ route }) {
 }
 
 function ThemedStyles() {
-
   return StyleSheet.create({
     root: {
       alignItems: 'center',
       padding: 20,
     },
-
   });
 }

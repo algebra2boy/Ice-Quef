@@ -3,12 +3,7 @@ import { ThemeContext } from '../style/AppTheme';
 import { StyleSheet, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { setNavigatorTabIndex, getNavigatorTabIndex } from '../props/NavigatorTabIndexController';
-import {
-  HomePageController,
-  ManagePageController,
-  ProfilePageController
-} from '../controllers'
-
+import { HomePageController, ManagePageController, ProfilePageController } from '../controllers';
 
 const Tab = createBottomTabNavigator();
 const images = [
@@ -23,7 +18,7 @@ export function BottomTabNavigator() {
 
   return (
     <Tab.Navigator
-      screenOptions={() =>({
+      screenOptions={() => ({
         showLabel: false,
         headerShown: false,
         tabBarActiveTintColor: mainColor,
@@ -32,72 +27,70 @@ export function BottomTabNavigator() {
           borderTopWidth: 0,
           backgroundColor: mainColor,
           paddingHorizontal: 10,
-          height: 120
+          height: 120,
         },
         gestureEnabled: false,
       })}
-      
     >
-      <Tab.Screen name="Calendar" options={{
-        animation: 'none',
-        tabBarIcon:() => (
-          <View>
-            <Image 
-              source={images[0]}
-              style={themedStyles.smallPageIcon}>
-            </Image>
-            {getNavigatorTabIndex() == 0 && <View style={themedStyles.bottomUnderline}/>}
-          </View>
-        ),
-        tabBarLabel: ''
-      }} 
-      component={HomePageController}
-      listeners={{
-        tabPress: () => {
-          setNavigatorTabIndex(0);
-        }
-      }}/>
+      <Tab.Screen
+        name="Calendar"
+        options={{
+          animation: 'none',
+          tabBarIcon: () => (
+            <View>
+              <Image source={images[0]} style={themedStyles.smallPageIcon}></Image>
+              {getNavigatorTabIndex() == 0 && <View style={themedStyles.bottomUnderline} />}
+            </View>
+          ),
+          tabBarLabel: '',
+        }}
+        component={HomePageController}
+        listeners={{
+          tabPress: () => {
+            setNavigatorTabIndex(0);
+          },
+        }}
+      />
 
-      <Tab.Screen name="Manage" options={{
-        animation: 'none',
-        tabBarIcon:() => (
-          <View>
-            <Image 
-              source={images[1]}
-              style={themedStyles.smallPageIcon}>
-            </Image>
-            {getNavigatorTabIndex() == 1 && <View style={themedStyles.bottomUnderline}/>}
-          </View>
-        ),
-        tabBarLabel: ''
-      }} 
-      component={ManagePageController}
-      listeners={{
-        tabPress: () => {
-          setNavigatorTabIndex(1);
-        }
-      }}/>
+      <Tab.Screen
+        name="Manage"
+        options={{
+          animation: 'none',
+          tabBarIcon: () => (
+            <View>
+              <Image source={images[1]} style={themedStyles.smallPageIcon}></Image>
+              {getNavigatorTabIndex() == 1 && <View style={themedStyles.bottomUnderline} />}
+            </View>
+          ),
+          tabBarLabel: '',
+        }}
+        component={ManagePageController}
+        listeners={{
+          tabPress: () => {
+            setNavigatorTabIndex(1);
+          },
+        }}
+      />
 
-      <Tab.Screen name="Profile" options={{
-        animation: 'none',
-        tabBarIcon:() => (
-          <View>
-            <Image 
-              source={images[2]}
-              style={themedStyles.smallPageIcon}>
-            </Image>
-            {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline}/>}
-          </View>
-        ),
-        tabBarLabel: ''
-      }} 
-      component={ProfilePageController}
-      listeners={{
-        tabPress: () => {
-          setNavigatorTabIndex(3);
-        }
-      }}/>
-
+      <Tab.Screen
+        name="Profile"
+        options={{
+          animation: 'none',
+          tabBarIcon: () => (
+            <View>
+              <Image source={images[2]} style={themedStyles.smallPageIcon}></Image>
+              {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline} />}
+            </View>
+          ),
+          tabBarLabel: '',
+        }}
+        component={ProfilePageController}
+        listeners={{
+          tabPress: () => {
+            setNavigatorTabIndex(3);
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }

@@ -1,0 +1,11 @@
+{
+  "facultyName": "John Doe",
+  "day": 1,
+  "startTime": "2:30",
+  "endTime": "3:30",
+  "initialDate": "2:1:2024",
+  "terminalDate": "5:8:2024",
+  "courseDepartment": "CS",
+  "courseNumber": 100,
+  "id": 1
+}

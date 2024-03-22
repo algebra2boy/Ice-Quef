@@ -6,12 +6,11 @@ import { ThemeContext } from '../../style/AppTheme';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
 
-
 const height = Dimensions.get('window').height;
 export function ProfilePageDefault({}) {
   const themedStyles = ThemedStyles();
   const navigation = useNavigation();
-  
+
   return (
     <BasePage
       components={
@@ -27,19 +26,18 @@ export function ProfilePageDefault({}) {
             <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Profile" />
 
-              <View style={{flexDirection: 'column'}}>
-                <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'column' }}>
+                <View style={{ flexDirection: 'row' }}>
                   <KolynTextLabel text="Email " />
+
                   {/*
                   <EditIcon
                     onPress={()=>{}}
                   />
                   */}
-                </View>
-                <KolynTextLabel 
-                  text="jianxinlin@umass.edu" 
-                />
 
+                </View>
+                <KolynTextLabel text="jianxinlin@umass.edu" />
               </View>
 
               <View style={{height: '10%'}}/>
@@ -49,19 +47,19 @@ export function ProfilePageDefault({}) {
                 onPress={()=>{}}
               />
 */}
+
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
-                text="Log out" 
+              <KolynButton
+                text="Log out"
                 onPress={() => {
                   navigation.popToTop();
                   resetNavigatorTabIndex();
-                }} 
+                }}
               />
             </View>
           </View>
-
         </ScrollView>
       }
     />
@@ -72,17 +70,9 @@ function EditIcon({ onPress }) {
   const themedStyles = ThemedStyles();
 
   return (
-    <Pressable
-      style={themedStyles.editIconPart1}
-      onPress={onPress}
-    >
-      <View
-        style={themedStyles.editIconPart2}
-      >
-      <View
-        style={themedStyles.editIconPart3}
-      />
-
+    <Pressable style={themedStyles.editIconPart1} onPress={onPress}>
+      <View style={themedStyles.editIconPart2}>
+        <View style={themedStyles.editIconPart3} />
       </View>
     </Pressable>
   );
@@ -93,7 +83,6 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-
     root: {
       alignItems: 'center',
       padding: 20,
@@ -113,9 +102,7 @@ function ThemedStyles() {
       top: 11,
       left: 8,
       backgroundColor: currentTheme.primaryColor,
-      transform: [
-        {rotate: '135deg'}
-      ]
+      transform: [{ rotate: '135deg' }],
     },
 
     editIconPart3: {
@@ -131,10 +118,7 @@ function ThemedStyles() {
       borderLeftColor: 'transparent',
       borderRightColor: 'transparent',
       borderBottomColor: currentTheme.primaryColor, // Change color as needed,
-      transform: [
-        {rotate: '90deg'}
-      ]
-    }
-
+      transform: [{ rotate: '90deg' }],
+    },
   });
 }

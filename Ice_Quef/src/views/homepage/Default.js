@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { BasePage } from '../../style/BasePage';
-import { ThemeContext } from '../../style/AppTheme'
+import { ThemeContext } from '../../style/AppTheme';
 import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
-import * as KolynStyle from '../../style/KolynStyleKit'
+import * as KolynStyle from '../../style/KolynStyleKit';
 import { UserContext } from '../../props/UserInfo';
-
 
 export function HomePageDefault({ books }) {
   const themedStyles = ThemedStyles();
@@ -17,7 +16,7 @@ export function HomePageDefault({ books }) {
 
   const userManager = React.useContext(UserContext);
 
-  const onPressEvent = (event) => {
+  const onPressEvent = event => {
     setOpenMenu(true);
   };
 
@@ -33,27 +32,26 @@ export function HomePageDefault({ books }) {
     <BasePage
       components={
         <>
-          <View style={{flex: 20}}>
-            <Calendar 
-              events={books} 
-              height={400} 
-              mode='3days'
+          <View style={{ flex: 20 }}>
+            <Calendar
+              events={books}
+              height={400}
+              mode="3days"
               theme={eventCellTheme()}
               renderEvent={renderEvent}
               hourStyle={hourStyle}
               showWeekNumber={true}
               onPressEvent={onPressEvent}
             />
-            {isOpenMenu&&
+            {isOpenMenu && (
               <View style={themedStyles.bottomOverlay}>
                 <View style={themedStyles.topOverlay}>
-                  <View style={{bottom: '10%'}}>
-
-                    <TouchableOpacity 
+                  <View style={{ bottom: '10%' }}>
+                    <TouchableOpacity
                       style={themedStyles.closeMenuBotton}
                       onPress={() => setOpenMenu(false)}
                     >
-                      <CrossMark/>
+                      <CrossMark />
                     </TouchableOpacity>
 
                     <Text style={[themedStyles.waitlistHintLabel]}>
@@ -62,18 +60,15 @@ export function HomePageDefault({ books }) {
 
                     <TouchableOpacity
                       style={themedStyles.waitlistButton}
-                      onPress={()=>determineMessage()}
+                      onPress={() => determineMessage()}
                     >
-                      <Text style={themedStyles.waitlistLabel}>
-                        {message}
-                      </Text>
+                      <Text style={themedStyles.waitlistLabel}>{message}</Text>
                     </TouchableOpacity>
-
                   </View>
                 </View>
               </View>
-            }
-          </View> 
+            )}
+          </View>
         </>
       }
     />
@@ -87,7 +82,7 @@ function getHourStyle() {
   return {
     fontFamily: currentTheme.mainFont,
     fontSize: currentTheme.fontSizes.small,
-    color: currentTheme.mainColor
+    color: currentTheme.mainColor,
   };
 }
 
@@ -107,10 +102,10 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-    topOverlay:{
+    topOverlay: {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: currentTheme.mainColor,
-      opacity:1,
+      opacity: 1,
       justifyContent: 'center',
       alignItems: 'center',
       height: '50%',
@@ -122,14 +117,14 @@ function ThemedStyles() {
       shadowOffset: { width: 0, height: 12 },
       shadowOpacity: 0.3,
       shadowRadius: 3,
-      elevation: 5 // This is for Android
+      elevation: 5, // This is for Android
     },
 
-    bottomOverlay:{
+    bottomOverlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: currentTheme.disableColor+'CC',
+      backgroundColor: currentTheme.disableColor + 'CC',
       justifyContent: 'center',
-      alignItems: 'center', 
+      alignItems: 'center',
       borderRadius: 10,
       height: '120%',
       top: '-10%',
@@ -138,8 +133,8 @@ function ThemedStyles() {
     },
 
     waitlistButton: {
-      borderRadius: 80, 
-      width: 160, 
+      borderRadius: 80,
+      width: 160,
       height: 160,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 12 },
@@ -148,17 +143,25 @@ function ThemedStyles() {
       elevation: 5, // This is for Android
       backgroundColor: currentTheme.primaryColor,
       alignSelf: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
 
     waitlistHintLabel: StyleSheet.flatten([
-      {alignSelf: 'center', textAlign: 'center', padding: 20, height: 100},
-      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+      { alignSelf: 'center', textAlign: 'center', padding: 20, height: 100 },
+      KolynStyle.kolynLabel(
+        currentTheme.fontSizes.small,
+        currentTheme.mainFont,
+        currentTheme.primaryColor,
+      ),
     ]),
 
     waitlistLabel: StyleSheet.flatten([
-      {alignSelf: 'center', textAlign: 'center'},
-      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.subColor)
+      { alignSelf: 'center', textAlign: 'center' },
+      KolynStyle.kolynLabel(
+        currentTheme.fontSizes.small,
+        currentTheme.mainFont,
+        currentTheme.subColor,
+      ),
     ]),
 
     crossMarkPart1: {
@@ -167,9 +170,7 @@ function ThemedStyles() {
       top: 15,
       right: 15,
       backgroundColor: currentTheme.primaryColor,
-      transform: [
-        {rotate: '45deg'}
-      ]
+      transform: [{ rotate: '45deg' }],
     },
 
     crossMarkpart2: {
@@ -178,17 +179,14 @@ function ThemedStyles() {
       top: 5,
       right: 15,
       backgroundColor: currentTheme.primaryColor,
-      transform: [
-        {rotate: '135deg'}
-      ]
+      transform: [{ rotate: '135deg' }],
     },
 
     closeMenuBotton: {
       left: '35%',
       width: 36,
       height: 36,
-      alignSelf: 'center'
-    }
-
+      alignSelf: 'center',
+    },
   });
 }
