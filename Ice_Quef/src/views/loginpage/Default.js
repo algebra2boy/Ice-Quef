@@ -5,7 +5,6 @@ import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
 
-
 const height = Dimensions.get('window').height;
 
 /**
@@ -22,16 +21,15 @@ export function LoginPageDefault({ pressLogInButton }) {
 
   const userManager = React.useContext(UserContext);
 
-  const onLogInPressed = () => {
-    const isPass = pressLogInButton(email, password);
-
+  const onLogInPressed = async () => {
+    const isPass = await pressLogInButton(email, password);
     userManager.setUser("i'm a user");
 
     if (isPass) {
       // validate user
       navigation.navigate('Home');
       // activate bottom tab navigator
-      navigation.navigate('BottomTab')
+      navigation.navigate('BottomTab');
     }
   };
 

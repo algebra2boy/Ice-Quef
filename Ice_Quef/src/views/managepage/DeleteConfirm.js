@@ -5,7 +5,6 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { Bold, NonBold, day } from './AddOH';
 
-
 const height = Dimensions.get('window').height;
 
 export function ManagePageDeleteConfirm({ route }) {
@@ -28,51 +27,41 @@ export function ManagePageDeleteConfirm({ route }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{height: height * 0.5}}>
+            <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Confirm deleting" />
 
               <Text>
-                <Bold
-                  text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
-                />
+                <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
+                <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold
-                  text = { officeHour.facultyName + "\n" }
-                />
-                <NonBold
-                  text = { day(officeHour.day) + " " + 
-                        officeHour.startTime + 
-                        " - " + 
-                        officeHour.endTime }
+                  text={
+                    day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime
+                  }
                 />
               </Text>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
+              <KolynButton
                 text="Delete"
                 onPress={() => {
-
                   if (Math.floor(Math.random() * 2)) {
-                    navigation.navigate("ManagePageDeleteSuccess",
-                    {
+                    navigation.navigate('ManagePageDeleteSuccess', {
+                      officeHour: officeHour,
+                    });
+                  } else {
+                    navigation.navigate('ManagePageDeleteFail', {
                       officeHour: officeHour,
                     });
                   }
-                  else {
-                    navigation.navigate("ManagePageDeleteFail",
-                    {
-                      officeHour: officeHour,
-                    });
-                  }
-
                 }}
               />
-              <View style={{top: 20}}>
-                <KolynButton 
+              <View style={{ top: 20 }}>
+                <KolynButton
                   text="Go back"
                   onPress={() => {
                     navigation.goBack();
-                  }} 
+                  }}
                 />
               </View>
             </View>
@@ -84,12 +73,10 @@ export function ManagePageDeleteConfirm({ route }) {
 }
 
 function ThemedStyles() {
-
   return StyleSheet.create({
     root: {
       alignItems: 'center',
       padding: 20,
     },
-
   });
 }

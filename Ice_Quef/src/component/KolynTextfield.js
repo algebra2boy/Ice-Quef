@@ -3,7 +3,6 @@ import { TextInput, StyleSheet } from 'react-native';
 import { ThemeContext } from '../style/AppTheme';
 import * as KolynStyle from '../style/KolynStyleKit';
 
-
 /**
  * Resembles a textfield with pre-existing style
  *
