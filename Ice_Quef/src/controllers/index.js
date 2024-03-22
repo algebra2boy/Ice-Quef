@@ -1,5 +1,5 @@
-import { HomePageController } from './homepage/Controller';
-import { ManagePageController } from './managepage/Controller';
-import { ProfilePageController } from './profilepage/Controller';
+import { HomePageController } from './calendar_page/Controller';
+import { ManagePageController } from './manage_page/Controller';
+import { ProfilePageController } from './profile_page/Controller';
 
 export { HomePageController, ManagePageController, ProfilePageController };

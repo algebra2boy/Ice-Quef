@@ -1,4 +1,4 @@
-import { ProfilePageDefault } from '../../views/profilepage/Default';
+import { ProfilePageDefault } from '../../views/profile_page/Default';
 
 export function ProfilePageDefaultController() {
   return <ProfilePageDefault />;
