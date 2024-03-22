@@ -10,26 +10,22 @@ import { ManagePageDeleteConfirm } from '../../views/managepage/DeleteConfirm';
 import { ManagePageDeleteSuccess } from '../../views/managepage/DeleteSuccess';
 import { ManagePageDeleteFail } from '../../views/managepage/DeleteFail';
 
-
 const Stack = createNativeStackNavigator();
 export function ManagePageController() {
-  
   return (
     <Stack.Navigator
       initialRouteName="ManagePageDefault"
-      screenOptions={{headerShown: false, gestureEnabled: false}}
+      screenOptions={{ headerShown: false, gestureEnabled: false }}
     >
-
-      <Stack.Screen name="ManagePageDefault" component={ManagePageDefaultController}/>
-      <Stack.Screen name="ManagePageAddOH" component={ManagePageAddOHController}/>
-      <Stack.Screen name="ManagePageAddConfirm" component={ManagePageAddConfirm}/>
-      <Stack.Screen name="ManagePageAddSuccess" component={ManagePageAddSuccess}/>
-      <Stack.Screen name="ManagePageAddFail" component={ManagePageAddFail}/>
-      <Stack.Screen name="ManagePageStatics" component={ManagePageStatics}/>
-      <Stack.Screen name="ManagePageDeleteConfirm" component={ManagePageDeleteConfirm}/>
-      <Stack.Screen name="ManagePageDeleteSuccess" component={ManagePageDeleteSuccess}/>
-      <Stack.Screen name="ManagePageDeleteFail" component={ManagePageDeleteFail}/>
-
+      <Stack.Screen name="ManagePageDefault" component={ManagePageDefaultController} />
+      <Stack.Screen name="ManagePageAddOH" component={ManagePageAddOHController} />
+      <Stack.Screen name="ManagePageAddConfirm" component={ManagePageAddConfirm} />
+      <Stack.Screen name="ManagePageAddSuccess" component={ManagePageAddSuccess} />
+      <Stack.Screen name="ManagePageAddFail" component={ManagePageAddFail} />
+      <Stack.Screen name="ManagePageStatics" component={ManagePageStatics} />
+      <Stack.Screen name="ManagePageDeleteConfirm" component={ManagePageDeleteConfirm} />
+      <Stack.Screen name="ManagePageDeleteSuccess" component={ManagePageDeleteSuccess} />
+      <Stack.Screen name="ManagePageDeleteFail" component={ManagePageDeleteFail} />
     </Stack.Navigator>
   );
 }

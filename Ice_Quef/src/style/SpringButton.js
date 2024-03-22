@@ -2,7 +2,6 @@ import React from 'react';
 import { Animated } from 'react-native';
 import { Pressable, Text } from 'react-native';
 
-
 //https://www.youtube.com/watch?v=BzqHru-sIXw
 var isPressing = false;
 /**
@@ -22,8 +21,7 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
   }, []);
 
   const handleButtonPress = () => {
-    if (isPressing)
-      return;
+    if (isPressing) return;
     animatedScale.setValue(0.95);
     Animated.spring(animatedScale, {
       toValue: 1,
@@ -34,9 +32,8 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
   };
 
   const handleButtonRelease = () => {
-    if (isPressing)
-      return;
-    
+    if (isPressing) return;
+
     Animated.spring(animatedScale, {
       toValue: 1,
       bounciness: 24,
@@ -50,15 +47,15 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
 
   return (
     <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
-      <Pressable 
-        style={buttonStyle} 
-        onPressIn={handleButtonPress} 
+      <Pressable
+        style={buttonStyle}
+        onPressIn={handleButtonPress}
         onPressOut={handleButtonRelease}
-        onPress={()=>onPress()}
-        onLongPress={()=>{}}
+        onPress={() => onPress()}
+        onLongPress={() => {}}
       >
-        { typeof text === 'string' && <Text style={labelStyle}>{text}</Text> }
-        { typeof text === 'object' && text }
+        {typeof text === 'string' && <Text style={labelStyle}>{text}</Text>}
+        {typeof text === 'object' && text}
       </Pressable>
     </Animated.View>
   );

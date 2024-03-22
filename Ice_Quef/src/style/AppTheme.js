@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createContext } from 'react';
 
-
 /**
  * All colors for app theme
  * @enum { color }
@@ -139,9 +138,5 @@ export const ThemeProvider = ({ children }) => {
     setTheme(themes[themeIndex]);
   };
 
-  return(
-    <ThemeContext.Provider value={{ theme, changeTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, changeTheme }}>{children}</ThemeContext.Provider>;
 };

@@ -8,7 +8,6 @@ import * as KolynStyle from './KolynStyleKit';
 import { ThemeContext } from './AppTheme';
 import loadImages from '../props/ImageLoader';
 
-
 const ios = Platform.OS == 'ios';
 
 /**
