@@ -1,13 +1,15 @@
 export class OfficeHour {
-  constructor(facultyName,
-              day,
-              startTime,
-              endTime,
-              initialDate,
-              terminalDate,
-              courseDepartment,
-              courseNumber,
-              id) {
+  constructor(
+    facultyName,
+    day,
+    startTime,
+    endTime,
+    initialDate,
+    terminalDate,
+    courseDepartment,
+    courseNumber,
+    id,
+  ) {
     this.facultyName = facultyName;
     // Sunday - Saturday: 0 - 6
     this.day = day;
@@ -22,7 +24,7 @@ export class OfficeHour {
     // eg. CS, Bio, Chem
     this.courseDepartment = courseDepartment;
     // eg. 520, 320, 326
-    this.courseNumber= courseNumber;
+    this.courseNumber = courseNumber;
     this.id = id;
   }
 }

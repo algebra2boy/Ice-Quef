@@ -7,9 +7,8 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { SpringButton } from '../../style/SpringButton';
 
-
 const RenderItem = (officeHour, themedStyles, navigation) => {
-  const day = (num) => {
+  const day = num => {
     switch (num) {
       case 0:
         return 'Sun';
@@ -26,54 +25,39 @@ const RenderItem = (officeHour, themedStyles, navigation) => {
       case 6:
         return 'Sat';
     }
-  }
+  };
 
   function Bold({ text }) {
-    return (
-      <Text style = {themedStyles.itemLabelL}>
-        {text}
-      </Text>
-    );
+    return <Text style={themedStyles.itemLabelL}>{text}</Text>;
   }
 
   function NonBold({ text }) {
-    return (
-      <Text style = {themedStyles.itemLabel}>
-        {text}
-      </Text>
-    );
+    return <Text style={themedStyles.itemLabel}>{text}</Text>;
   }
 
   return (
-    <SpringButton 
+    <SpringButton
       text={
         <Text>
-          <Bold
-            text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
-          />
+          <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
+          <NonBold text={officeHour.facultyName + '\n'} />
           <NonBold
-            text = { officeHour.facultyName + "\n" }
-          />
-          <NonBold
-            text = { day(officeHour.day) + " " + 
-                  officeHour.startTime + 
-                  " - " + 
-                  officeHour.endTime }
+            text={day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime}
           />
         </Text>
       }
-      onPress={()=>{
-        navigation.navigate("ManagePageStatics", {
-          officeHour: officeHour
-        })
+      onPress={() => {
+        navigation.navigate('ManagePageStatics', {
+          officeHour: officeHour,
+        });
       }}
       buttonStyle={themedStyles.item}
       labelStyle={themedStyles.itemLabel}
     />
   );
-}
+};
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export function ManagePageDefault({ ohList }) {
   const navigation = useNavigation();
@@ -85,21 +69,21 @@ export function ManagePageDefault({ ohList }) {
   // The entire array for the course items
   const [elementState, setElementState] = useState(ohList);
 
-  const mySetElementState = (newElementState) => {
+  const mySetElementState = newElementState => {
     setElementState(newElementState);
   };
 
   // Called each time the flat list if refreshed
   const refreshElements = () => {
     mySetElementState(elementState);
-  }
+  };
 
   // Refresh the flat list
   const onRefresh = () => {
     setIsRefreshing(true);
     refreshElements();
     setIsRefreshing(false);
-  }
+  };
 
   return (
     <BasePage
@@ -112,18 +96,18 @@ export function ManagePageDefault({ ohList }) {
                 data={elementState}
                 showsVerticalScrollIndicator={false}
                 renderItem={item => RenderItem(item.item, themedStyles, navigation)}
-                keyExtractor={item=>item.id}
+                keyExtractor={item => item.id}
                 onRefresh={onRefresh}
                 refreshing={isRefreshing}
               />
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
-                text="Add" 
+              <KolynButton
+                text="Add"
                 onPress={() => {
-                  navigation.navigate("ManagePageAddOH");
-                }} 
+                  navigation.navigate('ManagePageAddOH');
+                }}
               />
             </View>
           </View>
@@ -144,19 +128,20 @@ function ThemedStyles() {
     },
 
     flatListView: {
-      alignSelf: 'center', 
-      backgroundColor: currentTheme.primaryColor
+      alignSelf: 'center',
+      backgroundColor: currentTheme.primaryColor,
     },
 
     item: StyleSheet.flatten([
       {
-        top: 0, 
-        width: width*0.6, 
-        alignSelf: 'center', 
-        marginTop: 10, 
-        borderRadius: 10, 
-        backgroundColor: currentTheme.subColor, 
-        borderWidth: 4 }, 
+        top: 0,
+        width: width * 0.6,
+        alignSelf: 'center',
+        marginTop: 10,
+        borderRadius: 10,
+        backgroundColor: currentTheme.subColor,
+        borderWidth: 4,
+      },
       KolynStyle.kolynButton(currentTheme.primaryColor),
     ]),
 
@@ -166,7 +151,7 @@ function ThemedStyles() {
         currentTheme.fontSizes.small,
         currentTheme.mainFont,
         currentTheme.subColor,
-      )
+      ),
     ]),
 
     itemLabelL: StyleSheet.flatten([
@@ -175,8 +160,7 @@ function ThemedStyles() {
         currentTheme.fontSizes.casual,
         currentTheme.mainFont,
         currentTheme.subColor,
-      )
+      ),
     ]),
-
-  })
+  });
 }

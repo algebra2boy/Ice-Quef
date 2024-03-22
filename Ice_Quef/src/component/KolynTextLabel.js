@@ -3,17 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as KolynStyle from '../style/KolynStyleKit';
 import { ThemeContext } from '../style/AppTheme';
 
-
 export function KolynTextLabel({ text, style }) {
   const themedStyles = ThemedStyles();
 
-  return (
-    <Text 
-      style={StyleSheet.flatten([themedStyles.text, style])}
-    >
-      {text}
-    </Text>
-  );
+  return <Text style={StyleSheet.flatten([themedStyles.text, style])}>{text}</Text>;
 }
 
 export function KolynTitleLabel({ title }) {
@@ -39,14 +32,13 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-
     text: StyleSheet.flatten([
       { marginVertical: 10 },
       KolynStyle.kolynLabel(
         currentTheme.fontSizes.small,
         currentTheme.mainFont,
         currentTheme.subColor,
-      )
+      ),
     ]),
 
     title: StyleSheet.flatten([
@@ -66,6 +58,5 @@ function ThemedStyles() {
         currentTheme.subColor,
       ),
     ]),
-
   });
 }

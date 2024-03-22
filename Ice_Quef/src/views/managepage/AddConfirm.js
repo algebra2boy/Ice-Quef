@@ -5,14 +5,13 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { Bold, NonBold, day } from './AddOH';
 
-
 const height = Dimensions.get('window').height;
 
 /**
  * This page serves as a transition between add office hour
  * page and successfully added office hour page
- * 
- * @param {Prop} objects received from add office hour page 
+ *
+ * @param {Prop} objects received from add office hour page
  * @returns {ReactElement} The add confirm page
  */
 export function ManagePageAddConfirm({ route }) {
@@ -35,49 +34,41 @@ export function ManagePageAddConfirm({ route }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{height: height * 0.5}}>
+            <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Confirm adding" />
 
               <Text>
-                <Bold
-                  text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
-                />
+                <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
+                <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold
-                  text = { officeHour.facultyName + "\n" }
-                />
-                <NonBold
-                  text = { day(officeHour.day) + " " + 
-                        officeHour.startTime + 
-                        " - " + 
-                        officeHour.endTime }
+                  text={
+                    day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime
+                  }
                 />
               </Text>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
+              <KolynButton
                 text="Add"
                 onPress={() => {
-
                   if (Math.floor(Math.random() * 2)) {
-                    navigation.navigate("ManagePageAddSuccess", {
+                    navigation.navigate('ManagePageAddSuccess', {
+                      officeHour: officeHour,
+                    });
+                  } else {
+                    navigation.navigate('ManagePageAddFail', {
                       officeHour: officeHour,
                     });
                   }
-                  else {
-                    navigation.navigate("ManagePageAddFail", {
-                      officeHour: officeHour,
-                    });
-                  }
-
                 }}
               />
-              <View style={{top: 20}}>
-                <KolynButton 
+              <View style={{ top: 20 }}>
+                <KolynButton
                   text="Go back"
                   onPress={() => {
                     navigation.goBack();
-                  }} 
+                  }}
                 />
               </View>
             </View>
@@ -89,12 +80,10 @@ export function ManagePageAddConfirm({ route }) {
 }
 
 function ThemedStyles() {
-
   return StyleSheet.create({
     root: {
       alignItems: 'center',
       padding: 20,
     },
-
   });
 }

@@ -5,7 +5,6 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { Bold, NonBold, day } from './AddOH';
 
-
 const height = Dimensions.get('window').height;
 
 export function ManagePageStatics({ route }) {
@@ -13,7 +12,6 @@ export function ManagePageStatics({ route }) {
   const themedStyles = ThemedStyles();
 
   const officeHour = route.params?.officeHour;
-
 
   return (
     <BasePage
@@ -27,66 +25,52 @@ export function ManagePageStatics({ route }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{height: height * 0.5}}>
+            <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Statics" />
 
-              <View style={{flex: 1}}>
+              <View style={{ flex: 1 }}>
                 <Text>
-                  <Bold
-                    text={officeHour.courseDepartment + 
-                          " " + 
-                          officeHour.courseNumber +
-                          "\n"}
-                  />
-                  <NonBold
-                    text={officeHour.facultyName}
-                  />
+                  <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
+                  <NonBold text={officeHour.facultyName} />
                 </Text>
               </View>
 
-              <View style={{flex: 1}}>
-                <KolynButton 
-                  text="Delete" 
+              <View style={{ flex: 1 }}>
+                <KolynButton
+                  text="Delete"
                   onPress={() => {
-                    navigation.navigate("ManagePageDeleteConfirm", {
-                      officeHour: officeHour
-                    })
-                  }} 
+                    navigation.navigate('ManagePageDeleteConfirm', {
+                      officeHour: officeHour,
+                    });
+                  }}
                 />
               </View>
 
-              <View style={{flex: 1}}>
+              <View style={{ flex: 1 }}>
                 <Text>
+                  <NonBold text={'Start: ' + officeHour.initialDate.replaceAll(':', '/') + '\n'} />
+                  <NonBold text={'End: ' + officeHour.terminalDate.replaceAll(':', '/') + '\n\n'} />
                   <NonBold
-                    text={"Start: "+
-                          officeHour.initialDate.replaceAll(':', '/') + 
-                          "\n"}
-                  />
-                  <NonBold
-                    text={"End: " +
-                          officeHour.terminalDate.replaceAll(':', '/') +
-                          "\n\n"}
-                  />
-                  <NonBold
-                    text={"Time span: \n" +
-                          day(officeHour.day) + 
-                          " " + 
-                          officeHour.startTime + 
-                          " - " +
-                          officeHour.endTime}
+                    text={
+                      'Time span: \n' +
+                      day(officeHour.day) +
+                      ' ' +
+                      officeHour.startTime +
+                      ' - ' +
+                      officeHour.endTime
+                    }
                   />
                 </Text>
               </View>
-
             </View>
 
             <View style={{ top: height * 0.1 }}>
               <View style={{ top: 60 }}>
-                <KolynButton 
-                  text="Go back" 
+                <KolynButton
+                  text="Go back"
                   onPress={() => {
                     navigation.goBack();
-                  }} 
+                  }}
                 />
               </View>
             </View>
@@ -98,12 +82,10 @@ export function ManagePageStatics({ route }) {
 }
 
 function ThemedStyles() {
-
   return StyleSheet.create({
     root: {
       alignItems: 'center',
       padding: 20,
     },
-
   });
 }

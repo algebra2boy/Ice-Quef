@@ -5,7 +5,6 @@ import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { Bold, NonBold, day } from './AddOH';
 
-
 const height = Dimensions.get('window').height;
 
 export function ManagePageDeleteFail({ route }) {
@@ -26,36 +25,29 @@ export function ManagePageDeleteFail({ route }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{height: height * 0.5}}>
+            <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Failed to delete" />
 
               <Text>
-                <Bold
-                  text = { officeHour.courseDepartment + " " + officeHour.courseNumber + "\n" }
-                />
+                <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
+                <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold
-                  text = { officeHour.facultyName + "\n" }
-                />
-                <NonBold
-                  text = { day(officeHour.day) + " " + 
-                        officeHour.startTime + 
-                        " - " + 
-                        officeHour.endTime }
+                  text={
+                    day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime
+                  }
                 />
               </Text>
-              <View style={{top: 20, alignSelf: 'center'}}>
-                <KolynTextLabel
-                  text="Please try again later."
-                />
+              <View style={{ top: 20, alignSelf: 'center' }}>
+                <KolynTextLabel text="Please try again later." />
               </View>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
+              <KolynButton
                 text="OK"
                 onPress={() => {
-                  navigation.navigate("ManagePageDefault");
-                }} 
+                  navigation.navigate('ManagePageDefault');
+                }}
               />
             </View>
           </View>
@@ -66,12 +58,10 @@ export function ManagePageDeleteFail({ route }) {
 }
 
 function ThemedStyles() {
-
   return StyleSheet.create({
     root: {
       alignItems: 'center',
       padding: 20,
     },
-
   });
 }
