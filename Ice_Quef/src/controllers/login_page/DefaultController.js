@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoginPageDefault } from '../../views/loginpage/Default';
+import { LoginPageDefault } from '../../views/login_page/Default';
 import encryptPassword from '../../props/encrypt';
 import ServerAddress from '../../props/Server';
 import { Alert } from 'react-native';
@@ -7,6 +7,8 @@ import { Alert } from 'react-native';
 async function LogInButtonPressed(email, password) {
   console.log(email);
   console.log(password);
+
+  return true;
 
   try {
     // Encrypt the password

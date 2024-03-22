@@ -2,8 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from './src/style/AppTheme'
 import { UserProvider } from './src/props/UserInfo';
-import { LoginPageDefaultController } from './src/controllers/loginpage/DefaultController';
-import { SignupPageDefaultController } from './src/controllers/signuppage/DefaultController';
+import { LoginPageDefaultController } from './src/controllers/login_page/DefaultController';
+import { SignupPageDefaultController } from './src/controllers/signup_page/DefaultController';
 import { BottomTabNavigator } from './src/component/BottomTabNav';
 import { HomePageController } from './src/controllers';
 

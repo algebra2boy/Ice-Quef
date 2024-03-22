@@ -2,13 +2,13 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ManagePageDefaultController } from './DefaultController';
 import { ManagePageAddOHController } from './AddOHController';
-import { ManagePageAddConfirm } from '../../views/managepage/AddConfirm';
-import { ManagePageAddSuccess } from '../../views/managepage/AddSuccess';
-import { ManagePageAddFail } from '../../views/managepage/AddFail';
-import { ManagePageStatics } from '../../views/managepage/Statics';
-import { ManagePageDeleteConfirm } from '../../views/managepage/DeleteConfirm';
-import { ManagePageDeleteSuccess } from '../../views/managepage/DeleteSuccess';
-import { ManagePageDeleteFail } from '../../views/managepage/DeleteFail';
+import { ManagePageAddConfirm } from '../../views/manage_page/AddConfirm';
+import { ManagePageAddSuccess } from '../../views/manage_page/AddSuccess';
+import { ManagePageAddFail } from '../../views/manage_page/AddFail';
+import { ManagePageStatics } from '../../views/manage_page/Statics';
+import { ManagePageDeleteConfirm } from '../../views/manage_page/DeleteConfirm';
+import { ManagePageDeleteSuccess } from '../../views/manage_page/DeleteSuccess';
+import { ManagePageDeleteFail } from '../../views/manage_page/DeleteFail';
 
 const Stack = createNativeStackNavigator();
 export function ManagePageController() {
