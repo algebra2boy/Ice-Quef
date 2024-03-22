@@ -6,7 +6,7 @@ import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
-import { GetSampleList } from '../../models/OHListModel';
+import { GetSampleList } from '../../models/RegisterModel';
 import { SpringButton } from '../../style/SpringButton';
 
 const { width, height } = Dimensions.get('window');
