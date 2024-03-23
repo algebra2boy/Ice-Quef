@@ -35,19 +35,17 @@ export function ProfilePageDefault({}) {
                     onPress={()=>{}}
                   />
                   */}
-
                 </View>
                 <KolynTextLabel text="jianxinlin@umass.edu" />
               </View>
 
-              <View style={{height: '10%'}}/>
-{/*
+              <View style={{ height: '10%' }} />
+              {/*
               <KolynButton 
                 text="Change password"
                 onPress={()=>{}}
               />
 */}
-
             </View>
 
             <View style={{ top: height * 0.1 }}>

@@ -7,18 +7,21 @@ import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { UserContext } from '../../props/UserInfo';
 
-
-export function CalendarPageDefault({ books }) {
+export function CalendarPageDefault({ registered }) {
   const themedStyles = ThemedStyles();
   const hourStyle = getHourStyle();
 
+  const lst = getRenderList(registered);
+
   const [isOpenMenu, setOpenMenu] = useState(false);
+  const [title, setTitle] = useState('');
   const [message, setMessage] = useState('Press to join waitlist.');
 
   const userManager = React.useContext(UserContext);
 
-  const onPressEvent = event => {
+  const onPressEvent = (event) => {
     setOpenMenu(true);
+    setTitle(event.title);
   };
 
   const determineMessage = () => {
@@ -35,7 +38,7 @@ export function CalendarPageDefault({ books }) {
         <>
           <View style={{ flex: 20 }}>
             <Calendar
-              events={books}
+              events={lst}
               height={400}
               mode="3days"
               theme={eventCellTheme()}
@@ -56,7 +59,7 @@ export function CalendarPageDefault({ books }) {
                     </TouchableOpacity>
 
                     <Text style={[themedStyles.waitlistHintLabel]}>
-                      CS 520 Theory and Practice of Software Engineering, Juan Zhai
+                      {title}
                     </Text>
 
                     <TouchableOpacity
@@ -76,7 +79,114 @@ export function CalendarPageDefault({ books }) {
   );
 }
 
-function getHourStyle() {
+/**
+ * Convert a list of registered office hours into
+ * renderable info.
+ * 
+ * @param {*} registered a list of registered office hours
+ */
+const getRenderList = (registered) => {
+  /**
+   * Determine the info needed for the 'blocks'.
+   * It will return a list because oh is repeated. 
+   * 
+   * @param {object} oh an office hour
+   */
+  const getRenderInfo = (oh) => {
+    const getDate = (myDate) => {
+      const date = myDate.split(':');
+      var month = parseInt(date[0])-1;
+      var day = parseInt(date[1]);
+      var year = parseInt(date[2]);
+
+      return new Date(year, month, day);
+    };
+
+    const getTime = (myTime) => {
+      const time = myTime.split(':');
+      var hour = parseInt(time[0]);
+      var minute = parseInt(time[1]);
+
+      return [hour, minute];
+    };
+
+    const getWeekDay = () => {
+      return oh.day;
+    };
+
+    const addDays = (date, addition) => {
+      var result = new Date(date);
+      result.setDate(result.getDate() + addition);
+      return result;
+    }
+
+    const hasReachTerminal = (curr, terminal) => {
+      return curr.getFullYear() > terminal.getFullYear() ||
+              (curr.getFullYear() === terminal.getFullYear() &&
+              curr.getMonth() > terminal.getMonth()) ||
+              (curr.getFullYear() === terminal.getFullYear() &&
+                curr.getMonth() === terminal.getMonth() &&
+                curr.getDate() > terminal.getDate());
+    }
+
+    const getTitle = () => {
+      const getCourse = () => {
+        return oh.courseDepartment + " " + oh.courseNumber;
+      };
+  
+      const getFacultyName = () => {
+        return oh.facultyName;
+      };
+
+      return getCourse() + ", " + getFacultyName();
+    };
+
+    const initialDate = getDate(oh.initialDate);
+    const terminalDate = getDate(oh.terminalDate);
+    const startTime = getTime(oh.startTime);
+    const endTime = getTime(oh.endTime);
+    const weekDay = getWeekDay();
+    const title = getTitle();
+    
+    const info = [];
+    var currentDate;
+    const convertToCorrectStartDate = (curr, weekDay) => {
+      var currDay = curr.getDay();
+      if (currDay > weekDay) {
+        return addDays(curr, 7-(currDay-weekDay));
+      } 
+      else if (currDay < weekDay) {
+        return addDays(curr, weekDay-currDay);
+      }
+      else {
+        return curr;
+      }
+    }
+    for (currentDate = convertToCorrectStartDate(initialDate, weekDay); 
+        !hasReachTerminal(currentDate, terminalDate); 
+        currentDate = addDays(currentDate, 7)) {
+        info.push(
+        {
+          title: title,
+          start: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), startTime[0], startTime[1]),
+          end: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), endTime[0], endTime[1]),
+        }
+      );
+    }
+
+    return info;
+  };
+
+  const result = [];
+  for (var i = 0; i < registered.length; i++) {
+    const renderInfo = getRenderInfo(registered[i]);
+    result.push(renderInfo);
+  }
+
+  return result.flat();
+};
+
+const getHourStyle = () => {
   const themeManager = React.useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
@@ -85,7 +195,7 @@ function getHourStyle() {
     fontSize: currentTheme.fontSizes.small,
     color: currentTheme.mainColor,
   };
-}
+};
 
 function CrossMark() {
   const themedStyles = ThemedStyles();
