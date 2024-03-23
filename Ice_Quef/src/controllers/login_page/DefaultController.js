@@ -5,9 +5,6 @@ import ServerAddress from '../../props/Server';
 import { Alert } from 'react-native';
 
 async function LogInButtonPressed(email, password) {
-  console.log(email);
-  console.log(password);
-
   return true;
 
   try {
