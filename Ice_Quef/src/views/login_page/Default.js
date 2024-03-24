@@ -58,24 +58,24 @@ export function LoginPageDefault({ pressLogInButton }) {
                 <KolynTextfield
                   value={email}
                   setValue={setEmail}
-                  placeholder="Enter email"
-                  keyboardType="email-address"
+                  placeholder='Enter email'
+                  keyboardType='email-address'
                   isSecure={false}
                 />
                 <KolynTextfield
                   value={password}
                   setValue={setPassword}
-                  placeholder="Enter password"
-                  keyboardType="default"
+                  placeholder='Enter password'
+                  keyboardType='default'
                   isSecure={true}
                 />
               </View>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onLogInPressed} />
+              <KolynButton text='Log In' onPress={onLogInPressed} testID={'loginButton'} />
               <View style={{ top: 20 }}>
-                <KolynButton text="Sign Up" onPress={onSignUpPress} />
+                <KolynButton text='Sign Up' onPress={onSignUpPress} />
               </View>
             </View>
           </View>
