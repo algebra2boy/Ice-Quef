@@ -1,6 +1,6 @@
 function ServerAddress() {
   //TODO replace with the backend url in the future
-  return 'http://localhost:3000/';
+  return 'https://localhost:8443/';
 }
 
 export default ServerAddress;
