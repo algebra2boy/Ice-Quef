@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, Dimensions } from 'react-native';
+import {View, ScrollView, Dimensions, Alert} from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
@@ -30,6 +30,9 @@ export function LoginPageDefault({ pressLogInButton }) {
       navigation.navigate('Calendar');
       // activate bottom tab navigator
       navigation.navigate('BottomTab');
+    }
+    else{ // didn't login successfully
+      console.log("didn't login successfully")
     }
   };
 
