@@ -1,6 +1,9 @@
+import config from '../../config.json'
+
 function ServerAddress() {
   //TODO replace with the backend url in the future
-  return 'https://localhost:8443/';
+  const { hostname } = config.server;
+  return `${hostname}/`;
 }
 
 export default ServerAddress;
