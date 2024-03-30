@@ -1,8 +1,8 @@
-import Env from 'react-native-config';
+import config from '../../config.json'
 
 function ServerAddress() {
-  // Access the server hostname using Env
-  const hostname = Env.SERVER_HOSTNAME;
+  //TODO replace with the backend url in the future
+  const { hostname } = config.server;
   return `${hostname}/`;
 }
 
