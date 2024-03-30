@@ -114,7 +114,7 @@ export function SignupPageDefault({}) {
             const hashedPassword = await encryptPassword(password);
             // Package data with the hashed password
             const registrationData = {
-                email: email,
+                email: email.toLowerCase(),
                 password: hashedPassword,
             };
 

@@ -12,7 +12,7 @@ async function LogInButtonPressed(email, password) {
     const hashedPassword = await encryptPassword(password);
     // Package data with the hashed password
     const loginData = {
-      email: email,
+      email: email.toLowerCase(),
       password: hashedPassword,
     };
 
