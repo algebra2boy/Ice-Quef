@@ -55,7 +55,7 @@ export async function GetUserOfficeHour(email) {
             parseInt(oh.courseNumber), // integer? Im not too sure about this one, but imma just put it down here
             oh.id
         ));
-
+        console.log("Load Office Hour")
         return userOfficeHours;
 
     } catch (error) {
