@@ -45,7 +45,7 @@ async function LogInButtonPressed(email, password) {
       }
     } catch (error) {
       // network error
-      Alert.alert('Error', 'Could not connect to the server.');
+      Alert.alert('Error', error.toString() || 'Could not connect to the server.');
       return false;
     }
   } catch (error) {
