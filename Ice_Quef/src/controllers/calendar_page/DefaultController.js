@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react';
 import {UserContext} from '../../props/UserInfo';
-import {GetSampleList, GetUserOfficeHour} from '../../models/RegisterModel';
+import {GetUserOfficeHour} from '../../models/RegisterModel';
 import {CalendarPageDefault} from '../../views/calendar_page/Default';
 
 export function CalendarPageDefaultController() {
@@ -9,12 +9,14 @@ export function CalendarPageDefaultController() {
 
     const [registered, setRegistered] = useState([]);
     const [message, setMessage] = useState('Press to join waitlist.');
+    //console.log(registered)
 
     useEffect(() => {
         const fetchUserOfficeHour = async () => {
             try {
                 const officeHours = await GetUserOfficeHour(userEmail);
                 setRegistered(officeHours);
+                console.log(officeHours);
             } catch (error) {
                 console.error(error);
             }
