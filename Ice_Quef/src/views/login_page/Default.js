@@ -23,7 +23,7 @@ export function LoginPageDefault({ pressLogInButton }) {
 
   const onLogInPressed = async () => {
     const isPass = await pressLogInButton(email, password);
-    userManager.setUser("i'm a user");
+    userManager.setUser(email);
 
     if (isPass) {
       // validate user

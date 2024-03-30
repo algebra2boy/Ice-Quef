@@ -6,12 +6,12 @@ import { CalendarPageDefault } from '../../views/calendar_page/Default';
 export function CalendarPageDefaultController() {
   const [registered, setRegistered] = useState(GetSampleList());
   const [message, setMessage] = useState('Press to join waitlist.');
-  // const userManager = React.useContext(UserContext);
+  const userManager = React.useContext(UserContext);
 
   const regLst = useMemo(() => getRenderList(registered), [registered]);
 
   const determineMessage = () => {
-    if (message == 'Press to join waitlist.') {
+    if (message === 'Press to join waitlist.') {
       setMessage('Your current position: 4');
     } else {
       setMessage('Press to join waitlist.');
