@@ -6,6 +6,7 @@ import {BasePage} from '../../style/BasePage';
 import {KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel} from '../../component';
 import ServerAddress from '../../props/Server';
 import encryptPassword from '../../props/encrypt';
+import {UserContext} from "../../props/UserInfo";
 
 const emailHint = {
     0: 'Enter your UMass email',
@@ -89,6 +90,7 @@ export function SignupPageDefault({}) {
         // console.log("email: " + emailCondition);
         // console.log("password: " + passwordConditions);
         // console.log("repassword: " + confirmPasswordCondition);
+        const userManager = React.useContext(UserContext);
 
         // validate email address
         if (!emailCondition) {
@@ -133,6 +135,7 @@ export function SignupPageDefault({}) {
 
                 if (response.ok) {
                     // success
+                    userManager.setUser(email.toLowerCase());
                     Alert.alert('Success', 'You have been registered successfully!');
 
                     navigation.navigate('Calendar');

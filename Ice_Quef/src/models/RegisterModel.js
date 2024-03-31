@@ -52,7 +52,7 @@ export async function GetUserOfficeHour(email) {
             formatDate(oh.startDate), // mm:dd:yyyy
             formatDate(oh.endDate),   //  mm:dd:yyyy
             oh.courseDepartment,
-            parseInt(oh.courseNumber), // integer? Im not too sure about this one, but imma just put it down here
+            oh.courseNumber,
             oh.id
         ));
         console.log("Load Office Hour")
