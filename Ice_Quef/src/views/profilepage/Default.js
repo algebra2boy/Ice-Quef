@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
+import { UserContext } from '../../props/UserInfo';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
 
@@ -10,6 +11,7 @@ import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController'
 const height = Dimensions.get('window').height;
 export function ProfilePageDefault({}) {
   const themedStyles = ThemedStyles();
+  const user = React.useContext(UserContext);
   const navigation = useNavigation();
   
   return (
@@ -36,10 +38,7 @@ export function ProfilePageDefault({}) {
                   />
                   */}
                 </View>
-                <KolynTextLabel 
-                  text="jianxinlin@umass.edu" 
-                />
-
+                <KolynTextLabel text={user.user} />
               </View>
 
               <View style={{height: '10%'}}/>
