@@ -5,8 +5,6 @@ import ServerAddress from '../../props/Server';
 import { Alert } from 'react-native';
 
 async function LogInButtonPressed(email, password) {
-
-
   try {
     // Encrypt the password
     const hashedPassword = await encryptPassword(password);
@@ -28,7 +26,7 @@ async function LogInButtonPressed(email, password) {
 
       // get response
       const serverResponse = await response.json();
-      console.log(serverResponse);
+      // console.log(serverResponse);
 
       if (serverResponse.status === 'success' && response.ok) {
         // success
