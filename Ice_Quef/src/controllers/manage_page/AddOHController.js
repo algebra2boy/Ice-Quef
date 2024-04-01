@@ -1,10 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import { ManagePageAddOH } from '../../views/manage_page/AddOH';
-import { GetSampleList } from '../../models/RegisterModel';
+import { FetchOfficeHours } from '../../models/OfficeHourSearcher';
+import { LoadingPage } from '../../component/LoadingPage';
 
 export function ManagePageAddOHController() {
-<<<<<<< Updated upstream
-  return <ManagePageAddOH />;
-=======
   const [officeHour, setOfficeHour] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // loading indicator
   useEffect(() => {
@@ -29,5 +28,4 @@ export function ManagePageAddOHController() {
   }
 
   return <ManagePageAddOH ohList={officeHour} />;
->>>>>>> Stashed changes
 }

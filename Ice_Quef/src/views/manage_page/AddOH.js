@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
+import { day, Bold, NonBold, ManageOHStyles } from '../../style/ManageOHStyle';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
-import { GetSampleList } from '../../models/RegisterModel';
 import { SpringButton } from '../../style/SpringButton';
 
-const { width, height } = Dimensions.get('window');
-const ohList = GetSampleList();
+const height = Dimensions.get('window').height;
 
-const RenderItem = (officeHour, themedStyles, navigation) => {
+const RenderItem = (officeHour, styles, navigation) => {
   return (
     <SpringButton
       text={
@@ -29,8 +27,8 @@ const RenderItem = (officeHour, themedStyles, navigation) => {
           officeHour: officeHour,
         });
       }}
-      buttonStyle={themedStyles.item}
-      labelStyle={themedStyles.itemLabel}
+      buttonStyle={styles.item}
+      labelStyle={styles.itemLabel}
     />
   );
 };
@@ -38,17 +36,21 @@ const RenderItem = (officeHour, themedStyles, navigation) => {
 /**
  * Resembles the add office hour page
  *
+ * @param { Array } ohList All office hours
  * @return { ReactElement } The add office hour page
  */
-export function ManagePageAddOH({}) {
+export function ManagePageAddOH({ ohList }) {
   const navigation = useNavigation();
+  const manageOHStyles = ManageOHStyles();
   const themedStyles = ThemedStyles();
 
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // The entire array for the course items
-  const [elementState, setElementState] = useState(ohList);
+  const [elementState, setElementState] = useState([]);
+
+  const [text, setText] = useState('');
 
   const mySetElementState = newElementState => {
     setElementState(newElementState);
@@ -69,91 +71,69 @@ export function ManagePageAddOH({}) {
   return (
     <BasePage
       components={
-        <TouchableWithoutFeedback
-          onPress={() => {
-            if (Platform.OS === 'ios' || Platform.OS === 'android') {
-              Keyboard.dismiss();
-            }
-          }}
-        >
-          <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
-              <KolynTitleLabel title="Add office hours" />
-              <Hint themedStyles={themedStyles} />
-              <SearchBar
-                elementState={elementState}
-                themedStyles={themedStyles}
-                onRefresh={onRefresh}
-                isRefreshing={isRefreshing}
-                navigation={navigation}
+        <View style={themedStyles.root}>
+          <View style={{ height: height * 0.5 }}>
+            <KolynTitleLabel title="Add office hours" />
+            <Hint themedStyles={themedStyles} />
+            <SearchBar
+              text={text}
+              setText={setText}
+              elementState={elementState}
+              styles={manageOHStyles}
+              onRefresh={onRefresh}
+              isRefreshing={isRefreshing}
+              navigation={navigation}
+            />
+          </View>
+          <View style={{ top: height * 0.1 }}>
+            <View style={{ top: 60 }}>
+              <KolynButton
+                text="Go back"
+                onPress={() => {
+                  navigation.goBack();
+                }}
               />
             </View>
-            <View style={{ top: height * 0.1 }}>
-              <View style={{ top: 60 }}>
-                <KolynButton
-                  text="Go back"
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                />
-              </View>
-            </View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       }
     />
   );
 }
 
-export const day = num => {
-  switch (num) {
-    case 0:
-      return 'Sun';
-    case 1:
-      return 'Mon';
-    case 2:
-      return 'Tue';
-    case 3:
-      return 'Wed';
-    case 4:
-      return 'Thu';
-    case 5:
-      return 'Fri';
-    case 6:
-      return 'Sat';
-  }
-};
-
-<<<<<<< Updated upstream
-export function Bold({ text }) {
-  const themedStyles = ThemedStyles();
-=======
-    // IMPORTANT: Use 'newText' to perform searching
+/**
+ * The bar in the search bar, updates the list each time its
+ * value is modified.
+ *
+ * @return { ReactElement } The bar
+ */
+function Bar({ text, setText }) {
+  const onChangeText = async newText => {
+    setText(newText);
   };
->>>>>>> Stashed changes
 
-  return <Text style={themedStyles.itemLabelL}>{text}</Text>;
+  return (
+    <KolynTextfield
+      value={text}
+      setValue={onChangeText}
+      placeholder="Enter text to start search"
+    />
+  );
 }
 
-export function NonBold({ text }) {
-  const themedStyles = ThemedStyles();
-
-  return <Text style={themedStyles.itemLabel}>{text}</Text>;
-}
-
-function SearchBar({ elementState, themedStyles, onRefresh, isRefreshing, navigation }) {
+function SearchBar({ text, setText, elementState, styles, onRefresh, isRefreshing, navigation }) {
   return (
     <View>
-      <KolynTextfield />
+      <Bar text={text} setText={setText} />
       <View style={{ height: Platform.OS === 'ios' || Platform.OS === 'android' ? '80%' : '60%' }}>
         <FlatList
           data={elementState}
           showsVerticalScrollIndicator={false}
-          renderItem={item => RenderItem(item.item, themedStyles, navigation)}
+          renderItem={item => RenderItem(item.item, styles, navigation)}
           keyExtractor={item => item.id}
           onRefresh={onRefresh}
           refreshing={isRefreshing}
-          contentContainerStyle={themedStyles.flatListView}
+          contentContainerStyle={styles.flatListView}
         />
       </View>
     </View>
@@ -197,36 +177,5 @@ function ThemedStyles() {
       alignSelf: 'center',
       width: '100%',
     },
-
-    item: StyleSheet.flatten([
-      {
-        top: 0,
-        width: width * 0.6,
-        alignSelf: 'center',
-        marginTop: 10,
-        borderRadius: 10,
-        backgroundColor: currentTheme.subColor,
-        borderWidth: 4,
-      },
-      KolynStyle.kolynButton(currentTheme.primaryColor),
-    ]),
-
-    itemLabel: StyleSheet.flatten([
-      { marginVertical: 10, textAlign: 'center' },
-      KolynStyle.kolynLabel(
-        currentTheme.fontSizes.small,
-        currentTheme.mainFont,
-        currentTheme.subColor,
-      ),
-    ]),
-
-    itemLabelL: StyleSheet.flatten([
-      { marginVertical: 10, textAlign: 'center' },
-      KolynStyle.kolynLabel(
-        currentTheme.fontSizes.casual,
-        currentTheme.mainFont,
-        currentTheme.subColor,
-      ),
-    ]),
   });
 }

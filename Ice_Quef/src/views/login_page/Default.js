@@ -19,17 +19,20 @@ export function LoginPageDefault({ pressLogInButton }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const userManager = React.useContext(UserContext);
+  const user = React.useContext(UserContext);
 
   const onLogInPressed = async () => {
     const isPass = await pressLogInButton(email, password);
-    userManager.setUser("i'm a user");
+    user.setEmail(email.toLowerCase());
 
     if (isPass) {
       // validate user
       navigation.navigate('Calendar');
       // activate bottom tab navigator
       navigation.navigate('BottomTab');
+    } else {
+      // didn't login successfully
+      // console.log("didn't login successfully")
     }
   };
 
@@ -73,7 +76,7 @@ export function LoginPageDefault({ pressLogInButton }) {
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onLogInPressed} />
+              <KolynButton text="Log In" onPress={onLogInPressed} testID={'loginButton'} />
               <View style={{ top: 20 }}>
                 <KolynButton text="Sign Up" onPress={onSignUpPress} />
               </View>

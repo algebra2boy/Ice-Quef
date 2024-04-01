@@ -7,7 +7,6 @@ import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit';
 
 export function CalendarPageDefault(props) {
-  const themedStyles = ThemedStyles();
   const hourStyle = getHourStyle();
 
   const [isOpenMenu, setOpenMenu] = useState(false);
