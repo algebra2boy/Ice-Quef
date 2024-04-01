@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { ManagePageDefault } from '../../views/manage_page/Default';
 import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { UserContext } from '../../props/UserInfo';
-import { View, Text } from 'react-native';
+import { LoadingPage } from '../../component/LoadingPage';
 
 export function ManagePageDefaultController() {
   const user = useContext(UserContext);
@@ -30,11 +30,8 @@ export function ManagePageDefaultController() {
   }, []);
 
   if (isLoading) {
-    //TODO: need to change this style in the future, I just put plain text for rn
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading office hours...</Text>
-      </View>
+      <LoadingPage text="Loading office hours..." />
     );
   }
 

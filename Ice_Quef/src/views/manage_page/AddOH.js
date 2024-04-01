@@ -112,8 +112,7 @@ function Bar({ text, setText }) {
     setText(newText);
 
     // IMPORTANT: Use 'newText' to perform searching
-    const searchResult = PerformSearch('');
-    console.log(searchResult);
+    
   };
 
   return (
