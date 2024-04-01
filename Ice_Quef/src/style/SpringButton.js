@@ -13,7 +13,7 @@ var isPressing = false;
  * @param { StyleSheet } labelStyle: The label's style
  * @returns { ReactElement } The button
  */
-export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
+export const SpringButton = ({ text, onPress, buttonStyle, labelStyle, testID = undefined }) => {
   const animatedScale = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
@@ -53,6 +53,7 @@ export const SpringButton = ({ text, onPress, buttonStyle, labelStyle }) => {
         onPressOut={handleButtonRelease}
         onPress={() => onPress()}
         onLongPress={() => {}}
+        testID={testID}
       >
         {typeof text === 'string' && <Text style={labelStyle}>{text}</Text>}
         {typeof text === 'object' && text}

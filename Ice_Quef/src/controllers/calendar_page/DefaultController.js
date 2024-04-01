@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { UserContext } from '../../props/UserInfo';
-import { GetSampleList } from '../../models/RegisterModel';
+import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
 
 const joinStatus = {
-  joined: (index) => `Your current position: ${index}.`,
-  notJoined: 'Press to join waitlist.'
-}
+  joined: index => `Your current position: ${index}.`,
+  notJoined: 'Press to join waitlist.',
+};
 
 export function CalendarPageDefaultController() {
   const user = React.useContext(UserContext);
@@ -15,12 +15,6 @@ export function CalendarPageDefaultController() {
   const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
   //console.log(registered)
-
-  // Todo: set current position index when being notified
-  const setPosition = () => {
-    const index = 1;
-    setCurrStatus(joinStatus.joined(index));
-  };
 
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
@@ -41,8 +35,7 @@ export function CalendarPageDefaultController() {
   const determineMessage = () => {
     if (currStatus === joinStatus.notJoined) {
       setCurrStatus(joinStatus.joined(1));
-    }
-    else {
+    } else {
       setCurrStatus(joinStatus.notJoined);
     }
   };

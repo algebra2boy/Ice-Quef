@@ -11,7 +11,7 @@ import { SpringButton } from '../style/SpringButton';
  * @param { func } onPress: Function to be exected after animation finishes
  * @return { ReactElement } The button
  */
-export function KolynButton({ text, onPress }) {
+export function KolynButton({ text, onPress, testID = undefined }) {
   const themedStyles = ThemedStyles();
 
   return (
@@ -20,6 +20,7 @@ export function KolynButton({ text, onPress }) {
       onPress={onPress}
       buttonStyle={themedStyles.casualButton}
       labelStyle={themedStyles.casualButtonLabel}
+      testID={testID}
     />
   );
 }

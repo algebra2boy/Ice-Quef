@@ -6,6 +6,7 @@ import { BasePage } from '../../style/BasePage';
 import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '../../component';
 import ServerAddress from '../../props/Server';
 import encryptPassword from '../../props/encrypt';
+import { UserContext } from '../../props/UserInfo';
 
 const emailHint = {
   0: 'Enter your UMass email',
@@ -21,6 +22,7 @@ const confirmPasswordHint = {
 };
 
 const height = Dimensions.get('window').height;
+
 export function SignupPageDefault({}) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
@@ -88,10 +90,23 @@ export function SignupPageDefault({}) {
     // console.log("email: " + emailCondition);
     // console.log("password: " + passwordConditions);
     // console.log("repassword: " + confirmPasswordCondition);
+    const user = React.useContext(UserContext);
+
+    // validate email address
+    if (!emailCondition) {
+      Alert.alert('Error', 'Please enter valid email associate with UMass domain');
+      return;
+    }
 
     // password match
     if (!confirmPasswordCondition) {
       Alert.alert('Error', "Passwords doesn't match!");
+      return;
+    }
+
+    // password validation
+    if (passwordConditions.includes(false)) {
+      Alert.alert('Error', "At least one of the password requirements don't meet");
       return;
     }
 
@@ -101,9 +116,8 @@ export function SignupPageDefault({}) {
       const hashedPassword = await encryptPassword(password);
       // Package data with the hashed password
       const registrationData = {
-        email: email,
+        email: email.toLowerCase(),
         password: hashedPassword,
-        isTeacher: false,
       };
 
       try {
@@ -121,8 +135,12 @@ export function SignupPageDefault({}) {
 
         if (response.ok) {
           // success
+          user.setEmail(email.toLowerCase());
           Alert.alert('Success', 'You have been registered successfully!');
-          // navigation.; //TODO: idk which page will be navigated to after a successful registration.
+
+          navigation.navigate('Calendar');
+          navigation.navigate('BottomTab');
+          //TODO: idk which page will be navigated to after a successful registration.
         } else {
           // edge case
           Alert.alert(

@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
-import { Bold, NonBold, day } from './AddOH';
+import { day, Bold, NonBold } from '../../style/ManageOHStyle';
 
 const height = Dimensions.get('window').height;
 

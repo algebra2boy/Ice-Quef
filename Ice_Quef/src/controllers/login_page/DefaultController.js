@@ -5,14 +5,12 @@ import ServerAddress from '../../props/Server';
 import { Alert } from 'react-native';
 
 async function LogInButtonPressed(email, password) {
-  return true;
-
   try {
     // Encrypt the password
     const hashedPassword = await encryptPassword(password);
     // Package data with the hashed password
     const loginData = {
-      email: email,
+      email: email.toLowerCase(),
       password: hashedPassword,
     };
 
@@ -28,7 +26,7 @@ async function LogInButtonPressed(email, password) {
 
       // get response
       const serverResponse = await response.json();
-      console.log(serverResponse);
+      // console.log(serverResponse);
 
       if (serverResponse.status === 'success' && response.ok) {
         // success
@@ -36,21 +34,22 @@ async function LogInButtonPressed(email, password) {
         // TODO: navigate to calendar
         return true;
       } else if (serverResponse.status) {
-        Alert.alert('Login Failed', serverResponse.message || 'Username or password is wrong');
+        return false;
+        // Alert.alert('Login Failed', serverResponse.message || 'Username or password is wrong');
       } else {
         // edge case
-        Alert.alert('Login Failed', serverResponse.errors.toString() || 'An error occurred');
+        return false;
+        // Alert.alert('Login Failed', serverResponse.errors.toString() || 'An error occurred');
       }
-      return false;
     } catch (error) {
       // network error
-      Alert.alert('Error', 'Could not connect to the server.');
-      // return false;
+      Alert.alert('Error', error.toString() || 'Could not connect to the server.');
+      return false;
     }
   } catch (error) {
     // Handle errors as before
     Alert.alert('Error', error.toString());
-    // return false;
+    return false;
   }
 
   // Also expecting different errors
