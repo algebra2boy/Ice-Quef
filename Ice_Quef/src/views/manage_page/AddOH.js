@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
@@ -37,9 +36,10 @@ const RenderItem = (officeHour, styles, navigation) => {
 /**
  * Resembles the add office hour page
  *
+ * @param { Array } ohList All office hours
  * @return { ReactElement } The add office hour page
  */
-export function ManagePageAddOH({}) {
+export function ManagePageAddOH({ ohList }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
   const manageOHStyles = ManageOHStyles();
@@ -49,6 +49,8 @@ export function ManagePageAddOH({}) {
 
   // The entire array for the course items
   const [elementState, setElementState] = useState([]);
+
+  const [text, setText] = useState('');
 
   const mySetElementState = newElementState => {
     setElementState(newElementState);
@@ -69,46 +71,60 @@ export function ManagePageAddOH({}) {
   return (
     <BasePage
       components={
-        <TouchableWithoutFeedback
-          onPress={() => {
-            if (Platform.OS === 'ios' || Platform.OS === 'android') {
-              Keyboard.dismiss();
-            }
-          }}
-        >
-          <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
-              <KolynTitleLabel title="Add office hours" />
-              <Hint themedStyles={themedStyles} />
-              <SearchBar
-                elementState={elementState}
-                styles={manageOHStyles}
-                onRefresh={onRefresh}
-                isRefreshing={isRefreshing}
-                navigation={navigation}
+        <View style={themedStyles.root}>
+          <View style={{ height: height * 0.5 }}>
+            <KolynTitleLabel title="Add office hours" />
+            <Hint themedStyles={themedStyles} />
+            <SearchBar
+              text={text}
+              setText={setText}
+              elementState={elementState}
+              styles={manageOHStyles}
+              onRefresh={onRefresh}
+              isRefreshing={isRefreshing}
+              navigation={navigation}
+            />
+          </View>
+          <View style={{ top: height * 0.1 }}>
+            <View style={{ top: 60 }}>
+              <KolynButton
+                text="Go back"
+                onPress={() => {
+                  navigation.goBack();
+                }}
               />
             </View>
-            <View style={{ top: height * 0.1 }}>
-              <View style={{ top: 60 }}>
-                <KolynButton
-                  text="Go back"
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                />
-              </View>
-            </View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       }
     />
   );
 }
 
-function SearchBar({ elementState, styles, onRefresh, isRefreshing, navigation }) {
+/**
+ * The bar in the search bar, updates the list each time its
+ * value is modified.
+ *
+ * @return { ReactElement } The bar
+ */
+function Bar({ text, setText }) {
+  const onChangeText = async newText => {
+    setText(newText);
+
+    // IMPORTANT: Use 'newText' to perform searching
+    const searchResult = PerformSearch('');
+    console.log(searchResult);
+  };
+
+  return (
+    <KolynTextfield value={text} setValue={onChangeText} placeholder="Enter text to start search" />
+  );
+}
+
+function SearchBar({ text, setText, elementState, styles, onRefresh, isRefreshing, navigation }) {
   return (
     <View>
-      <KolynTextfield />
+      <Bar text={text} setText={setText} />
       <View style={{ height: Platform.OS === 'ios' || Platform.OS === 'android' ? '80%' : '60%' }}>
         <FlatList
           data={elementState}
