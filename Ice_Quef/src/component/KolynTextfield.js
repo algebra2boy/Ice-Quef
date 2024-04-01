@@ -9,8 +9,8 @@ import * as KolynStyle from '../style/KolynStyleKit';
  * @param { string } value: State string for textfield
  * @param { func } setValue: Function to be executed after value is set
  * @param { string } placeholder: The default text for the field
- * @param { string } keyboardType: The keyboard type
- * @param { boolean } isSecure: Checks if text should be hidden
+ * @param { string } keyboardType: The keyboard type (default="default")
+ * @param { boolean } isSecure: Checks if text should be hidden (default=false)
  * @param { StyleSheet } overrideStyle: When provided, overrides the existing style
  * @return { ReactElement } The textfield
  */
@@ -18,8 +18,8 @@ export function KolynTextfield({
   value,
   setValue: onChangeText,
   placeholder,
-  keyboardType,
-  isSecure,
+  keyboardType = 'default',
+  isSecure = false,
   overrideStyle = null,
 }) {
   const themedStyles = ThemedStyles();
