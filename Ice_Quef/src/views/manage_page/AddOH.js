@@ -124,8 +124,13 @@ export const day = num => {
   }
 };
 
+<<<<<<< Updated upstream
 export function Bold({ text }) {
   const themedStyles = ThemedStyles();
+=======
+    // IMPORTANT: Use 'newText' to perform searching
+  };
+>>>>>>> Stashed changes
 
   return <Text style={themedStyles.itemLabelL}>{text}</Text>;
 }

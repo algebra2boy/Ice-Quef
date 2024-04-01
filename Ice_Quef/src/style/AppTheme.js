@@ -7,6 +7,7 @@ import { createContext } from 'react';
  */
 const palette = {
   colorDodgerblue: '#2596ff',
+  colorLightblue: '#A2CFFE',
   colorWhite: '#fff',
   colorGainsboro: '#d9d9d9',
   colorBlack: '#000',
@@ -40,7 +41,7 @@ const myFontSize = {
 
 /* --- Official themes --- */
 const defaultTheme = {
-  mainColor: palette.colorEmeraldGreen,
+  mainColor: palette.colorLightblue,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -118,7 +119,7 @@ const blackGoldenTheme = {
  * add the theme you created to this array
  * @array { Theme }
  */
-const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
+const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme, blackGoldenTheme];
 
 /**
  * Tracks the current theme
