@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
 import { ManagePageAddOH } from '../../views/manage_page/AddOH';
 import { FetchOfficeHours } from '../../models/OfficeHourSearcher';
+import { LoadingPage } from '../../component/LoadingPage';
 
 export function ManagePageAddOHController() {
   const [officeHour, setOfficeHour] = useState([]);
@@ -10,8 +10,8 @@ export function ManagePageAddOHController() {
     const fetchUserOfficeHour = async () => {
       try {
         setIsLoading(true); // Before the fetch starts
-        const officeHours = await FetchOfficeHours('');
-        setOfficeHour(officeHours);
+        //const officeHours = await FetchOfficeHours(''); // attempting to fetch without email - this is wrong
+        //setOfficeHour(officeHours);
         // console.log(officeHours);
       } catch (error) {
         console.error(error);
@@ -24,11 +24,8 @@ export function ManagePageAddOHController() {
   }, []);
 
   if (isLoading) {
-    //TODO: need to change this style in the future, I just put plain text for rn
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading office hours...</Text>
-      </View>
+      <LoadingPage text="Loading office hours..." />
     );
   }
 
