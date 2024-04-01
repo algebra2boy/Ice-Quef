@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, Dimensions } from 'react-native';
+import {View, ScrollView, Dimensions, Alert} from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
@@ -23,13 +23,16 @@ export function LoginPageDefault({ pressLogInButton }) {
 
   const onLogInPressed = async () => {
     const isPass = await pressLogInButton(email, password);
-    userManager.setUser("i'm a user");
+    userManager.setUser(email.toLowerCase());
 
     if (isPass) {
       // validate user
       navigation.navigate('Calendar');
       // activate bottom tab navigator
       navigation.navigate('BottomTab');
+    }
+    else{ // didn't login successfully
+      console.log("didn't login successfully")
     }
   };
 
@@ -58,24 +61,24 @@ export function LoginPageDefault({ pressLogInButton }) {
                 <KolynTextfield
                   value={email}
                   setValue={setEmail}
-                  placeholder="Enter email"
-                  keyboardType="email-address"
+                  placeholder='Enter email'
+                  keyboardType='email-address'
                   isSecure={false}
                 />
                 <KolynTextfield
                   value={password}
                   setValue={setPassword}
-                  placeholder="Enter password"
-                  keyboardType="default"
+                  placeholder='Enter password'
+                  keyboardType='default'
                   isSecure={true}
                 />
               </View>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onLogInPressed} />
+              <KolynButton text='Log In' onPress={onLogInPressed} testID={'loginButton'} />
               <View style={{ top: 20 }}>
-                <KolynButton text="Sign Up" onPress={onSignUpPress} />
+                <KolynButton text='Sign Up' onPress={onSignUpPress} />
               </View>
             </View>
           </View>
