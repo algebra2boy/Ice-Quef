@@ -6,6 +6,10 @@ import { LoadingPage } from '../../component/LoadingPage';
 export function ManagePageAddOHController() {
   const [officeHour, setOfficeHour] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // loading indicator
+  const [userInput, setUserInput] = useState('');
+
+  // Todo: set office hour list whenever user input changes
+
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
       try {
@@ -27,5 +31,5 @@ export function ManagePageAddOHController() {
     return <LoadingPage text="Loading office hours..." />;
   }
 
-  return <ManagePageAddOH ohList={officeHour} />;
+  return <ManagePageAddOH ohList={officeHour} text={userInput} setText={setUserInput} />;
 }

@@ -45,6 +45,8 @@ export function ManagePageDeleteConfirm({ route }) {
               <KolynButton
                 text="Delete"
                 onPress={() => {
+                  // Todo: set deleting status after delete button is pressed
+                  // currently it is random and only visual
                   if (Math.floor(Math.random() * 2)) {
                     navigation.navigate('ManagePageDeleteSuccess', {
                       officeHour: officeHour,

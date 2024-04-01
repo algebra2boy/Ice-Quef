@@ -36,10 +36,10 @@ const RenderItem = (officeHour, styles, navigation) => {
 /**
  * Resembles the add office hour page
  *
- * @param { Array } ohList All office hours
+ * @param { List } ohList All office hours
  * @return { ReactElement } The add office hour page
  */
-export function ManagePageAddOH({ ohList }) {
+export function ManagePageAddOH(props) {
   const navigation = useNavigation();
   const manageOHStyles = ManageOHStyles();
   const themedStyles = ThemedStyles();
@@ -47,10 +47,11 @@ export function ManagePageAddOH({ ohList }) {
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // The entire array for the course items
+  // The entire list for the course items
   const [elementState, setElementState] = useState([]);
 
-  const [text, setText] = useState('');
+  const text = props.text;
+  const setText = props.setText;
 
   const mySetElementState = newElementState => {
     setElementState(newElementState);

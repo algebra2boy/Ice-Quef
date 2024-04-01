@@ -116,8 +116,8 @@ const blackGoldenTheme = {
 /**
  * All themes included in the release.
  * After you have created a new theme, remember to
- * add the theme you created to this array
- * @array { Theme }
+ * add the theme you created to this list
+ * @list { Theme }
  */
 const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme, blackGoldenTheme];
 

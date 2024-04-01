@@ -52,6 +52,8 @@ export function ManagePageAddConfirm({ route }) {
               <KolynButton
                 text="Add"
                 onPress={() => {
+                  // Todo: set adding status after add button is pressed
+                  // currently it is random and only visual
                   if (Math.floor(Math.random() * 2)) {
                     navigation.navigate('ManagePageAddSuccess', {
                       officeHour: officeHour,

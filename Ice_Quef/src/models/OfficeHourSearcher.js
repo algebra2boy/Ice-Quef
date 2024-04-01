@@ -6,8 +6,8 @@ import ServerAddress from '../props/Server';
  * office hours and return them.
  *
  * @param { String } userInput the text entered by the user
- * @param { Array } officeHours the entire array of office hours
- * @return { Array } matchOfficeHours an array of office hours that
+ * @param { List } officeHours the entire list of office hours
+ * @return { List } matchOfficeHours an list of office hours that
  *                   match the given input to be used for display
  */
 export function PerformSearch(userInput, officeHours) {}
@@ -27,8 +27,8 @@ export async function FetchOfficeHours(addressFilter = '') {
             throw new Error('invalid email');
           } else if (errorData.message.includes('office hour document is not found')) {
             throw new Error('no office');
-          } else if (errorData.message.includes('office hour array ids is not found')) {
-            throw new Error('no office hour array ids');
+          } else if (errorData.message.includes('office hour list ids is not found')) {
+            throw new Error('no office hour list ids');
           } else {
             throw new Error('An error occurred');
           }

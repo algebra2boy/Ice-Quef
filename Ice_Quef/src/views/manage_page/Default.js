@@ -66,7 +66,7 @@ export function ManagePageDefault({ ohList }) {
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // The entire array for the course items
+  // The entire list for the course items
   const [elementState, setElementState] = useState(ohList);
 
   const mySetElementState = newElementState => {
