@@ -3,29 +3,62 @@ import { UserContext } from '../../props/UserInfo';
 import { GetSampleList } from '../../models/RegisterModel';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
 
+const joinStatus = {
+  joined: (index) => `Your current position: ${index}.`,
+  notJoined: 'Press to join waitlist.'
+}
+
 export function CalendarPageDefaultController() {
-  const [registered, setRegistered] = useState(GetSampleList());
-  const [message, setMessage] = useState('Press to join waitlist.');
-  // const userManager = React.useContext(UserContext);
+  const user = React.useContext(UserContext);
+  const userEmail = user.email; // get user email address (account name)
+
+  const [registered, setRegistered] = useState([]);
+  const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
+  //console.log(registered)
+
+  // Todo: set current position index when being notified
+  const setPosition = () => {
+    const index = 1;
+    setCurrStatus(joinStatus.joined(index));
+  };
+
+  useEffect(() => {
+    const fetchUserOfficeHour = async () => {
+      try {
+        const officeHours = await GetUserOfficeHour(userEmail);
+        setRegistered(officeHours);
+        // console.log(officeHours);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserOfficeHour();
+  }, []);
 
   const regLst = useMemo(() => getRenderList(registered), [registered]);
 
   const determineMessage = () => {
-    if (message == 'Press to join waitlist.') {
-      setMessage('Your current position: 4');
-    } else {
-      setMessage('Press to join waitlist.');
+    if (currStatus === joinStatus.notJoined) {
+      setCurrStatus(joinStatus.joined(1));
+    }
+    else {
+      setCurrStatus(joinStatus.notJoined);
     }
   };
 
   return (
-    <CalendarPageDefault regLst={regLst} message={message} determineMessage={determineMessage} />
+    <CalendarPageDefault 
+      regLst={regLst} 
+      message={currStatus} 
+      determineMessage={determineMessage} 
+    />
   );
 }
 
 /**
  * Convert a list of registered office hours into
- * renderable info.
+ * renderable info. It's a list to be rendered.
  *
  * @param {*} registered a list of registered office hours
  */
