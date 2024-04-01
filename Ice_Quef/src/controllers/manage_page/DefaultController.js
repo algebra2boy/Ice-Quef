@@ -1,10 +1,7 @@
 import { ManagePageDefault } from '../../views/manage_page/Default';
-import { GetSampleList } from '../../models/RegisterModel';
+
 
 export function ManagePageDefaultController() {
-<<<<<<< Updated upstream
-  return <ManagePageDefault ohList={GetSampleList()} />;
-=======
   const user = useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
 
@@ -34,5 +31,4 @@ export function ManagePageDefaultController() {
   }
 
   return <ManagePageDefault ohList={officeHour} />;
->>>>>>> Stashed changes
 }
