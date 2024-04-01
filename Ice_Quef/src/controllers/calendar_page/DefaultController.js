@@ -14,6 +14,13 @@ export function CalendarPageDefaultController() {
 
   const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
+
+  // Todo: modify queue index when changed
+  const updatePosition = () => {
+    const index = 1;
+    setCurrStatus(joinStatus.joined(index));
+  }
+
   //console.log(registered)
 
   useEffect(() => {
