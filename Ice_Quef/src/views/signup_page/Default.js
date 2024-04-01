@@ -90,7 +90,7 @@ export function SignupPageDefault({}) {
     // console.log("email: " + emailCondition);
     // console.log("password: " + passwordConditions);
     // console.log("repassword: " + confirmPasswordCondition);
-    const userManager = React.useContext(UserContext);
+    const user = React.useContext(UserContext);
 
     // validate email address
     if (!emailCondition) {
@@ -135,7 +135,7 @@ export function SignupPageDefault({}) {
 
         if (response.ok) {
           // success
-          userManager.setUser(email.toLowerCase());
+          user.setEmail(email.toLowerCase());
           Alert.alert('Success', 'You have been registered successfully!');
 
           navigation.navigate('Calendar');

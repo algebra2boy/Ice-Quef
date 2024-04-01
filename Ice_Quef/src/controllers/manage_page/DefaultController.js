@@ -5,9 +5,10 @@ import { UserContext } from '../../props/UserInfo';
 import { View, Text } from 'react-native';
 
 export function ManagePageDefaultController() {
-  const userManager = useContext(UserContext);
-  const userEmail = userManager.user; // get user email address (account name)
+  const user = useContext(UserContext);
+  const userEmail = user.email; // get user email address (account name)
 
+  // The list of office hour that the student has currently enrolled
   const [officeHour, setOfficeHour] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // loading indicator
 

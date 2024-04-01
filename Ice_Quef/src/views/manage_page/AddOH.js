@@ -6,11 +6,9 @@ import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
-import { GetSampleList } from '../../models/RegisterModel';
 import { SpringButton } from '../../style/SpringButton';
 
 const { width, height } = Dimensions.get('window');
-const ohList = GetSampleList();
 
 const RenderItem = (officeHour, themedStyles, navigation) => {
   return (
@@ -48,7 +46,7 @@ export function ManagePageAddOH({}) {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // The entire array for the course items
-  const [elementState, setElementState] = useState(ohList);
+  const [elementState, setElementState] = useState([]);
 
   const mySetElementState = newElementState => {
     setElementState(newElementState);
