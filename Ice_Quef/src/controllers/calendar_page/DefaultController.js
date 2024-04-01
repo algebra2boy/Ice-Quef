@@ -4,8 +4,8 @@ import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
 
 export function CalendarPageDefaultController() {
-  const userManager = React.useContext(UserContext);
-  const userEmail = userManager.user; // get user email address (account name)
+  const user = React.useContext(UserContext);
+  const userEmail = user.email; // get user email address (account name)
 
   const [registered, setRegistered] = useState([]);
   const [message, setMessage] = useState('Press to join waitlist.');

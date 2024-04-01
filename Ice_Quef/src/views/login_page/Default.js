@@ -19,11 +19,11 @@ export function LoginPageDefault({ pressLogInButton }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const userManager = React.useContext(UserContext);
+  const user = React.useContext(UserContext);
 
   const onLogInPressed = async () => {
     const isPass = await pressLogInButton(email, password);
-    userManager.setUser(email.toLowerCase());
+    user.setEmail(email.toLowerCase());
 
     if (isPass) {
       // validate user

@@ -38,7 +38,7 @@ export function ProfilePageDefault({}) {
                   />
                   */}
                 </View>
-                <KolynTextLabel text={user.user} />
+                <KolynTextLabel text={user.email} />
               </View>
 
               <View style={{ height: '10%' }} />
