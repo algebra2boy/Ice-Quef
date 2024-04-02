@@ -1,10 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeProvider } from './src/kit/AppTheme'
-import { 
-  LoginPage, 
-  SignupPage 
-} from './src/pages';
+import { ThemeProvider } from './src/style/AppTheme'
+import { UserProvider } from './src/props/UserInfo';
+import { LoginPageDefaultController } from './src/controllers/login_page/DefaultController';
+import { SignupPageDefaultController } from './src/controllers/signup_page/DefaultController';
+import { BottomTabNavigator } from './src/component/BottomTabNav';
+import { CalendarPageController } from './src/controllers';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,18 +21,21 @@ function App() {
   };
 
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{headerShown: false, gestureEnabled: false}}
-        >
-          <Stack.Screen name="Login" component={LoginPage}/>
-          <Stack.Screen name="Signup" component={SignupPage}/>
-          
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{headerShown: false, gestureEnabled: false}}
+          >
+            <Stack.Screen name="Login" component={LoginPageDefaultController}/>
+            <Stack.Screen name="Signup" component={SignupPageDefaultController}/>
+            <Stack.Screen name="Calendar" component={CalendarPageController}/>
+            <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 
