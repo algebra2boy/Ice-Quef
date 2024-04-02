@@ -34,6 +34,8 @@ export function SignupPageDefault({}) {
   const [passwordConditions, setPasswordConditions] = useState([false, false, false, false]);
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
+  const user = React.useContext(UserContext);
+
   const checkEmail = email => {
     if (email === undefined) return;
 
@@ -90,7 +92,7 @@ export function SignupPageDefault({}) {
     // console.log("email: " + emailCondition);
     // console.log("password: " + passwordConditions);
     // console.log("repassword: " + confirmPasswordCondition);
-    const user = React.useContext(UserContext);
+
 
     // validate email address
     if (!emailCondition) {
@@ -145,11 +147,12 @@ export function SignupPageDefault({}) {
           // edge case
           Alert.alert(
             'Registration Failed',
-            serverResponse.errors.toString() || 'An error occurred',
+            serverResponse.message || 'An error occurred',
           );
         }
       } catch (error) {
         // network error
+        console.error(error)
         Alert.alert('Error', 'Could not connect to the server.');
       }
     } catch (error) {

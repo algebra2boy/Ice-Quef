@@ -30,7 +30,8 @@ export function CalendarPageDefaultController() {
         setRegistered(officeHours);
         // console.log(officeHours);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
+          console.log(error);   // seems like a lot of time user comes from signup page will end up here cuz there's no office hour for them yet
       }
     };
 
@@ -48,10 +49,10 @@ export function CalendarPageDefaultController() {
   };
 
   return (
-    <CalendarPageDefault 
-      regLst={regLst} 
-      message={currStatus} 
-      determineMessage={determineMessage} 
+    <CalendarPageDefault
+      regLst={regLst}
+      message={currStatus}
+      determineMessage={determineMessage}
     />
   );
 }
