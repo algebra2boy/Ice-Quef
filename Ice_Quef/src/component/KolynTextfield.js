@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { ThemeContext } from '../kit/AppTheme';
-import * as KolynStyle from '../kit/KolynStyleKit';
+import { ThemeContext } from '../style/AppTheme';
+import * as KolynStyle from '../style/KolynStyleKit';
 
 /**
  * Resembles a textfield with pre-existing style
@@ -9,17 +9,17 @@ import * as KolynStyle from '../kit/KolynStyleKit';
  * @param { string } value: State string for textfield
  * @param { func } setValue: Function to be executed after value is set
  * @param { string } placeholder: The default text for the field
- * @param { string } keyboardType: The keyboard type
- * @param { boolean } isSecure: Checks if text should be hidden
+ * @param { string } keyboardType: The keyboard type (default="default")
+ * @param { boolean } isSecure: Checks if text should be hidden (default=false)
  * @param { StyleSheet } overrideStyle: When provided, overrides the existing style
  * @return { ReactElement } The textfield
  */
 export function KolynTextfield({
   value,
-  setValue,
+  setValue: onChangeText,
   placeholder,
-  keyboardType,
-  isSecure,
+  keyboardType = 'default',
+  isSecure = false,
   overrideStyle = null,
 }) {
   const themedStyles = ThemedStyles();
@@ -29,11 +29,12 @@ export function KolynTextfield({
     <TextInput
       style={overrideStyle ? overrideStyle : themedStyles.inputTextfield}
       value={value}
-      onChangeText={setValue}
+      onChangeText={onChangeText}
       placeholder={placeholder}
       placeholderTextColor={placeholderColor}
       keyboardType={keyboardType}
       secureTextEntry={isSecure}
+      textContentType="oneTimeCode"
     />
   );
 }

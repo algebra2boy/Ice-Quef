@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions } from 'react-native';
-import { KolynButton, KolynTextfield, KolynLogo } from '../component';
-import { BasePage } from '../kit/BasePage';
-
+import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
+import { BasePage } from '../../style/BasePage';
+import { UserContext } from '../../props/UserInfo';
 
 const height = Dimensions.get('window').height;
 
@@ -12,13 +13,27 @@ const height = Dimensions.get('window').height;
  * @param { Props } { navigation }
  * @return { ReactElement } The login page
  */
-export function LoginPage({ navigation }) {
-  const [username, setUsername] = useState('');
+export function LoginPageDefault({ pressLogInButton }) {
+  const navigation = useNavigation();
+
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onSignInPressed = () => {
-    // validate user
-    navigation.navigate('Home');
+  const user = React.useContext(UserContext);
+
+  const onLogInPressed = async () => {
+    const isPass = await pressLogInButton(email, password);
+    user.setEmail(email.toLowerCase());
+
+    if (isPass) {
+      // validate user
+      navigation.navigate('Calendar');
+      // activate bottom tab navigator
+      navigation.navigate('BottomTab');
+    } else {
+      // didn't login successfully
+      // console.log("didn't login successfully")
+    }
   };
 
   const onSignUpPress = () => {
@@ -44,8 +59,8 @@ export function LoginPage({ navigation }) {
 
               <View>
                 <KolynTextfield
-                  value={username}
-                  setValue={setUsername}
+                  value={email}
+                  setValue={setEmail}
                   placeholder="Enter email"
                   keyboardType="email-address"
                   isSecure={false}
@@ -61,7 +76,7 @@ export function LoginPage({ navigation }) {
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onSignInPressed} />
+              <KolynButton text="Log In" onPress={onLogInPressed} testID={'loginButton'} />
               <View style={{ top: 20 }}>
                 <KolynButton text="Sign Up" onPress={onSignUpPress} />
               </View>

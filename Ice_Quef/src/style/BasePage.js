@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
 import { StyleSheet, View } from 'react-native';
-import { SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { SafeAreaView, Keyboard } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import loadFont from '../props/FontLoader';
 import * as KolynStyle from './KolynStyleKit';
@@ -35,11 +35,9 @@ export function BasePage({ components }) {
 
   return (
     <View style={[themedStyles.screen, { height: '100%' }]} onLayout={onLayoutRootView}>
-      <TouchableWithoutFeedback onPress={dismissKeyboard()}>
-        <SafeAreaView className={ios ? '-mb-8' : ''} style={{ height: '100%' }}>
-          {components}
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
+      <SafeAreaView className={ios ? '-mb-8' : ''} style={{ height: '100%' }}>
+        {components}
+      </SafeAreaView>
     </View>
   );
 }
@@ -58,6 +56,6 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
-    screen: StyleSheet.flatten([KolynStyle.kolynScreen(currentTheme.backgroundColor)]),
+    screen: StyleSheet.flatten([KolynStyle.kolynScreen()]),
   });
 }

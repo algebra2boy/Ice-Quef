@@ -7,6 +7,7 @@ import { createContext } from 'react';
  */
 const palette = {
   colorDodgerblue: '#2596ff',
+  colorLightblue: '#A2CFFE',
   colorWhite: '#fff',
   colorGainsboro: '#d9d9d9',
   colorBlack: '#000',
@@ -40,7 +41,7 @@ const myFontSize = {
 
 /* --- Official themes --- */
 const defaultTheme = {
-  mainColor: palette.colorEmeraldGreen,
+  mainColor: palette.colorLightblue,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -58,7 +59,7 @@ const greenTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorBlack,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 1,
 };
@@ -70,7 +71,7 @@ const redTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorBlack,
   errorColor: palette.colorEmeraldGreen,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 2,
 };
@@ -82,7 +83,7 @@ const purpleTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 3,
 };
@@ -94,19 +95,31 @@ const yellowTheme = {
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
-  mainFont: fontFamily.balooBhai,
+  mainFont: fontFamily.quenda,
   fontSizes: myFontSize,
   index: 4,
+};
+
+const blackGoldenTheme = {
+  mainColor: palette.colorBlack,
+  subColor: palette.colorGoldenrodOrange,
+  primaryColor: palette.colorWhite,
+  disableColor: palette.colorGainsboro,
+  checkBoxColor: palette.colorEmeraldGreen,
+  errorColor: palette.colorScarletRed,
+  mainFont: fontFamily.quenda,
+  fontSizes: myFontSize,
+  index: 5,
 };
 /* --- End of Official themes --- */
 
 /**
  * All themes included in the release.
  * After you have created a new theme, remember to
- * add the theme you created to this array
- * @array { Theme }
+ * add the theme you created to this list
+ * @list { Theme }
  */
-const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme];
+const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme, blackGoldenTheme];
 
 /**
  * Tracks the current theme

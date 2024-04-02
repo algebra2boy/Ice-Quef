@@ -1,7 +1,19 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as KolynStyle from './KolynStyleKit';
-import ThemeContext from './AppTheme';
+import * as KolynStyle from '../style/KolynStyleKit';
+import { ThemeContext } from '../style/AppTheme';
+
+export function KolynTextLabel({ text, style }) {
+  const themedStyles = ThemedStyles();
+
+  return <Text style={StyleSheet.flatten([themedStyles.text, style])}>{text}</Text>;
+}
+
+export function KolynTitleLabel({ title }) {
+  const themedStyles = ThemedStyles();
+
+  return <Text style={themedStyles.title}>{title}</Text>;
+}
 
 /**
  * Resembles a medium size title label
@@ -20,6 +32,24 @@ function ThemedStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
+    text: StyleSheet.flatten([
+      { marginVertical: 10 },
+      KolynStyle.kolynLabel(
+        currentTheme.fontSizes.small,
+        currentTheme.mainFont,
+        currentTheme.subColor,
+      ),
+    ]),
+
+    title: StyleSheet.flatten([
+      { fontWeight: 'bold', margin: 20, alignSelf: 'center', textAlign: 'center' },
+      KolynStyle.kolynLabel(
+        currentTheme.fontSizes.large,
+        currentTheme.mainFont,
+        currentTheme.subColor,
+      ),
+    ]),
+
     subtitle: StyleSheet.flatten([
       { alignSelf: 'center', top: 20 },
       KolynStyle.kolynLabel(

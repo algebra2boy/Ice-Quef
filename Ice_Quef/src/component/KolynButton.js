@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { ThemeContext } from '../kit/AppTheme';
-import * as KolynStyle from '../kit/KolynStyleKit';
-import { SpringButton } from '../kit/SpringButton';
-
+import { ThemeContext } from '../style/AppTheme';
+import * as KolynStyle from '../style/KolynStyleKit';
+import { SpringButton } from '../style/SpringButton';
 
 /**
  * Resembles an animated button
@@ -12,7 +11,7 @@ import { SpringButton } from '../kit/SpringButton';
  * @param { func } onPress: Function to be exected after animation finishes
  * @return { ReactElement } The button
  */
-export function KolynButton({ text, onPress }) {
+export function KolynButton({ text, onPress, testID = undefined }) {
   const themedStyles = ThemedStyles();
 
   return (
@@ -21,6 +20,7 @@ export function KolynButton({ text, onPress }) {
       onPress={onPress}
       buttonStyle={themedStyles.casualButton}
       labelStyle={themedStyles.casualButtonLabel}
+      testID={testID}
     />
   );
 }
