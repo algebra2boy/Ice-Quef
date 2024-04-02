@@ -127,17 +127,3 @@ a JSDOCS:
    ```
    @return { your type } description
    ```
-   
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> main
