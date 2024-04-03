@@ -9,7 +9,23 @@ Platforms: iOS, Android, Web
 
 # Welcome to Ice Queb front-end
 
+## How to run
 
+### With Script
+`cd Ice_Quef`
+
+`chmod +x run.sh`
+
+`./run.sh <*YourNgrokURL>`
+
+Then you are good to go
+
+### With npm
+If backend hostname is already set in the ***config.json*** file, then you are all set for configeration.
+
+`cd Ice_Quef`
+
+`npm start`
 
 
 ## Table of contents
