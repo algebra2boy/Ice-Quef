@@ -14,7 +14,6 @@ export function PerformSearch(userInput, officeHours) {}
 
 export async function FetchOfficeHours(addressFilter = '') {
   try {
-
     const response = await fetch(ServerAddress() + `api/officeHour/list${addressFilter}`);
 
     // check if the response is successful

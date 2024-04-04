@@ -93,7 +93,6 @@ export function SignupPageDefault({}) {
     // console.log("password: " + passwordConditions);
     // console.log("repassword: " + confirmPasswordCondition);
 
-
     // validate email address
     if (!emailCondition) {
       Alert.alert('Error', 'Please enter valid email associate with UMass domain');
@@ -145,14 +144,11 @@ export function SignupPageDefault({}) {
           //TODO: idk which page will be navigated to after a successful registration.
         } else {
           // edge case
-          Alert.alert(
-            'Registration Failed',
-            serverResponse.message || 'An error occurred',
-          );
+          Alert.alert('Registration Failed', serverResponse.message || 'An error occurred');
         }
       } catch (error) {
         // network error
-        console.error(error)
+        console.error(error);
         Alert.alert('Error', 'Could not connect to the server.');
       }
     } catch (error) {
