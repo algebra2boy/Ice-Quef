@@ -47,7 +47,7 @@ const RenderItem = (officeHour, themedStyles, navigation) => {
         </Text>
       }
       onPress={() => {
-        navigation.navigate('ManagePageStatics', {
+        navigation.navigate('ManagePageInformation', {
           officeHour: officeHour,
         });
       }}

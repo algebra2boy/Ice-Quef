@@ -5,7 +5,7 @@ import { ManagePageAddOHController } from './AddOHController';
 import { ManagePageAddConfirm } from '../../views/manage_page/AddConfirm';
 import { ManagePageAddSuccess } from '../../views/manage_page/AddSuccess';
 import { ManagePageAddFail } from '../../views/manage_page/AddFail';
-import { ManagePageStatics } from '../../views/manage_page/Statics';
+import { ManagePageInformation } from '../../views/manage_page/Information';
 import { ManagePageDeleteConfirm } from '../../views/manage_page/DeleteConfirm';
 import { ManagePageDeleteSuccess } from '../../views/manage_page/DeleteSuccess';
 import { ManagePageDeleteFail } from '../../views/manage_page/DeleteFail';
@@ -22,7 +22,7 @@ export function ManagePageController() {
       <Stack.Screen name="ManagePageAddConfirm" component={ManagePageAddConfirm} />
       <Stack.Screen name="ManagePageAddSuccess" component={ManagePageAddSuccess} />
       <Stack.Screen name="ManagePageAddFail" component={ManagePageAddFail} />
-      <Stack.Screen name="ManagePageStatics" component={ManagePageStatics} />
+      <Stack.Screen name="ManagePageInformation" component={ManagePageInformation} />
       <Stack.Screen name="ManagePageDeleteConfirm" component={ManagePageDeleteConfirm} />
       <Stack.Screen name="ManagePageDeleteSuccess" component={ManagePageDeleteSuccess} />
       <Stack.Screen name="ManagePageDeleteFail" component={ManagePageDeleteFail} />

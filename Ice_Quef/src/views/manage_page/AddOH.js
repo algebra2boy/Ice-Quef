@@ -114,11 +114,7 @@ function Bar({ text, setText }) {
   };
 
   return (
-    <KolynTextfield
-      value={text}
-      setValue={onChangeText}
-      placeholder="Enter text to start search"
-    />
+    <KolynTextfield value={text} setValue={onChangeText} placeholder="Enter text to start search" />
   );
 }
 
