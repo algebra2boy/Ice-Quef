@@ -10,13 +10,13 @@ export function ManagePageAddOHController() {
   const [facultyName, setFacultyName] = useState('');
 
   // Todo: set office hour list whenever user input changes
-/*
+
   useEffect(() => {
-    const fetchUserOfficeHour = async () => {
+    const getSearchResult = async () => {
       try {
-        console.log(userInput);
-        setIsLoading(true); // Before the fetch starts
-        const fetchedOH = await PerformSearch(userInput);
+        // console.log("Course: " + courseCode + "| Faculty: " + facultyName);
+        // setIsLoading(true); // Before the fetch starts
+        const fetchedOH = await PerformSearch("100");
         console.log(fetchedOH);
         setOfficeHour(fetchedOH);
       } catch (error) {
@@ -26,20 +26,20 @@ export function ManagePageAddOHController() {
       }
     };
 
-    fetchUserOfficeHour();
-  }, [userInput]);
+    getSearchResult();
+  }, [courseCode, facultyName]);
 
   if (isLoading) {
     return <LoadingPage text="Loading office hours..." />;
   }
-*/
+
   return (
-    <ManagePageAddOH 
-      ohList={officeHour} 
-      courseCode={courseCode} 
-      setCourseCode={setCourseCode} 
-      facultyName={facultyName} 
-      setFacultyName={setFacultyName} 
+    <ManagePageAddOH
+      ohList={officeHour}
+      courseCode={courseCode}
+      setCourseCode={setCourseCode}
+      facultyName={facultyName}
+      setFacultyName={setFacultyName}
       />
   );
 }
