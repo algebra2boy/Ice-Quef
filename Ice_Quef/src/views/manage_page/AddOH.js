@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
@@ -8,6 +8,7 @@ import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
 import { SpringButton } from '../../style/SpringButton';
+import { KolynTextLabel } from '../../component';
 
 const height = Dimensions.get('window').height;
 
@@ -45,9 +46,9 @@ export function ManagePageAddOH(props) {
   const manageOHStyles = ManageOHStyles();
   const themedStyles = ThemedStyles();
 
-  // The refresh control for the course flat list
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
+  const isRefreshing = props.isRefreshing;
+  const setIsRefreshing = props.setIsRefreshing;
+  const isSearching = props.isSearching;
   const officeHour = props.officeHour;
   const setOfficeHour = props.setOfficeHour;
   const courseCode = props.courseCode;
@@ -75,31 +76,44 @@ export function ManagePageAddOH(props) {
     <BasePage
       components={
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={themedStyles.root}>
-          <View style={{ height: height * 0.65 }}>
-            <KolynTitleLabel title="Add office hours" />
-            <Hint themedStyles={themedStyles} />
-            <SearchBar text={courseCode} setText={setCourseCode} placeholder="Please enter class code. ex. CS 520" />
-            <SearchBar text={facultyName} setText={setFacultyName} placeholder="Please enter faculty's name: ex. Joe Doe" />
-            <SearchResultList 
-              elementState={officeHour}
-              styles={manageOHStyles}
-              onRefresh={onRefresh}
-              isRefreshing={isRefreshing}
-              navigation={navigation}
-            />
-          </View>
-          <View >
-            <View style={{ top: 60-height * 0.05 }}>
-              <KolynButton
-                text="Go back"
-                onPress={() => {
-                  navigation.goBack();
-                }}
+          <View style={themedStyles.root}>
+            <View style={{ height: height * 0.65 }}>
+              <KolynTitleLabel title="Add office hours" />
+              <Hint themedStyles={themedStyles} />
+              <SearchBar
+                text={courseCode}
+                setText={setCourseCode}
+                placeholder="Please enter class code. ex. CS 520"
               />
+              <SearchBar
+                text={facultyName}
+                setText={setFacultyName}
+                placeholder="Please enter faculty's name: ex. Joe Doe"
+              />
+              {!isSearching && (
+                <SearchResultList
+                  elementState={officeHour}
+                  styles={manageOHStyles}
+                  onRefresh={onRefresh}
+                  isRefreshing={isRefreshing}
+                  navigation={navigation}
+                />
+              )}
+              {(courseCode !== '' || facultyName !== '') && isSearching && (
+                <LoadingView text="Loading..." />
+              )}
+            </View>
+            <View>
+              <View style={{ top: 60 - height * 0.05 }}>
+                <KolynButton
+                  text="Go back"
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                />
+              </View>
             </View>
           </View>
-        </View>
         </TouchableWithoutFeedback>
       }
     />
@@ -117,13 +131,10 @@ function SearchBar({ text, setText, placeholder }) {
     setText(newText);
   };
 
-  return (
-    <KolynTextfield value={text} setValue={onChangeText} placeholder={placeholder} />
-  );
+  return <KolynTextfield value={text} setValue={onChangeText} placeholder={placeholder} />;
 }
 
 function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navigation }) {
-  
   return (
     <FlatList
       data={elementState}
@@ -134,6 +145,14 @@ function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navig
       refreshing={isRefreshing}
       contentContainerStyle={styles.flatListView}
     />
+  );
+}
+
+function LoadingView({ text }) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <KolynTextLabel text={text} />
+    </View>
   );
 }
 
