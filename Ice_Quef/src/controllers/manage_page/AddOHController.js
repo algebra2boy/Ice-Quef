@@ -35,7 +35,8 @@ export function ManagePageAddOHController() {
 
   return (
     <ManagePageAddOH
-      ohList={officeHour}
+      officeHour={officeHour}
+      setOfficeHour={setOfficeHour}
       courseCode={courseCode}
       setCourseCode={setCourseCode}
       facultyName={facultyName}
