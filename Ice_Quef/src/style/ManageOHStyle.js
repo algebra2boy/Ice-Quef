@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Dimensions } from 'react-native';
 import { ThemeContext } from './AppTheme';
 import * as KolynStyle from './KolynStyleKit';
+
+const width = Dimensions.get('window').width;
 
 export const day = num => {
   switch (num) {
@@ -39,6 +41,19 @@ export function ManageOHStyles() {
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
+    item: StyleSheet.flatten([
+      {
+        top: 0,
+        width: width * 0.6,
+        alignSelf: 'center',
+        marginTop: 10,
+        borderRadius: 10,
+        backgroundColor: currentTheme.subColor,
+        borderWidth: 4,
+      },
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+
     itemLabel: StyleSheet.flatten([
       { marginVertical: 10, textAlign: 'center' },
       KolynStyle.kolynLabel(
@@ -56,5 +71,9 @@ export function ManageOHStyles() {
         currentTheme.subColor,
       ),
     ]),
+
+    flatListView: {
+      alignSelf: 'center',
+    }
   });
 }
