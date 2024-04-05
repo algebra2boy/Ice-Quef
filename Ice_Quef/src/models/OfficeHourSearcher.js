@@ -93,10 +93,10 @@ export async function FetchOfficeHours(addressFilter = '') {
           throw new Error('An unexpected error occurred');
       }
     }
-    console.log('HELLO');
+    //console.log('HELLO');
     const data = await response.json();
 
-    console.log('data' + data);
+    //console.log('data' + data);
     // Assuming we want to transform the fetched data into instances of the OfficeHour class
     const userOfficeHours = data.officeHours.map(
       oh =>
