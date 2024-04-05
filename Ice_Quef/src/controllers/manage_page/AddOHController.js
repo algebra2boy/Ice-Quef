@@ -1,46 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { ManagePageAddOH } from '../../views/manage_page/AddOH';
-import { LoadingPage } from '../../component/LoadingPage';
-import { PerformSearch } from '../../models/OfficeHourSearcher';
+import React, {useState, useEffect} from 'react';
+import {ManagePageAddOH} from '../../views/manage_page/AddOH';
+import {LoadingPage} from '../../component/LoadingPage';
+import {PerformSearch} from '../../models/OfficeHourSearcher';
 
-export function ManagePageAddOHController() {
-  const [officeHour, setOfficeHour] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // loading indicator
-  const [courseCode, setCourseCode] = useState('');
-  const [facultyName, setFacultyName] = useState('');
+function debounce(func, wait) {
+    let timeout;
 
-  // Todo: set office hour list whenever user input changes
+    // debounce return function
+    const executedFunction = function (...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
 
-  useEffect(() => {
-    const getSearchResult = async () => {
-      try {
-        // console.log("Course: " + courseCode + "| Faculty: " + facultyName);
-        // setIsLoading(true); // Before the fetch starts
-        const fetchedOH = await PerformSearch("100");
-        console.log(fetchedOH);
-        setOfficeHour(fetchedOH);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false); // fetch is complete or if there is an error
-      }
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
     };
 
-    getSearchResult();
-  }, [courseCode, facultyName]);
+    // cancel method to clear the timeout after
+    executedFunction.cancel = function () {
+        clearTimeout(timeout);
+    };
 
-  if (isLoading) {
-    return <LoadingPage text="Loading office hours..." />;
-  }
+    return executedFunction;
+}
 
-  return (
-    <ManagePageAddOH
-      officeHour={officeHour}
-      setOfficeHour={setOfficeHour}
-      courseCode={courseCode}
-      setCourseCode={setCourseCode}
-      facultyName={facultyName}
-      setFacultyName={setFacultyName}
-      />
-  );
+
+export function ManagePageAddOHController() {
+    const [officeHour, setOfficeHour] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // initial loading indicator
+    const [isSearching, setIsSearching] = useState(false);
+    const [courseCode, setCourseCode] = useState('');
+    const [facultyName, setFacultyName] = useState('');
+
+    const debouncedSearchResult = debounce(async () => {
+        if (!isSearching) setIsSearching(true); // true if not already searched
+        try {
+            const fetchedOH = await PerformSearch(facultyName, courseCode);
+            setOfficeHour(fetchedOH);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsSearching(false);
+            setIsLoading(false);
+        }
+    }, 3000); // 3000 milliseconds, 3 seconds
+
+    useEffect(() => {
+        debouncedSearchResult();
+        return () => debouncedSearchResult.cancel();
+    }, [courseCode, facultyName]);
+
+    if (isLoading) {
+        return <LoadingPage text="Loading office hours..."/>;
+    } else if (isSearching) {
+        return <LoadingPage text="Searching..."/>;
+    }
+
+    return (
+        <ManagePageAddOH
+            officeHour={officeHour}
+            setOfficeHour={setOfficeHour}
+            courseCode={courseCode}
+            setCourseCode={setCourseCode}
+            facultyName={facultyName}
+            setFacultyName={setFacultyName}
+        />
+    );
 }
