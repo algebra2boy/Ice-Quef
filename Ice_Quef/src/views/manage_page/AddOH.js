@@ -8,7 +8,6 @@ import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
 import { SpringButton } from '../../style/SpringButton';
-import { GetSampleList } from '../../models/RegisterModel';
 
 const height = Dimensions.get('window').height;
 
@@ -49,21 +48,20 @@ export function ManagePageAddOH(props) {
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // The entire list for the course items
-  const [elementState, setElementState] = useState(GetSampleList());
-
+  const officeHour = props.officeHour;
+  const setOfficeHour = props.setOfficeHour;
   const courseCode = props.courseCode;
   const setCourseCode = props.setCourseCode;
   const facultyName = props.facultyName;
   const setFacultyName = props.setFacultyName;
 
   const mySetElementState = newElementState => {
-    setElementState(newElementState);
+    setOfficeHour(newElementState);
   };
 
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-    mySetElementState(elementState);
+    mySetElementState(officeHour);
   };
 
   // Refresh the flat list
@@ -84,7 +82,7 @@ export function ManagePageAddOH(props) {
             <SearchBar text={courseCode} setText={setCourseCode} placeholder="Please enter class code. ex. CS 520" />
             <SearchBar text={facultyName} setText={setFacultyName} placeholder="Please enter faculty's name: ex. Joe Doe" />
             <SearchResultList 
-              elementState={elementState}
+              elementState={officeHour}
               styles={manageOHStyles}
               onRefresh={onRefresh}
               isRefreshing={isRefreshing}
