@@ -5,7 +5,7 @@ import {KolynButton, KolynTitleLabel} from '../../component';
 import {BasePage} from '../../style/BasePage';
 import {day, Bold, NonBold} from '../../style/ManageOHStyle';
 import {UserContext} from "../../props/UserInfo";
-import {addUserOfficeHour} from "../../controllers/manage_page/AddConfirmController";
+import {addUserOfficeHour} from "../../controllers/manage_page/AddDropController";
 import {useOfficeHourUpdate} from "../../props/OfficeHourContext";
 
 const height = Dimensions.get('window').height;
@@ -30,7 +30,19 @@ export function ManagePageAddConfirm({route}) {
 
     const {triggerUpdate} = useOfficeHourUpdate();
 
-    const addOHToDB = () => {
+    const addOHToDB = async () => {
+        const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID)
+        if (requestStatus) {    // true means successful
+            triggerUpdate();    // trigger an update on the manage main page
+
+            navigation.navigate('ManagePageAddSuccess', {
+                officeHour: officeHour,
+            });
+        } else {
+            navigation.navigate('ManagePageAddFail', {
+                officeHour: officeHour,
+            });
+        }
     };
 
     return (
@@ -63,18 +75,7 @@ export function ManagePageAddConfirm({route}) {
                             <KolynButton
                                 text="Add"
                                 onPress={async () => {
-                                    const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID)
-                                    if (requestStatus) {    // true means successful
-                                        triggerUpdate();    // trigger an update on the manage main page
-
-                                        navigation.navigate('ManagePageAddSuccess', {
-                                            officeHour: officeHour,
-                                        });
-                                    } else {
-                                        navigation.navigate('ManagePageAddFail', {
-                                            officeHour: officeHour,
-                                        });
-                                    }
+                                    await addOHToDB()
                                 }}
                             />
                             <View style={{top: 20}}>
