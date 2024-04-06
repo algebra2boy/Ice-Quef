@@ -24,3 +24,27 @@ export async function addUserOfficeHour(userEmail, userToken, officeHourID) {
         return false;
     }
 }
+
+
+export async function deleteUserOfficeHour(userToken, officeHourID) {
+    const requestURL = ServerAddress() + `api/officeHour/remove/${officeHourID}`;
+    try {
+        const response = await fetch(requestURL, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+            },
+        });
+        const data = await response.json();
+        if (response.status === 200) {
+            console.log(data); // deletion is successfully
+            return true;
+        } else {
+            console.error(data);
+            return false; //  not successful
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return false;
+    }
+}
