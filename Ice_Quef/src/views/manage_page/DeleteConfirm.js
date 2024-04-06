@@ -14,7 +14,7 @@ export function ManagePageDeleteConfirm({route}) {
     const navigation = useNavigation();
     const themedStyles = ThemedStyles();
 
-    const userToken = useContext(UserContext);
+    const userToken = useContext(UserContext).token;
     const officeHour = route.params?.officeHour;
     const {triggerUpdate} = useOfficeHourUpdate();
 
