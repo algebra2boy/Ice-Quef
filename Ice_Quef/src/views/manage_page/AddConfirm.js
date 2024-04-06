@@ -6,6 +6,7 @@ import {BasePage} from '../../style/BasePage';
 import {day, Bold, NonBold} from '../../style/ManageOHStyle';
 import {UserContext} from "../../props/UserInfo";
 import {addUserOfficeHour} from "../../controllers/manage_page/AddConfirmController";
+import {useOfficeHourUpdate} from "../../props/OfficeHourContext";
 
 const height = Dimensions.get('window').height;
 
@@ -25,7 +26,9 @@ export function ManagePageAddConfirm({route}) {
     const userToken = user.token;
 
     const officeHour = route.params?.officeHour;
-    const officeHourID = officeHour.id
+    const officeHourID = officeHour.id;
+
+    const {triggerUpdate} = useOfficeHourUpdate();
 
     const addOHToDB = () => {
     };
@@ -62,6 +65,8 @@ export function ManagePageAddConfirm({route}) {
                                 onPress={async () => {
                                     const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID)
                                     if (requestStatus) {    // true means successful
+                                        triggerUpdate();    // trigger an update on the manage main page
+
                                         navigation.navigate('ManagePageAddSuccess', {
                                             officeHour: officeHour,
                                         });
