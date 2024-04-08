@@ -136,7 +136,10 @@ export function SignupPageDefault({}) {
 
         if (response.ok) {
           // success
+          const userToken = serverResponse.token;
+
           user.setEmail(email.toLowerCase());
+          user.setToken(userToken);
           Alert.alert('Success', 'You have been registered successfully!');
 
           navigation.navigate('Calendar');

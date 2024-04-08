@@ -5,33 +5,30 @@ import ServerAddress from '../props/Server';
  * Perform a search based on given user input and find all matching
  * office hours and return them.
  *
- * @param userInput
+ * @param facultyName
+ * @param courseCode
  * @param searchLimit
  * @return { List } matchOfficeHours an list of office hours that
  *                   match the given input to be used for display
  */
-export async function PerformSearch(userInput, searchLimit = 5) {
-  const inputList = userInput.trim().split(' ');
-  let facultyName = '';
-  let courseName = '';
-
-  if (inputList.length === 1) {
-    if (inputList[0].match(/[0-9]/)) {
-      courseName = inputList[0]; // has number then it's courseName
-    } else {
-      facultyName = inputList[0]; // no numbers, assume it's facultyName
-    }
-  } else if (inputList.length > 1) {
-    //  the first is facultyName and the second is courseName
-    [facultyName, courseName] = inputList;
-  }
-
-  return await FetchOfficeHoursSearch(facultyName, courseName, searchLimit);
+export async function PerformSearch(facultyName = '', courseCode = '', searchLimit = 5) {
+  return await FetchOfficeHoursSearch(facultyName, courseCode, searchLimit);
 }
 
 async function FetchOfficeHoursSearch(facultyName, courseName, searchLimit) {
   try {
-    const query = `facultyName=${encodeURIComponent(facultyName)}&courseName=${encodeURIComponent(courseName)}&searchLimit=${encodeURIComponent(searchLimit)}`;
+    let query = `searchLimit=${encodeURIComponent(searchLimit)}`;
+    console.log(
+      `Faculty: |${encodeURIComponent(facultyName)}| Course: |${encodeURIComponent(courseName)}|`,
+    );
+    // the searchLimit will apply when both faculty and course are empty
+    if (facultyName === '' && courseName === '') {
+      // includes quotes
+      query += `&facultyName=""&courseName=""`;
+    } else {
+      query += `&facultyName=${encodeURIComponent(facultyName)}&courseName=${encodeURIComponent(courseName)}`;
+    }
+
     const response = await fetch(ServerAddress() + `api/officeHour/search?${query}`);
 
     if (!response.ok) {
@@ -93,10 +90,9 @@ export async function FetchOfficeHours(addressFilter = '') {
           throw new Error('An unexpected error occurred');
       }
     }
-    //console.log('HELLO');
+
     const data = await response.json();
 
-    //console.log('data' + data);
     // Assuming we want to transform the fetched data into instances of the OfficeHour class
     const userOfficeHours = data.officeHours.map(
       oh =>

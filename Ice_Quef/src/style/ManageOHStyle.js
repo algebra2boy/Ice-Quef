@@ -74,6 +74,6 @@ export function ManageOHStyles() {
 
     flatListView: {
       alignSelf: 'center',
-    }
+    },
   });
 }
