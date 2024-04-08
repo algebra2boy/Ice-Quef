@@ -11,7 +11,7 @@ Platforms: iOS, Android, Web
 
 ## How to run
 
-### First step: Download [expo go](https://github.com/algebra2boy/Ice-Quef/misc/redirectory/README.md#get-a-hang-of-react-native-expo) on your mobile device
+### First step: Download [expo go](https://github.com/algebra2boy/Ice-Quef/blob/misc/redirectory/README.md#get-a-hang-of-react-native-expo) on your mobile device
 
 
 ### With Script
