@@ -55,7 +55,5 @@ else
 fi
 
 
-npm install
-npm update
 # run
 npm start
