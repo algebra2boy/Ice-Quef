@@ -30,26 +30,26 @@ async function LogInButtonPressed(email, password) {
 
       if (serverResponse.status === 'success' && response.ok) {
         // success
+        const token = serverResponse.token;
         Alert.alert('Success', 'You have been login successfully!');
-        // TODO: navigate to calendar
-        return true;
+        return token;
       } else if (serverResponse.status) {
-        return false;
+        return null;
         // Alert.alert('Login Failed', serverResponse.message || 'Username or password is wrong');
       } else {
         // edge case
-        return false;
+        return null;
         // Alert.alert('Login Failed', serverResponse.errors.toString() || 'An error occurred');
       }
     } catch (error) {
       // network error
       Alert.alert('Error', error.toString() || 'Could not connect to the server.');
-      return false;
+      return null;
     }
   } catch (error) {
     // Handle errors as before
     Alert.alert('Error', error.toString());
-    return false;
+    return null;
   }
 
   // Also expecting different errors
