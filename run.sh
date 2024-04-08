@@ -54,5 +54,8 @@ else
     jq ".server.hostname = \"$hostname\"" config.json > tmp.$$.json && mv tmp.$$.json config.json
 fi
 
+
+npm install
+npm update
 # run
 npm start
