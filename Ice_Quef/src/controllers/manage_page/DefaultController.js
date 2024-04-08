@@ -3,10 +3,13 @@ import { ManagePageDefault } from '../../views/manage_page/Default';
 import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { UserContext } from '../../props/UserInfo';
 import { LoadingPage } from '../../component/LoadingPage';
+import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 
 export function ManagePageDefaultController() {
   const user = useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
+
+  const { updateTrigger } = useOfficeHourUpdate();
 
   // The list of office hour that the student has currently enrolled
   const [officeHour, setOfficeHour] = useState([]);
@@ -27,7 +30,7 @@ export function ManagePageDefaultController() {
     };
 
     fetchUserOfficeHour();
-  }, []);
+  }, [updateTrigger]);
 
   if (isLoading) {
     return <LoadingPage text="Loading office hours..." />;
