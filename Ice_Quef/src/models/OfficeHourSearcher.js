@@ -5,18 +5,66 @@ import ServerAddress from '../props/Server';
  * Perform a search based on given user input and find all matching
  * office hours and return them.
  *
- * @param { String } userInput the text entered by the user
- * @param { List } officeHours the entire list of office hours
+ * @param facultyName
+ * @param courseCode
+ * @param searchLimit
  * @return { List } matchOfficeHours an list of office hours that
  *                   match the given input to be used for display
  */
-export function PerformSearch(userInput, officeHours) {}
+export async function PerformSearch(facultyName = '', courseCode = '', searchLimit = 5) {
+  return await FetchOfficeHoursSearch(facultyName, courseCode, searchLimit);
+}
+
+async function FetchOfficeHoursSearch(facultyName, courseName, searchLimit) {
+  try {
+    let query = `searchLimit=${encodeURIComponent(searchLimit)}`;
+    console.log(
+      `Faculty: |${encodeURIComponent(facultyName)}| Course: |${encodeURIComponent(courseName)}|`,
+    );
+    // the searchLimit will apply when both faculty and course are empty
+    if (facultyName === '' && courseName === '') {
+      // includes quotes
+      query += `&facultyName=""&courseName=""`;
+    } else {
+      query += `&facultyName=${encodeURIComponent(facultyName)}&courseName=${encodeURIComponent(courseName)}`;
+    }
+
+    const response = await fetch(ServerAddress() + `api/officeHour/search?${query}`);
+
+    if (!response.ok) {
+      // handle errors similarly...
+      throw new Error('Failed to fetch office hours');
+    }
+    const data = await response.json();
+
+    // Transform the fetched data as needed
+    const searchResults = data.searchResult.map(oh => ({
+      id: oh.id,
+      facultyName: oh.facultyName,
+      day: oh.day,
+      startDate: formatDate(oh.startDate),
+      endDate: formatDate(oh.endDate),
+      startTime: oh.startTime,
+      endTime: oh.endTime,
+      courseDepartment: oh.courseDepartment,
+      courseNumber: oh.courseNumber,
+    }));
+    return searchResults;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
 
 export async function FetchOfficeHours(addressFilter = '') {
   try {
-    console.log("here")
-    const response = await fetch(ServerAddress() + `api/officeHour/list${addressFilter}`);
-
+    const response = await fetch(ServerAddress() + `api/officeHour/list${addressFilter}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
     // check if the response is successful
     if (!response.ok) {
       // handle depends on HTTP status codes
@@ -42,6 +90,7 @@ export async function FetchOfficeHours(addressFilter = '') {
           throw new Error('An unexpected error occurred');
       }
     }
+
     const data = await response.json();
 
     // Assuming we want to transform the fetched data into instances of the OfficeHour class

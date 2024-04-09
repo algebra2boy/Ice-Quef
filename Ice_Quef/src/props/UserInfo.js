@@ -5,6 +5,10 @@ export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
   const [email, setEmail] = React.useState(null);
-
-  return <UserContext.Provider value={{ email, setEmail }}>{children}</UserContext.Provider>;
+  const [token, setToken] = React.useState(null);
+  return (
+    <UserContext.Provider value={{ email, setEmail, token, setToken }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
