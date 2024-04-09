@@ -4,6 +4,9 @@ import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
+import { UserContext } from '../../props/UserInfo';
+import { addUserOfficeHour } from '../../controllers/manage_page/AddDropController';
+import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 
 const height = Dimensions.get('window').height;
 
@@ -18,9 +21,30 @@ export function ManagePageAddConfirm({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
-  const officeHour = route.params?.officeHour;
+  const user = React.useContext(UserContext);
+  const userEmail = user.email;
+  const userToken = user.token;
 
-  const addOHToDB = () => {};
+  const officeHour = route.params?.officeHour;
+  const officeHourID = officeHour.id;
+
+  const { triggerUpdate } = useOfficeHourUpdate();
+
+  const addOHToDB = async () => {
+    const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID);
+    if (requestStatus) {
+      // true means successful
+      triggerUpdate(); // trigger an update on the manage main page
+
+      navigation.navigate('ManagePageAddSuccess', {
+        officeHour: officeHour,
+      });
+    } else {
+      navigation.navigate('ManagePageAddFail', {
+        officeHour: officeHour,
+      });
+    }
+  };
 
   return (
     <BasePage
@@ -51,18 +75,8 @@ export function ManagePageAddConfirm({ route }) {
             <View style={{ top: height * 0.1 }}>
               <KolynButton
                 text="Add"
-                onPress={() => {
-                  // Todo: set adding status after add button is pressed
-                  // currently it is random and only visual
-                  if (Math.floor(Math.random() * 2)) {
-                    navigation.navigate('ManagePageAddSuccess', {
-                      officeHour: officeHour,
-                    });
-                  } else {
-                    navigation.navigate('ManagePageAddFail', {
-                      officeHour: officeHour,
-                    });
-                  }
+                onPress={async () => {
+                  await addOHToDB();
                 }}
               />
               <View style={{ top: 20 }}>

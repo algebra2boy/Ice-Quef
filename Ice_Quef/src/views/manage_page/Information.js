@@ -3,11 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, Text, StyleSheet, ScrollView } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
-import { day, Bold, NonBold } from '../../style/ManageOHStyle';
+import { day, NonBold } from '../../style/ManageOHStyle';
 
 const height = Dimensions.get('window').height;
 
-export function ManagePageStatics({ route }) {
+export function ManagePageInformation({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
@@ -26,11 +26,12 @@ export function ManagePageStatics({ route }) {
         >
           <View style={themedStyles.root}>
             <View style={{ height: height * 0.5 }}>
-              <KolynTitleLabel title="Statics" />
+              <KolynTitleLabel
+                title={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'}
+              />
 
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1, bottom: 40 }}>
                 <Text>
-                  <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
                   <NonBold text={officeHour.facultyName} />
                 </Text>
               </View>

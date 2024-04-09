@@ -22,11 +22,12 @@ export function LoginPageDefault({ pressLogInButton }) {
   const user = React.useContext(UserContext);
 
   const onLogInPressed = async () => {
-    const isPass = await pressLogInButton(email, password);
+    const userToken = await pressLogInButton(email, password);
     user.setEmail(email.toLowerCase());
 
-    if (isPass) {
+    if (userToken != null) {
       // validate user
+      user.setToken(userToken);
       navigation.navigate('Calendar');
       // activate bottom tab navigator
       navigation.navigate('BottomTab');

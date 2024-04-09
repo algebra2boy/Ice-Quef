@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
+import { View, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { day, Bold, NonBold, ManageOHStyles } from '../../style/ManageOHStyle';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
 import { SpringButton } from '../../style/SpringButton';
+import { KolynTextLabel } from '../../component';
 
 const height = Dimensions.get('window').height;
 
@@ -44,22 +46,23 @@ export function ManagePageAddOH(props) {
   const manageOHStyles = ManageOHStyles();
   const themedStyles = ThemedStyles();
 
-  // The refresh control for the course flat list
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  // The entire list for the course items
-  const [elementState, setElementState] = useState([]);
-
-  const text = props.text;
-  const setText = props.setText;
+  const isRefreshing = props.isRefreshing;
+  const setIsRefreshing = props.setIsRefreshing;
+  const isSearching = props.isSearching;
+  const officeHour = props.officeHour;
+  const setOfficeHour = props.setOfficeHour;
+  const courseCode = props.courseCode;
+  const setCourseCode = props.setCourseCode;
+  const facultyName = props.facultyName;
+  const setFacultyName = props.setFacultyName;
 
   const mySetElementState = newElementState => {
-    setElementState(newElementState);
+    setOfficeHour(newElementState);
   };
 
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-    mySetElementState(elementState);
+    mySetElementState(officeHour);
   };
 
   // Refresh the flat list
@@ -72,31 +75,46 @@ export function ManagePageAddOH(props) {
   return (
     <BasePage
       components={
-        <View style={themedStyles.root}>
-          <View style={{ height: height * 0.5 }}>
-            <KolynTitleLabel title="Add office hours" />
-            <Hint themedStyles={themedStyles} />
-            <SearchBar
-              text={text}
-              setText={setText}
-              elementState={elementState}
-              styles={manageOHStyles}
-              onRefresh={onRefresh}
-              isRefreshing={isRefreshing}
-              navigation={navigation}
-            />
-          </View>
-          <View style={{ top: height * 0.1 }}>
-            <View style={{ top: 60 }}>
-              <KolynButton
-                text="Go back"
-                onPress={() => {
-                  navigation.goBack();
-                }}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={themedStyles.root}>
+            <View style={{ height: height * 0.65 }}>
+              <KolynTitleLabel title="Add office hours" />
+              <Hint themedStyles={themedStyles} />
+              <SearchBar
+                text={courseCode}
+                setText={setCourseCode}
+                placeholder="Please enter class code. ex. CS 520"
               />
+              <SearchBar
+                text={facultyName}
+                setText={setFacultyName}
+                placeholder="Please enter faculty's name: ex. Joe Doe"
+              />
+              {!isSearching && (
+                <SearchResultList
+                  elementState={officeHour}
+                  styles={manageOHStyles}
+                  onRefresh={onRefresh}
+                  isRefreshing={isRefreshing}
+                  navigation={navigation}
+                />
+              )}
+              {(courseCode !== '' || facultyName !== '') && isSearching && (
+                <LoadingView text="Loading..." />
+              )}
+            </View>
+            <View>
+              <View style={{ top: 60 - height * 0.05 }}>
+                <KolynButton
+                  text="Go back"
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                />
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       }
     />
   );
@@ -108,35 +126,32 @@ export function ManagePageAddOH(props) {
  *
  * @return { ReactElement } The bar
  */
-function Bar({ text, setText }) {
+function SearchBar({ text, setText, placeholder }) {
   const onChangeText = async newText => {
     setText(newText);
   };
 
+  return <KolynTextfield value={text} setValue={onChangeText} placeholder={placeholder} />;
+}
+
+function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navigation }) {
   return (
-    <KolynTextfield
-      value={text}
-      setValue={onChangeText}
-      placeholder="Enter text to start search"
+    <FlatList
+      data={elementState}
+      showsVerticalScrollIndicator={false}
+      renderItem={item => RenderItem(item.item, styles, navigation)}
+      keyExtractor={item => item.id}
+      onRefresh={onRefresh}
+      refreshing={isRefreshing}
+      contentContainerStyle={styles.flatListView}
     />
   );
 }
 
-function SearchBar({ text, setText, elementState, styles, onRefresh, isRefreshing, navigation }) {
+function LoadingView({ text }) {
   return (
-    <View>
-      <Bar text={text} setText={setText} />
-      <View style={{ height: Platform.OS === 'ios' || Platform.OS === 'android' ? '80%' : '60%' }}>
-        <FlatList
-          data={elementState}
-          showsVerticalScrollIndicator={false}
-          renderItem={item => RenderItem(item.item, styles, navigation)}
-          keyExtractor={item => item.id}
-          onRefresh={onRefresh}
-          refreshing={isRefreshing}
-          contentContainerStyle={styles.flatListView}
-        />
-      </View>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <KolynTextLabel text={text} />
     </View>
   );
 }
@@ -173,10 +188,5 @@ function ThemedStyles() {
         currentTheme.subColor,
       ),
     ]),
-
-    flatListView: {
-      alignSelf: 'center',
-      width: '100%',
-    },
   });
 }
