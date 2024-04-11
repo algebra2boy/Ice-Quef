@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { UserContext } from '../../props/UserInfo';
 import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
+import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
+
 
 const joinStatus = {
   joined: index => `Your current position: ${index}.`,
@@ -11,6 +13,7 @@ const joinStatus = {
 export function CalendarPageDefaultController() {
   const user = React.useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
+  const officeHourUpdate = useOfficeHourUpdate();
 
   const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
@@ -23,20 +26,30 @@ export function CalendarPageDefaultController() {
 
   //console.log(registered)
 
-  useEffect(() => {
-    const fetchUserOfficeHour = async () => {
-      try {
-        const officeHours = await GetUserOfficeHour(userEmail);
-        setRegistered(officeHours);
-        // console.log(officeHours);
-      } catch (error) {
-        // console.error(error);
-        console.log(error); // seems like a lot of time user comes from signup page will end up here cuz there's no office hour for them yet
-      }
-    };
+  const fetchUserOfficeHour = async () => {
+    try {
+      const officeHours = await GetUserOfficeHour(userEmail);
+      setRegistered(officeHours);
+      // console.log(officeHours);
+    } catch (error) {
+      // console.error(error);
+      console.log(error); // seems like a lot of time user comes from signup page will end up here cuz there's no office hour for them yet
+    }
+  };
 
+  // fetch user's office hour when first time loading
+  useEffect(() => {
     fetchUserOfficeHour();
   }, []);
+
+  // update calendar office hour when user adds / removes an office hour
+  useEffect(() => {
+    if (officeHourUpdate.shouldRefreshCalendar) {
+      fetchUserOfficeHour();
+      officeHourUpdate.setShouldUpdate(false);
+    }
+
+  }, [officeHourUpdate.shouldRefreshCalendar]);
 
   const regLst = useMemo(() => getRenderList(registered), [registered]);
 

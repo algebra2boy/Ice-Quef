@@ -5,7 +5,7 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
 import { UserContext } from '../../props/UserInfo';
-import { addUserOfficeHour } from '../../controllers/manage_page/AddDropController';
+import { addUserOfficeHour } from '../../models/AddDropController';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 
 const height = Dimensions.get('window').height;

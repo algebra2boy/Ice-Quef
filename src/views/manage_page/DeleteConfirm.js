@@ -6,7 +6,7 @@ import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 import { UserContext } from '../../props/UserInfo';
-import { deleteUserOfficeHour } from '../../controllers/manage_page/AddDropController';
+import { deleteUserOfficeHour } from '../../models/AddDropController';
 
 const height = Dimensions.get('window').height;
 
