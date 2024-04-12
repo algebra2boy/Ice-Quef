@@ -9,13 +9,11 @@ import { ManagePageInformation } from '../../views/manage_page/Information';
 import { ManagePageDeleteConfirm } from '../../views/manage_page/DeleteConfirm';
 import { ManagePageDeleteSuccess } from '../../views/manage_page/DeleteSuccess';
 import { ManagePageDeleteFail } from '../../views/manage_page/DeleteFail';
-import { OfficeHourUpdateWrapper } from '../../props/OfficeHourContext';
 
 const Stack = createNativeStackNavigator();
 
 export function ManagePageController() {
   return (
-    <OfficeHourUpdateWrapper>
       <Stack.Navigator
         initialRouteName="ManagePageDefault"
         screenOptions={{ headerShown: false, gestureEnabled: false }}
@@ -30,6 +28,5 @@ export function ManagePageController() {
         <Stack.Screen name="ManagePageDeleteSuccess" component={ManagePageDeleteSuccess} />
         <Stack.Screen name="ManagePageDeleteFail" component={ManagePageDeleteFail} />
       </Stack.Navigator>
-    </OfficeHourUpdateWrapper>
   );
 }
