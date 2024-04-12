@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { UserContext } from '../../props/UserInfo';
-import { GetUserOfficeHour } from '../../models/RegisterModel';
+import React, { useState, useEffect } from 'react';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
+import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
+import { LoadingPage } from '../../component/LoadingPage';
 
 const joinStatus = {
   joined: index => `Your current position: ${index}.`,
@@ -9,11 +9,11 @@ const joinStatus = {
 };
 
 export function CalendarPageDefaultController() {
-  const user = React.useContext(UserContext);
-  const userEmail = user.email; // get user email address (account name)
+  const { triggerUpdate, officeHour, isLoading } = useOfficeHourUpdate();
 
-  const [registered, setRegistered] = useState([]);
+  // const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
+  // const [isLoading, setIsLoading] = useState(true); // loading indicator
 
   // Todo: modify queue index when changed
   const updatePosition = () => {
@@ -21,25 +21,21 @@ export function CalendarPageDefaultController() {
     setCurrStatus(joinStatus.joined(index));
   };
 
-  //console.log(registered)
+  const [result, setResult] = useState(null);
+  const calculateResult = () => {
+    console.log("update reglst");
+    setResult(getRenderList(officeHour));
+  };
 
   useEffect(() => {
-    const fetchUserOfficeHour = async () => {
-      try {
-        const officeHours = await GetUserOfficeHour(userEmail);
-        setRegistered(officeHours);
-        // console.log(officeHours);
-      } catch (error) {
-        // console.error(error);
-        console.log(error); // seems like a lot of time user comes from signup page will end up here cuz there's no office hour for them yet
-      }
-    };
-
-    fetchUserOfficeHour();
-  }, []);
-
-  const regLst = useMemo(() => getRenderList(registered), [registered]);
-
+    console.log("recalculate result");
+    calculateResult();
+  }, [officeHour]);
+  
+  if (isLoading) {
+    return <LoadingPage text="Loading office hours..." />;
+  }
+  
   const determineMessage = () => {
     if (currStatus === joinStatus.notJoined) {
       setCurrStatus(joinStatus.joined(1));
@@ -49,7 +45,7 @@ export function CalendarPageDefaultController() {
   };
 
   return (
-    <CalendarPageDefault regLst={regLst} message={currStatus} determineMessage={determineMessage} />
+    <CalendarPageDefault regLst={result} message={currStatus} determineMessage={determineMessage} />
   );
 }
 
