@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 import { LoadingPage } from '../../component/LoadingPage';
+import { GetUserOfficeHour } from '../../models/RegisterModel';
+import { UserContext } from '../../props/UserInfo';
 
 const joinStatus = {
   joined: index => `Your current position: ${index}.`,
@@ -9,7 +11,10 @@ const joinStatus = {
 };
 
 export function CalendarPageDefaultController() {
-  const { triggerUpdate, officeHour, isLoading } = useOfficeHourUpdate();
+  const user = React.useContext(UserContext);
+  const userEmail = user.email; // get user email address (account name)
+
+  const updateTrigger = useOfficeHourUpdate().updateTrigger;
 
   // const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
@@ -21,14 +26,31 @@ export function CalendarPageDefaultController() {
     setCurrStatus(joinStatus.joined(index));
   };
 
+  const [officeHour, setOfficeHour] = useState([]);
   const [result, setResult] = useState(null);
-  const calculateResult = () => {
-    console.log("update reglst");
-    setResult(getRenderList(officeHour));
-  };
+  const [isLoading, setIsLoading] = useState(true); // loading indicator
 
   useEffect(() => {
-    console.log("recalculate result");
+    const fetchUserOfficeHour = async () => {
+      try {
+        setIsLoading(true); // Before the fetch starts
+        const officeHours = await GetUserOfficeHour(userEmail);
+        setOfficeHour(officeHours);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false); // fetch is complete or if there is an error
+      }
+    };
+
+    fetchUserOfficeHour();
+  }, [updateTrigger]);
+
+  useEffect(() => {
+    const calculateResult = () => {
+      setResult(getRenderList(officeHour));
+    };
+
     calculateResult();
   }, [officeHour]);
   
