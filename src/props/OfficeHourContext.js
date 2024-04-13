@@ -1,6 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { GetUserOfficeHour } from '../models/RegisterModel';
-import { UserContext } from './UserInfo';
 
 const OfficeHourUpdateContext = createContext();
 
