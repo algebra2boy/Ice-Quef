@@ -34,6 +34,7 @@ export function ManagePageAddConfirm({ route }) {
     const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID);
     if (requestStatus) {
       // true means successful
+      console.log("trigger addition");
       triggerUpdate(); // trigger an update on the manage main page
 
       navigation.navigate('ManagePageAddSuccess', {

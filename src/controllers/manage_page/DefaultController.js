@@ -1,17 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useEffect }  from 'react';
 import { ManagePageDefault } from '../../views/manage_page/Default';
-import { GetUserOfficeHour } from '../../models/RegisterModel';
-import { UserContext } from '../../props/UserInfo';
 import { LoadingPage } from '../../component/LoadingPage';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
+import { GetUserOfficeHour } from '../../models/RegisterModel';
+import { UserContext } from '../../props/UserInfo';
 
 export function ManagePageDefaultController() {
-  const user = useContext(UserContext);
+  const user = React.useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
 
-  const { updateTrigger } = useOfficeHourUpdate();
+  const updateTrigger = useOfficeHourUpdate().updateTrigger;
 
-  // The list of office hour that the student has currently enrolled
   const [officeHour, setOfficeHour] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // loading indicator
 
@@ -21,7 +20,6 @@ export function ManagePageDefaultController() {
         setIsLoading(true); // Before the fetch starts
         const officeHours = await GetUserOfficeHour(userEmail);
         setOfficeHour(officeHours);
-        // console.log(officeHours);
       } catch (error) {
         console.error(error);
       } finally {

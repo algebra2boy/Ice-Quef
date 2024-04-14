@@ -1,7 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { UserContext } from '../../props/UserInfo';
-import { GetUserOfficeHour } from '../../models/RegisterModel';
+import React, { useState, useEffect } from 'react';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
+import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
+import { LoadingPage } from '../../component/LoadingPage';
+import { GetUserOfficeHour } from '../../models/RegisterModel';
+import { UserContext } from '../../props/UserInfo';
 
 const joinStatus = {
   joined: index => `Your current position: ${index}.`,
@@ -12,8 +14,11 @@ export function CalendarPageDefaultController() {
   const user = React.useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
 
-  const [registered, setRegistered] = useState([]);
+  const updateTrigger = useOfficeHourUpdate().updateTrigger;
+
+  // const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
+  // const [isLoading, setIsLoading] = useState(true); // loading indicator
 
   // Todo: modify queue index when changed
   const updatePosition = () => {
@@ -21,25 +26,38 @@ export function CalendarPageDefaultController() {
     setCurrStatus(joinStatus.joined(index));
   };
 
-  //console.log(registered)
+  const [officeHour, setOfficeHour] = useState([]);
+  const [result, setResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // loading indicator
 
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
       try {
+        setIsLoading(true); // Before the fetch starts
         const officeHours = await GetUserOfficeHour(userEmail);
-        setRegistered(officeHours);
-        // console.log(officeHours);
+        setOfficeHour(officeHours);
       } catch (error) {
-        // console.error(error);
-        console.log(error); // seems like a lot of time user comes from signup page will end up here cuz there's no office hour for them yet
+        console.error(error);
+      } finally {
+        setIsLoading(false); // fetch is complete or if there is an error
       }
     };
 
     fetchUserOfficeHour();
-  }, []);
+  }, [updateTrigger]);
 
-  const regLst = useMemo(() => getRenderList(registered), [registered]);
+  useEffect(() => {
+    const calculateResult = () => {
+      setResult(getRenderList(officeHour));
+    };
 
+    calculateResult();
+  }, [officeHour]);
+  
+  if (isLoading) {
+    return <LoadingPage text="Loading office hours..." />;
+  }
+  
   const determineMessage = () => {
     if (currStatus === joinStatus.notJoined) {
       setCurrStatus(joinStatus.joined(1));
@@ -49,7 +67,7 @@ export function CalendarPageDefaultController() {
   };
 
   return (
-    <CalendarPageDefault regLst={regLst} message={currStatus} determineMessage={determineMessage} />
+    <CalendarPageDefault regLst={result} message={currStatus} determineMessage={determineMessage} />
   );
 }
 

@@ -37,7 +37,7 @@ export async function deleteUserOfficeHour(userToken, officeHourID) {
     });
     const data = await response.json();
     if (response.status === 200) {
-      console.log(data); // deletion is successfully
+      console.log(data); // deletion is successful
       return true;
     } else {
       console.error(data);

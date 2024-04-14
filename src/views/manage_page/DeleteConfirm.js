@@ -21,6 +21,7 @@ export function ManagePageDeleteConfirm({ route }) {
   const deleteFromDB = async () => {
     const requestStatus = await deleteUserOfficeHour(userToken, officeHour.id);
     if (requestStatus) {
+      console.log("trigger deletion");
       triggerUpdate();
       navigation.navigate('ManagePageDeleteSuccess', {
         officeHour: officeHour,
