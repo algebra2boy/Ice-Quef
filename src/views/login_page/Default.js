@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, Dimensions } from 'react-native';
-import { KolynButton, KolynTextfield, KolynLogo } from '../../component';
+import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
+import { KolynButton, KolynTextfield, KolynLogo, KolynTextLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
+import { ThemeContext } from '../../style/AppTheme';
 
 const height = Dimensions.get('window').height;
 
@@ -13,7 +14,8 @@ const height = Dimensions.get('window').height;
  * @param { Props } { navigation }
  * @return { ReactElement } The login page
  */
-export function LoginPageDefault({ pressLogInButton }) {
+export function LoginPageDefault(props) {
+  const themedStyles = ThemedStyles();
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
@@ -21,20 +23,19 @@ export function LoginPageDefault({ pressLogInButton }) {
 
   const user = React.useContext(UserContext);
 
+  const pressLogInButton = props.pressLogInButton;
+  const status = props.status;
+  const isSuccess = props.isSuccess;
+
   const onLogInPressed = async () => {
     const userToken = await pressLogInButton(email, password);
     user.setEmail(email.toLowerCase());
 
-    if (userToken != null) {
-      // validate user
+    if (userToken != null) { // validate user
       user.setToken(userToken);
       navigation.navigate('Calendar');
-      // activate bottom tab navigator
       navigation.navigate('BottomTab');
-    } else {
-      // didn't login successfully
-      // console.log("didn't login successfully")
-    }
+    } else {} // didn't login successfully
   };
 
   const onSignUpPress = () => {
@@ -73,6 +74,10 @@ export function LoginPageDefault({ pressLogInButton }) {
                   keyboardType="default"
                   isSecure={true}
                 />
+                <KolynTextLabel
+                  text={ status }
+                  style={ isSuccess ? themedStyles.hintSuccess : themedStyles.hintFail }
+                />
               </View>
             </View>
 
@@ -87,4 +92,24 @@ export function LoginPageDefault({ pressLogInButton }) {
       }
     />
   );
+}
+
+function ThemedStyles() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
+  return StyleSheet.create({
+    hintSuccess: {
+      fontSize: currentTheme.fontSizes.small,
+      color: currentTheme.mainColor,
+      marginVertical: 0,
+      textAlign: 'center'
+    },
+    hintFail: {
+      fontSize: currentTheme.fontSizes.small,
+      color: currentTheme.errorColor,
+      marginVertical: 0,
+      textAlign: 'center'
+    }
+  });
 }

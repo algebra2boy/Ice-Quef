@@ -1,60 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { LoginPageDefault } from '../../views/login_page/Default';
 import encryptPassword from '../../props/encrypt';
 import ServerAddress from '../../props/Server';
-import { Alert } from 'react-native';
+import { LoginContext } from '../../props/LoginContext';
 
-async function LogInButtonPressed(email, password) {
-  try {
-    // Encrypt the password
-    const hashedPassword = await encryptPassword(password);
-    // Package data with the hashed password
-    const loginData = {
-      email: email.toLowerCase(),
-      password: hashedPassword,
-    };
-
-    try {
-      // HTTP POST
-      const response = await fetch(ServerAddress() + 'api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-      });
-
-      // get response
-      const serverResponse = await response.json();
-      // console.log(serverResponse);
-
-      if (serverResponse.status === 'success' && response.ok) {
-        // success
-        const token = serverResponse.token;
-        Alert.alert('Success', 'You have been login successfully!');
-        return token;
-      } else if (serverResponse.status) {
-        return null;
-        // Alert.alert('Login Failed', serverResponse.message || 'Username or password is wrong');
-      } else {
-        // edge case
-        return null;
-        // Alert.alert('Login Failed', serverResponse.errors.toString() || 'An error occurred');
-      }
-    } catch (error) {
-      // network error
-      Alert.alert('Error', error.toString() || 'Could not connect to the server.');
-      return null;
-    }
-  } catch (error) {
-    // Handle errors as before
-    Alert.alert('Error', error.toString());
-    return null;
-  }
-
-  // Also expecting different errors
-}
+const loginStatus = {
+  default: '',
+  success: 'You have been logged in successfully!',
+  notMatch: serverMsg => serverMsg || 'Log in failed. Your email or password was not found.',
+  serverFail: serverMsg => serverMsg || 'Could not connect to the server, please try again later.',
+  edgeCase: serverMsg => serverMsg || 'An error has occurred, please try again later.',
+  unknown: serverMsg => serverMsg || 'An unknown error has occurred.',
+};
 
 export function LoginPageDefaultController() {
-  return <LoginPageDefault pressLogInButton={LogInButtonPressed} />;
+  const [status, setStatus] = useState(loginStatus.default);
+  const [isSuccess, setSuccess] = useState(false);
+
+  const pass = React.useContext(LoginContext);
+
+  useEffect(() => {
+    setStatus(loginStatus.default);
+    setSuccess(false);
+  }, [pass.logStatus]);
+
+  async function LogInButtonPressed(email, password) {
+    try {
+      // Encrypt the password
+      const hashedPassword = await encryptPassword(password);
+      // Package data with the hashed password
+      const loginData = {
+        email: email.toLowerCase(),
+        password: hashedPassword,
+      };
+
+      try {
+        // HTTP POST
+        const response = await fetch(ServerAddress() + 'api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginData),
+        });
+  
+        // get response
+        const serverResponse = await response.json();
+
+        if (serverResponse.status === 'success' && response.ok) { // success
+          setStatus(loginStatus.success);
+          setSuccess(true);
+          return serverResponse.token;
+        } else if (serverResponse.status) {
+          setStatus(loginStatus.notMatch);
+          return null;
+        } else { // edge case
+          setStatus(loginStatus.edgeCase);
+          return null;
+        }
+      } catch (error) {
+        setStatus(loginStatus.serverFail);
+        return null;
+      }
+    } catch (error) { // Handle errors as before
+      setStatus(loginStatus.unknown);
+      return null;
+    }
+  }
+
+  return (
+    <LoginPageDefault 
+      pressLogInButton={ LogInButtonPressed } 
+      status={ status }
+      isSuccess={ isSuccess }
+    />);
 }

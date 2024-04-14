@@ -7,6 +7,7 @@ import { SignupPageDefaultController } from './src/controllers/signup_page/Defau
 import { BottomTabNavigator } from './src/component/BottomTabNav';
 import { CalendarPageController } from './src/controllers';
 import { OfficeHourUpdateWrapper } from './src/props/OfficeHourContext';
+import { LoginProvider } from './src/props/LoginContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,23 +22,25 @@ function App() {
   };
 
   return (
-    <UserProvider>
-      <ThemeProvider>
-        <OfficeHourUpdateWrapper>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="Login"
-              screenOptions={{headerShown: false, gestureEnabled: false}}
-            >
-              <Stack.Screen name="Login" component={LoginPageDefaultController}/>
-              <Stack.Screen name="Signup" component={SignupPageDefaultController}/>
-              <Stack.Screen name="Calendar" component={CalendarPageController}/>
-              <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
-            </Stack.Navigator>
-          </NavigationContainer>
-        </OfficeHourUpdateWrapper>
-      </ThemeProvider>
-    </UserProvider>
+    <LoginProvider>
+      <UserProvider>
+        <ThemeProvider>
+          <OfficeHourUpdateWrapper>
+            <NavigationContainer>
+              <Stack.Navigator
+                initialRouteName="Login"
+                screenOptions={{headerShown: false, gestureEnabled: false}}
+              >
+                <Stack.Screen name="Login" component={LoginPageDefaultController}/>
+                <Stack.Screen name="Signup" component={SignupPageDefaultController}/>
+                <Stack.Screen name="Calendar" component={CalendarPageController}/>
+                <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
+              </Stack.Navigator>
+            </NavigationContainer>
+          </OfficeHourUpdateWrapper>
+        </ThemeProvider>
+      </UserProvider>
+    </LoginProvider>
   );
 }
 

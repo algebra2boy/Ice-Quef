@@ -5,12 +5,13 @@ import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
 import { UserContext } from '../../props/UserInfo';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
-import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
+import { LoginContext } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
 export function ProfilePageDefault({}) {
   const themedStyles = ThemedStyles();
   const user = React.useContext(UserContext);
+  const pass = React.useContext(LoginContext);
   const navigation = useNavigation();
 
   return (
@@ -47,7 +48,7 @@ export function ProfilePageDefault({}) {
                 text="Change password"
                 onPress={()=>{}}
               />
-*/}
+              */}
             </View>
 
             <View style={{ top: height * 0.1 }}>
@@ -55,7 +56,7 @@ export function ProfilePageDefault({}) {
                 text="Log out"
                 onPress={() => {
                   navigation.popToTop();
-                  resetNavigatorTabIndex();
+                  pass.updateLogStatus();
                 }}
               />
             </View>
