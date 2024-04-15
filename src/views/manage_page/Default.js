@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, StyleSheet, FlatList, Text } from 'react-native';
 import { BasePage } from '../../style/BasePage';

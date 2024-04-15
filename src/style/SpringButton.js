@@ -1,6 +1,5 @@
-import React from 'react';
-import { Animated } from 'react-native';
-import { Pressable, Text } from 'react-native';
+import { useRef, useEffect } from 'react';
+import { Animated, Pressable, Text } from 'react-native';
 
 //https://www.youtube.com/watch?v=BzqHru-sIXw
 var isPressing = false;
@@ -14,9 +13,9 @@ var isPressing = false;
  * @returns { ReactElement } The button
  */
 export const SpringButton = ({ text, onPress, buttonStyle, labelStyle, testID = undefined }) => {
-  const animatedScale = React.useRef(new Animated.Value(0)).current;
+  const animatedScale = useRef(new Animated.Value(0)).current;
 
-  React.useEffect(() => {
+  useEffect(() => {
     animatedScale.setValue(1);
   }, []);
 

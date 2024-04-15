@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo, KolynTextLabel } from '../../component';
@@ -21,7 +21,7 @@ export function LoginPageDefault(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const user = React.useContext(UserContext);
+  const user = useContext(UserContext);
 
   const pressLogInButton = props.pressLogInButton;
   const status = props.status;
@@ -31,11 +31,13 @@ export function LoginPageDefault(props) {
     const userToken = await pressLogInButton(email, password);
     user.setEmail(email.toLowerCase());
 
-    if (userToken != null) { // validate user
+    if (userToken != null) {
+      // validate user
       user.setToken(userToken);
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
-    } else {} // didn't login successfully
+    } else {
+    } // didn't login successfully
   };
 
   const onSignUpPress = () => {
@@ -75,8 +77,8 @@ export function LoginPageDefault(props) {
                   isSecure={true}
                 />
                 <KolynTextLabel
-                  text={ status }
-                  style={ isSuccess ? themedStyles.hintSuccess : themedStyles.hintFail }
+                  text={status}
+                  style={isSuccess ? themedStyles.hintSuccess : themedStyles.hintFail}
                 />
               </View>
             </View>
@@ -95,7 +97,7 @@ export function LoginPageDefault(props) {
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({
@@ -103,13 +105,13 @@ function ThemedStyles() {
       fontSize: currentTheme.fontSizes.small,
       color: currentTheme.mainColor,
       marginVertical: 0,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     hintFail: {
       fontSize: currentTheme.fontSizes.small,
       color: currentTheme.errorColor,
       marginVertical: 0,
-      textAlign: 'center'
-    }
+      textAlign: 'center',
+    },
   });
 }

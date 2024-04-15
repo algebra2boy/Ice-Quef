@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import { Text, StyleSheet, Dimensions } from 'react-native';
 import { ThemeContext } from './AppTheme';
 import * as KolynStyle from './KolynStyleKit';
@@ -37,7 +37,7 @@ export function NonBold({ text }) {
 }
 
 export function ManageOHStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

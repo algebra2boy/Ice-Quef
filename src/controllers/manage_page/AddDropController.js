@@ -13,8 +13,7 @@ export async function addUserOfficeHour(userEmail, userToken, officeHourID) {
     const data = await response.json();
 
     if (response.status === 201) {
-      // adding OH is successful
-      console.log(data.message);
+      console.log(data.message); // addition was successful
       return true;
     } else {
       console.error(data.message);
@@ -26,7 +25,7 @@ export async function addUserOfficeHour(userEmail, userToken, officeHourID) {
   }
 }
 
-export async function deleteUserOfficeHour(userToken, officeHourID) {
+export async function deleteUserOfficeHour(userEmail, userToken, officeHourID) {
   const requestURL = ServerAddress() + `api/officeHour/remove/${officeHourID}`;
   try {
     const response = await fetch(requestURL, {
@@ -37,7 +36,7 @@ export async function deleteUserOfficeHour(userToken, officeHourID) {
     });
     const data = await response.json();
     if (response.status === 200) {
-      console.log(data); // deletion is successful
+      console.log(data); // deletion was successful
       return true;
     } else {
       console.error(data);

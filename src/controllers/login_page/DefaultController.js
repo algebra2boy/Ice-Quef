@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { LoginPageDefault } from '../../views/login_page/Default';
 import encryptPassword from '../../props/encrypt';
 import ServerAddress from '../../props/Server';
@@ -17,7 +17,7 @@ export function LoginPageDefaultController() {
   const [status, setStatus] = useState(loginStatus.default);
   const [isSuccess, setSuccess] = useState(false);
 
-  const pass = React.useContext(LoginContext);
+  const pass = useContext(LoginContext);
 
   useEffect(() => {
     setStatus(loginStatus.default);
@@ -43,18 +43,20 @@ export function LoginPageDefaultController() {
           },
           body: JSON.stringify(loginData),
         });
-  
+
         // get response
         const serverResponse = await response.json();
 
-        if (serverResponse.status === 'success' && response.ok) { // success
+        if (serverResponse.status === 'success' && response.ok) {
+          // success
           setStatus(loginStatus.success);
           setSuccess(true);
           return serverResponse.token;
         } else if (serverResponse.status) {
           setStatus(loginStatus.notMatch);
           return null;
-        } else { // edge case
+        } else {
+          // edge case
           setStatus(loginStatus.edgeCase);
           return null;
         }
@@ -62,16 +64,14 @@ export function LoginPageDefaultController() {
         setStatus(loginStatus.serverFail);
         return null;
       }
-    } catch (error) { // Handle errors as before
+    } catch (error) {
+      // Handle errors as before
       setStatus(loginStatus.unknown);
       return null;
     }
   }
 
   return (
-    <LoginPageDefault 
-      pressLogInButton={ LogInButtonPressed } 
-      status={ status }
-      isSuccess={ isSuccess }
-    />);
+    <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} isSuccess={isSuccess} />
+  );
 }

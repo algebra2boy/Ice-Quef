@@ -1,7 +1,7 @@
-import React from 'react';
-import { ThemeContext } from '../style/AppTheme';
+import { useContext } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ThemeContext } from '../style/AppTheme';
 import { setNavigatorTabIndex, getNavigatorTabIndex } from '../props/NavigatorTabIndexController';
 import {
   CalendarPageController,
@@ -83,7 +83,7 @@ export function BottomTabNavigator() {
           tabBarIcon: () => (
             <View>
               <Image source={images[2]} style={themedStyles.smallPageIcon}></Image>
-              {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline} />}
+              {getNavigatorTabIndex() == 2 && <View style={themedStyles.bottomUnderline} />}
             </View>
           ),
           tabBarLabel: '',
@@ -91,7 +91,7 @@ export function BottomTabNavigator() {
         component={ProfilePageController}
         listeners={{
           tabPress: () => {
-            setNavigatorTabIndex(3);
+            setNavigatorTabIndex(2);
           },
         }}
       />
@@ -100,13 +100,13 @@ export function BottomTabNavigator() {
 }
 
 function GetMainColor() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
   return currentTheme.mainColor;
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

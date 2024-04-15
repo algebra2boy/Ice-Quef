@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { BasePage } from '../../style/BasePage';
@@ -10,8 +10,8 @@ import { LoginContext } from '../../props/LoginContext';
 const height = Dimensions.get('window').height;
 export function ProfilePageDefault({}) {
   const themedStyles = ThemedStyles();
-  const user = React.useContext(UserContext);
-  const pass = React.useContext(LoginContext);
+  const user = useContext(UserContext);
+  const pass = useContext(LoginContext);
   const navigation = useNavigation();
 
   return (
@@ -80,7 +80,7 @@ function EditIcon({ onPress }) {
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

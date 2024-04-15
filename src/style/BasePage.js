@@ -1,11 +1,8 @@
-import * as React from 'react';
-import { Platform } from 'react-native';
-import { StyleSheet, View } from 'react-native';
-import { SafeAreaView, Keyboard } from 'react-native';
+import { useCallback } from 'react';
+import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import loadFont from '../props/FontLoader';
 import * as KolynStyle from './KolynStyleKit';
-import { ThemeContext } from './AppTheme';
 import loadImages from '../props/ImageLoader';
 
 const ios = Platform.OS == 'ios';
@@ -23,7 +20,7 @@ export function BasePage({ components }) {
   const fontsLoaded = loadFont();
   const imageLoaded = loadImages();
 
-  const onLayoutRootView = React.useCallback(async () => {
+  const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded && imageLoaded) {
       await SplashScreen.hideAsync();
     }
@@ -42,19 +39,7 @@ export function BasePage({ components }) {
   );
 }
 
-/**
- * Dismisses the keyboard if not on web platform
- */
-function dismissKeyboard() {
-  if (Platform.OS != 'web') {
-    Keyboard.dismiss();
-  }
-}
-
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
-  const currentTheme = themeManager.theme;
-
   return StyleSheet.create({
     screen: StyleSheet.flatten([KolynStyle.kolynScreen()]),
   });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Alert } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
@@ -34,7 +34,7 @@ export function SignupPageDefault({}) {
   const [passwordConditions, setPasswordConditions] = useState([false, false, false, false]);
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
-  const user = React.useContext(UserContext);
+  const user = useContext(UserContext);
 
   const checkEmail = email => {
     if (email === undefined) return;
@@ -291,7 +291,7 @@ function ConfirmPasswordHintText({ themedStyles, confirmPasswordHint, confirmPas
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

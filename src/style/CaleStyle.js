@@ -1,10 +1,16 @@
-import React from 'react';
+import { useContext } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { ThemeContext } from './AppTheme';
 
 export const renderEvent = (event, touchableOpacityProps) => {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
+
+  const makeTwoDigits = (time) => {
+    const timeString = `${time}`;
+    if (timeString.length === 2) return time;
+    return `0${time}`;
+  };
 
   return (
     <TouchableOpacity {...touchableOpacityProps}>
@@ -24,10 +30,10 @@ export const renderEvent = (event, touchableOpacityProps) => {
 };
 
 export const eventCellTheme = () => {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
-  theme = {
+  return {
     palette: {
       primary: {
         main: currentTheme.mainColor,
@@ -48,11 +54,4 @@ export const eventCellTheme = () => {
       moreLabel: { fontFamily: currentTheme.mainFont, fontSize: currentTheme.fontSizes.casual },
     },
   };
-  return theme;
 };
-
-function makeTwoDigits(time) {
-  const timeString = `${time}`;
-  if (timeString.length === 2) return time;
-  return `0${time}`;
-}
