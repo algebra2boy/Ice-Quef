@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
@@ -171,7 +171,7 @@ function Hint({ themedStyles }) {
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

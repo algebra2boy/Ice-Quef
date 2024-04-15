@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, Text, StyleSheet, ScrollView } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';

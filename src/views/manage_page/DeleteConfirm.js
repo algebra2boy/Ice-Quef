@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
@@ -14,14 +14,16 @@ export function ManagePageDeleteConfirm({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
-  const userToken = useContext(UserContext).token;
+  const user = useContext(UserContext);
+  const userEmail = user.email;
+  const userToken = user.token;
   const officeHour = route.params?.officeHour;
   const { triggerUpdate } = useOfficeHourUpdate();
 
   const deleteFromDB = async () => {
-    const requestStatus = await deleteUserOfficeHour(userToken, officeHour.id);
+    const requestStatus = await deleteUserOfficeHour(userEmail, userToken, officeHour.id);
     if (requestStatus) {
-      console.log("trigger deletion");
+      console.log('trigger deletion');
       triggerUpdate();
       navigation.navigate('ManagePageDeleteSuccess', {
         officeHour: officeHour,

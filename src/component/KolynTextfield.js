@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import { ThemeContext } from '../style/AppTheme';
 import * as KolynStyle from '../style/KolynStyleKit';
@@ -40,13 +40,14 @@ export function KolynTextfield({
 }
 
 function GetPlaceholderColor() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
+  
   return currentTheme.disableColor;
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

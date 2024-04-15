@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { ManagePageDefault } from '../../views/manage_page/Default';
 import { LoadingPage } from '../../component/LoadingPage';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
@@ -6,7 +6,7 @@ import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { UserContext } from '../../props/UserInfo';
 
 export function ManagePageDefaultController() {
-  const user = React.useContext(UserContext);
+  const user = useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
 
   const updateTrigger = useOfficeHourUpdate().updateTrigger;

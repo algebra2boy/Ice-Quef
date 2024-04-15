@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as KolynStyle from '../style/KolynStyleKit';
 import { ThemeContext } from '../style/AppTheme';
@@ -28,7 +28,7 @@ export function KolynSubtitleLabel({ title }) {
 }
 
 function ThemedStyles() {
-  const themeManager = React.useContext(ThemeContext);
+  const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
 
   return StyleSheet.create({

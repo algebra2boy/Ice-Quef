@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { CalendarPageDefault } from '../../views/calendar_page/Default';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 import { LoadingPage } from '../../component/LoadingPage';
@@ -11,7 +11,7 @@ const joinStatus = {
 };
 
 export function CalendarPageDefaultController() {
-  const user = React.useContext(UserContext);
+  const user = useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
 
   const updateTrigger = useOfficeHourUpdate().updateTrigger;
@@ -53,11 +53,11 @@ export function CalendarPageDefaultController() {
 
     calculateResult();
   }, [officeHour]);
-  
+
   if (isLoading) {
     return <LoadingPage text="Loading office hours..." />;
   }
-  
+
   const determineMessage = () => {
     if (currStatus === joinStatus.notJoined) {
       setCurrStatus(joinStatus.joined(1));

@@ -1,29 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ManagePageAddOH } from '../../views/manage_page/AddOH';
-import { LoadingPage } from '../../component/LoadingPage';
 import { PerformSearch } from '../../models/OfficeHourSearcher';
-
-function debounce(func, wait) {
-  let timeout;
-
-  // debounce return function
-  const executedFunction = (...args) => {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-
-  // cancel method to clear the timeout after
-  executedFunction.cancel = () => {
-    clearTimeout(timeout);
-  };
-
-  return executedFunction;
-}
 
 export function ManagePageAddOHController() {
   const [officeHour, setOfficeHour] = useState([]);
@@ -33,6 +10,28 @@ export function ManagePageAddOHController() {
   const [facultyName, setFacultyName] = useState('');
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const debounce = (func, wait) => {
+    let timeout;
+  
+    // debounce return function
+    const executedFunction = (...args) => {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+  
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  
+    // cancel method to clear the timeout after
+    executedFunction.cancel = () => {
+      clearTimeout(timeout);
+    };
+  
+    return executedFunction;
+  };
 
   const debouncedSearchResult = debounce(async () => {
     if (!isSearching) {

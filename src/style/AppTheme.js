@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { createContext } from 'react';
 
 /**
@@ -133,7 +133,7 @@ export const ThemeContext = createContext(themes);
  * @return { ReactElement } component wrapped with theme context
  */
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = React.useState(themes[0]);
+  const [theme, setTheme] = useState(themes[0]);
 
   const changeTheme = themeIndex => {
     setTheme(themes[themeIndex]);

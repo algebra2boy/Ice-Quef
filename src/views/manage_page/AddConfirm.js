@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
@@ -21,7 +21,7 @@ export function ManagePageAddConfirm({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
-  const user = React.useContext(UserContext);
+  const user = useContext(UserContext);
   const userEmail = user.email;
   const userToken = user.token;
 
@@ -34,7 +34,7 @@ export function ManagePageAddConfirm({ route }) {
     const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID);
     if (requestStatus) {
       // true means successful
-      console.log("trigger addition");
+      console.log('trigger addition');
       triggerUpdate(); // trigger an update on the manage main page
 
       navigation.navigate('ManagePageAddSuccess', {

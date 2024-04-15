@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Asset } from 'expo-asset';
 
 /**
@@ -10,7 +10,7 @@ import { Asset } from 'expo-asset';
 const images = [require('../../assets/images/3D_Logo.png')];
 
 function loadImages() {
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const cacheResources = async () => {
     const cacheImages = images.map(image => {
@@ -20,7 +20,7 @@ function loadImages() {
     return Promise.all(cacheImages);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadResources = async () => {
       await cacheResources();
       setIsLoaded(true);
