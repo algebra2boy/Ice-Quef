@@ -8,7 +8,8 @@ import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { LoginContext } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
-export function ProfilePageDefault({}) {
+
+export function ProfilePageDefault({ }) {
   const themedStyles = ThemedStyles();
   const user = useContext(UserContext);
   const pass = useContext(LoginContext);
@@ -43,12 +44,14 @@ export function ProfilePageDefault({}) {
               </View>
 
               <View style={{ height: '10%' }} />
-              {/*
+
               <KolynButton 
                 text="Change password"
-                onPress={()=>{}}
+                onPress={()=>{
+                  navigation.navigate("ProfilePageResetPassword");
+                }}
               />
-              */}
+
             </View>
 
             <View style={{ top: height * 0.1 }}>
