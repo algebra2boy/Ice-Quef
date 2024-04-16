@@ -7,20 +7,13 @@ import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '..
 import ServerAddress from '../../props/Server';
 import encryptPassword from '../../props/encrypt';
 import { UserContext } from '../../props/UserInfo';
+import { passwordHint, confirmPasswordHint } from '../../props/PasswordEnum';
+import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
+import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
 
 const emailHint = {
   0: 'Enter your UMass email',
 };
-const passwordHint = {
-  0: 'At least one lowercase letter',
-  1: 'At least one uppercase letter',
-  2: 'At least one number',
-  3: 'Minimum 8 characters',
-};
-const confirmPasswordHint = {
-  0: 'Enter your password again',
-};
-
 const height = Dimensions.get('window').height;
 
 export function SignupPageDefault({}) {
@@ -48,44 +41,6 @@ export function SignupPageDefault({}) {
     };
 
     setEmailCondition(isEnoughLength() && isUMass());
-  };
-
-  const checkPassword = password => {
-    if (password === undefined) return;
-    const containsLetter = /[a-zA-Z]/;
-    const containsNumber = /[0-9]/;
-
-    const atLeastOneLowercase = () => {
-      return password !== password.toUpperCase() && containsLetter.test(password);
-    };
-    const atLeastOneUppercase = () => {
-      return password !== password.toLowerCase() && containsLetter.test(password);
-    };
-    const atLeastOneNumber = () => {
-      return containsNumber.test(password);
-    };
-    const minimumEightChars = () => {
-      return password.length >= 8;
-    };
-
-    setPasswordConditions([
-      atLeastOneLowercase(),
-      atLeastOneUppercase(),
-      atLeastOneNumber(),
-      minimumEightChars(),
-    ]);
-  };
-
-  const checkConfirmPassword = (val, isEnterFromRePassword) => {
-    const isTheSame = () => {
-      if (isEnterFromRePassword) {
-        return val === password;
-      } else {
-        return val === repassword;
-      }
-    };
-
-    setConfirmPasswordCondition(isTheSame());
   };
 
   const onRegisterPressed = async () => {
@@ -196,15 +151,14 @@ export function SignupPageDefault({}) {
                 value={password}
                 setValue={password => {
                   setPassword(password);
-                  checkPassword(password);
-                  checkConfirmPassword(password, false);
+                  checkPassword(password, setPasswordConditions);
+                  checkConfirmPassword(password, password, repassword, false, setConfirmPasswordCondition);
                 }}
                 placeholder=""
                 keyboardType="default"
                 isSecure={true}
               />
               <PasswordHintText
-                themedStyles={themedStyles}
                 passwordHint={passwordHint}
                 passwordConditions={passwordConditions}
               />
@@ -214,14 +168,13 @@ export function SignupPageDefault({}) {
                 value={repassword}
                 setValue={repassword => {
                   setRePassword(repassword);
-                  checkConfirmPassword(repassword, true);
+                  checkConfirmPassword(repassword, password, repassword, true, setConfirmPasswordCondition);
                 }}
                 placeholder=""
                 keyboardType="default"
                 isSecure={true}
               />
               <ConfirmPasswordHintText
-                themedStyles={themedStyles}
                 confirmPasswordHint={confirmPasswordHint}
                 confirmPasswordCondition={confirmPasswordCondition}
               />
@@ -254,37 +207,6 @@ function EmailHintText({ themedStyles, emailHint, emailCondition }) {
     <View>
       <Text style={emailCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}>
         {emailHint[0]}
-      </Text>
-    </View>
-  );
-}
-
-function PasswordHintText({ themedStyles, passwordHint, passwordConditions }) {
-  return (
-    <View>
-      <Text style={passwordConditions[0] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        {passwordHint[0]}
-      </Text>
-      <Text style={passwordConditions[1] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        {passwordHint[1]}
-      </Text>
-      <Text style={passwordConditions[2] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        {passwordHint[2]}
-      </Text>
-      <Text style={passwordConditions[3] ? themedStyles.hintTextPass : themedStyles.hintTextError}>
-        {passwordHint[3]}
-      </Text>
-    </View>
-  );
-}
-
-function ConfirmPasswordHintText({ themedStyles, confirmPasswordHint, confirmPasswordCondition }) {
-  return (
-    <View>
-      <Text
-        style={confirmPasswordCondition ? themedStyles.hintTextPass : themedStyles.hintTextError}
-      >
-        {confirmPasswordHint[0]}
       </Text>
     </View>
   );

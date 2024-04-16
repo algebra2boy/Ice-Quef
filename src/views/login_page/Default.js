@@ -31,13 +31,13 @@ export function LoginPageDefault(props) {
     const userToken = await pressLogInButton(email, password);
     user.setEmail(email.toLowerCase());
 
-    if (userToken != null) {
-      // validate user
-      user.setToken(userToken);
+    // if (userToken != null) {
+    //   // validate user
+    //   user.setToken(userToken);
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
-    } else {
-    } // didn't login successfully
+    // } else {
+    // } // didn't login successfully
   };
 
   const onSignUpPress = () => {
