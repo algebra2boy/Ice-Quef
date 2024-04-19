@@ -15,7 +15,7 @@ export function ProfilePageResetPasswordController() {
   // Page 1: Please enter your password
   // Page 2: Set a new password & Re-enter new password
   // Page 3: Password changed successfully
-  const [pageVariant, onChangePageVariant] = useState(PageVariant.VerifyCurrent);
+  const [pageVariant, onChangePageVariant] = useState(PageVariant.NewPassword);
 
   // Check whether the new password matches our guideline
   // At least one lower case
