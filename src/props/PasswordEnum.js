@@ -1,5 +1,4 @@
 export const PageVariant = {
-  VerifyCurrent: 'Please enter your password:',
   NewPassword: 'Set a new password',
   ChangeSuccess: 'Password changed successfully!'
 };

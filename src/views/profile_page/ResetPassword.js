@@ -43,91 +43,61 @@ export function ProfilePageResetPassword(props) {
         >
           <View style={themedStyles.root}>
             <View style={{ height: height * 0.5 }}>
-              <View style={{flex: 2}}>
-                <KolynTitleLabel title="Change password" />
-              </View>
+              <KolynTitleLabel title="Change password" />
 
-              <View style={{flex: 2}}>
-                {pageVariant == PageVariant.NewPassword &&
-                  <View>
-                    <KolynTextLabel text={pageVariant} />
-                  </View>
-                }
-                {pageVariant == PageVariant.VerifyCurrent &&
-                  <View>
-                    <KolynTextLabel text={pageVariant} />
-                    <KolynTextfield
-                      placeholder="Enter password"
-                      setValue={onChangePasswordText}
-                      value={passwordText}
-                      isSecure={true}
-                    />
-                  </View>
-                }
+              {pageVariant == PageVariant.NewPassword &&
+                <View>
+                  <KolynTextLabel text="Enter your old password" />
+                  <KolynTextfield
+                    placeholder="Enter password"
+                    setValue={onChangePasswordText}
+                    value={passwordText}
+                    isSecure={true}
+                  />
+                  <KolynTextLabel text={pageVariant} />
 
-                {pageVariant == PageVariant.NewPassword &&
-                  <View>
-                    <KolynTextfield
-                      placeholder="Enter password"
-                      setValue={input => {
-                        onChangeRePasswordText(input);
-                        checkPassword(input, setPasswordConditions);
-                        checkConfirmPassword(input, repasswordText, rerepasswordText, false, setConfirmPasswordCondition);
-                      }}
-                      value={repasswordText}
-                      isSecure={true}
-                    />
-                  </View>
-                }
-              </View>
+                  <KolynTextfield
+                    placeholder="Enter password"
+                    setValue={input => {
+                      onChangeRePasswordText(input);
+                      checkPassword(input, setPasswordConditions);
+                      checkConfirmPassword(input, repasswordText, rerepasswordText, false, setConfirmPasswordCondition);
+                    }}
+                    value={repasswordText}
+                    isSecure={true}
+                  />
 
-              <View style={{flex: 2}}>
-                {pageVariant == PageVariant.NewPassword &&
-                  <View>
-                    <PasswordHintText
-                      passwordHint={passwordHint}
-                      passwordConditions={passwordConditions}
-                    />
-                  </View>
-                }
-                {pageVariant == PageVariant.ChangeSuccess &&
-                  <View>
-                    <KolynTextLabel text={pageVariant} />
-                  </View>
-                }
-              </View>
+                  <PasswordHintText
+                    passwordHint={passwordHint}
+                    passwordConditions={passwordConditions}
+                  />
 
-              <View style={{flex: 2}}>
-                {pageVariant == PageVariant.NewPassword &&
-                  <View>
-                    <KolynTextLabel text="Re-enter new password" />
-                    <KolynTextfield
-                      placeholder="Enter password"
-                      setValue={input => {
-                        onChangeReRePasswordText(input);
-                        checkConfirmPassword(input, repasswordText, rerepasswordText, true, setConfirmPasswordCondition);
-                      }}
-                      value={rerepasswordText}
-                      isSecure={true}
-                    />
-                    <ConfirmPasswordHintText
-                      confirmPasswordHint={confirmPasswordHint}
-                      confirmPasswordCondition={confirmPasswordCondition}
-                    />
-                  </View>
-                }
-              </View>
+                <KolynTextLabel text="Re-enter new password" />
+                  <KolynTextfield
+                    placeholder="Enter password"
+                    setValue={input => {
+                      onChangeReRePasswordText(input);
+                      checkConfirmPassword(input, repasswordText, rerepasswordText, true, setConfirmPasswordCondition);
+                    }}
+                    value={rerepasswordText}
+                    isSecure={true}
+                  />
+                  <ConfirmPasswordHintText
+                    confirmPasswordHint={confirmPasswordHint}
+                    confirmPasswordCondition={confirmPasswordCondition}
+                  />
+                </View>
+              }
+
+              {pageVariant == PageVariant.ChangeSuccess &&
+                <View>
+                  <KolynTextLabel text={pageVariant} />
+                </View>
+              }
+
             </View>
 
             <View style={{ top: height * 0.1 }}>
-                {pageVariant == PageVariant.VerifyCurrent &&
-                  <View>
-                    <KolynButton
-                      onPress={()=>{onChangePageVariant(PageVariant.NewPassword)}}
-                      text={"Next"}
-                    />
-                  </View>
-                }
                 {pageVariant == PageVariant.NewPassword &&
                   <View>
                     <KolynButton
