@@ -12,6 +12,8 @@ export function CalendarPageDefault(props) {
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [title, setTitle] = useState('');
 
+  const updatePosition = props.updatePosition;
+
   const onPressEvent = event => {
     setOpenMenu(true);
     setTitle(event.title);
@@ -38,6 +40,7 @@ export function CalendarPageDefault(props) {
                 determineMessage={props.determineMessage}
                 message={props.message}
                 setOpenMenu={setOpenMenu}
+                updatePosition={updatePosition}
               />
             )}
           </View>
@@ -60,6 +63,7 @@ const getHourStyle = () => {
 
 function PopupMenu(props) {
   const themedStyles = ThemedStyles();
+  const updatePosition = props.updatePosition;
 
   return (
     <View style={themedStyles.bottomOverlay}>
@@ -76,7 +80,11 @@ function PopupMenu(props) {
 
           <TouchableOpacity
             style={themedStyles.waitlistButton}
-            onPress={() => props.determineMessage()}
+            onPress={() => {
+              props.determineMessage();
+              updatePosition();
+            }
+          }
           >
             <Text style={themedStyles.waitlistLabel}>{props.message}</Text>
           </TouchableOpacity>
