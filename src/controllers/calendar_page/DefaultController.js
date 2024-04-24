@@ -24,35 +24,35 @@ export function CalendarPageDefaultController() {
 
     // Todo: modify queue index when changed
     const updatePosition = () => {
+        let queueIndex = -1;
         const socket = SocketIOClient(ServerAddress());
 
         socket.on('connect', () => {
             console.log("Connected to the server");
-        });
 
-        socket.on('disconnect', () => {
-            console.log("Disconnected from the server");
-        });
-
-        // socket.on('join queue', () => {
-        //     socket.emit("", {studentEmail: userEmail, officeHourID: officeHour.id})
-        // });
-
-        const send = () => {
-            console.log({
+            const joinData = {
                 studentEmail: userEmail,
                 officeHourID: officeHour[0].id
-            });
-            return socket.emit("join queue", {
-                studentEmail: userEmail, officeHourID: officeHour[0].id
-            });
+            };
 
-        }
+            socket.emit('join queue', joinData, (response) => {
+                console.log('Server response:', response);
+            });
+        });
 
-        const index = 1;
-        setCurrStatus(joinStatus.joined(index));
-        console.log(send());
-        console.log(send()["status"]);
+        socket.on('joined queue', (position) => {
+            console.log('Joined queue at position:', position);
+            queueIndex = position;
+            console.log("Index is:", queueIndex);
+            setCurrStatus(joinStatus.joined(queueIndex));
+            socket.close(); // Close the connection after receiving the position
+        });
+
+        socket.on('disconnect', (reason) => {
+            console.log('Disconnected from the server:', reason);
+        });
+
+
     };
 
     const [officeHour, setOfficeHour] = useState([]);
