@@ -15,24 +15,21 @@ const joinStatus = {
 export function CalendarPageDefaultController() {
     const user = useContext(UserContext);
     const userEmail = user.email; // get user email address (account name)
-
     const updateTrigger = useOfficeHourUpdate().updateTrigger;
 
     // const [registered, setRegistered] = useState([]);
     const [currStatus, setCurrStatus] = useState(joinStatus.notJoined);
     // const [isLoading, setIsLoading] = useState(true); // loading indicator
 
-    // Todo: modify queue index when changed
-    const updatePosition = () => {
+    const joinQueue = (socket) => {
         let queueIndex = -1;
-        const socket = SocketIOClient(ServerAddress());
 
         socket.on('connect', () => {
             console.log("Connected to the server");
 
             const joinData = {
                 studentEmail: userEmail,
-                officeHourID: officeHour[0].id
+                officeHourID: officeHour[0].id   //TODO: change office hour INDEX to a variable
             };
 
             socket.emit('join queue', joinData, (response) => {
@@ -43,16 +40,38 @@ export function CalendarPageDefaultController() {
         socket.on('joined queue', (position) => {
             console.log('Joined queue at position:', position);
             queueIndex = position;
-            console.log("Index is:", queueIndex);
             setCurrStatus(joinStatus.joined(queueIndex));
-            socket.close(); // Close the connection after receiving the position
+            // socket.close();
         });
 
-        socket.on('disconnect', (reason) => {
-            console.log('Disconnected from the server:', reason);
-        });
+    };
 
 
+    const leaveQueue = (socket) => {
+        if (!socket) {
+            console.log("Socket not connected");
+            return;
+        }
+
+        const leaveData = {
+            studentEmail: userEmail,
+            officeHourID: officeHour[0].id //TODO: change office hour INDEX to a variable
+        };
+        socket.emit('leave queue', leaveData);
+
+        // TODO: definitely need to add some error handling here, meanwhile leave queue with socket.on doesn't work well
+        setCurrStatus(joinStatus.notJoined);
+    };
+
+
+    const updatePosition = () => {
+        // init socket
+        const socket = SocketIOClient(ServerAddress());
+        if (currStatus === joinStatus.notJoined) {  // waiting, so user join
+            joinQueue(socket);
+        } else {
+            leaveQueue(socket);
+        }
     };
 
     const [officeHour, setOfficeHour] = useState([]);
@@ -87,19 +106,19 @@ export function CalendarPageDefaultController() {
         return <LoadingPage text="Loading office hours..."/>;
     }
 
-    const determineMessage = () => {
-        if (currStatus === joinStatus.notJoined) {
-            setCurrStatus(joinStatus.joined(1));
-        } else {
-            setCurrStatus(joinStatus.notJoined);
-        }
-    };
+    // const determineMessage = () => {
+    //     if (currStatus === joinStatus.notJoined) {
+    //         setCurrStatus(joinStatus.joined(1));
+    //     } else {
+    //         setCurrStatus(joinStatus.notJoined);
+    //     }
+    // };
 
     return (
         <CalendarPageDefault
             regLst={result}
             message={currStatus}
-            determineMessage={determineMessage}
+            determineMessage={updatePosition}
             updatePosition={updatePosition}
         />
     );
