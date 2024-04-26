@@ -22,41 +22,6 @@ export function CalendarPageDefaultController() {
     console.log('Connected to the server');
   });
 
-  // Receive the response sent back from server after "join queue" event is sent
-  socket.on('join queue response', response => {
-    const { status, data, error } = response;
-
-    if (status === 'success') {
-      const queueIndex = data;
-
-      console.log('Joined queue at position:', queueIndex);
-      setCurrStatus({ ...currStatus, message: joinStatus.joined(queueIndex), isJoined: true });
-      joinStatus.isJoined = true;
-    } else {
-      console.log(error);
-    }
-    // socket.close();
-  });
-
-  // Receive the response sent back from server after "queue queue" event is sent
-  socket.on('leave queue response', response => {
-    const { status, data, error } = response;
-
-    if (status === 'success') {
-      const pplInQueue = data;
-
-      console.log('Number of people in queue:', pplInQueue);
-      setCurrStatus({
-        ...currStatus,
-        message: joinStatus.notJoined(pplInQueue),
-        isJoined: false,
-      });
-      joinStatus.isJoined = false;
-    } else {
-      console.log(error);
-    }
-  });
-
   // const [registered, setRegistered] = useState([]);
   const [currStatus, setCurrStatus] = useState({
     // Initialize to 0 for testing purpose only
@@ -74,6 +39,22 @@ export function CalendarPageDefaultController() {
     socket.emit('join queue', joinData, response => {
       console.log('Server response:', response);
     });
+
+    // Receive the response sent back from server after "join queue" event is sent
+    socket.on('join queue response', response => {
+      const { status, data, error } = response;
+
+      if (status === 'success') {
+        const queueIndex = data;
+
+        console.log('Joined queue at position:', queueIndex);
+        setCurrStatus({ ...currStatus, message: joinStatus.joined(queueIndex), isJoined: true });
+        joinStatus.isJoined = true;
+      } else {
+        console.log(error);
+      }
+      // socket.close();
+    });
   };
 
   const leaveQueue = socket => {
@@ -88,6 +69,25 @@ export function CalendarPageDefaultController() {
     };
     socket.emit('leave queue', leaveData, response => {
       console.log('Server response:', response);
+    });
+
+    // Receive the response sent back from server after "queue queue" event is sent
+    socket.on('leave queue response', response => {
+      const { status, data, error } = response;
+
+      if (status === 'success') {
+        const pplInQueue = data;
+
+        console.log('Number of people in queue:', pplInQueue);
+        setCurrStatus({
+          ...currStatus,
+          message: joinStatus.notJoined(pplInQueue),
+          isJoined: false,
+        });
+        joinStatus.isJoined = false;
+      } else {
+        console.log(error);
+      }
     });
   };
 
