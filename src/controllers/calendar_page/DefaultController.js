@@ -30,10 +30,10 @@ export function CalendarPageDefaultController() {
   });
   // const [isLoading, setIsLoading] = useState(true); // loading indicator
 
-  const joinQueue = socket => {
+  const joinQueue = (socket, currentOfficeHourID) => {
     const joinData = {
       studentEmail: userEmail,
-      officeHourID: officeHour[0].id, //TODO: change office hour INDEX to a variable
+      officeHourID: currentOfficeHourID, //TODO: change office hour INDEX to a variable
     };
 
     socket.emit('join queue', joinData, response => {
@@ -91,18 +91,23 @@ export function CalendarPageDefaultController() {
     });
   };
 
+  const [officeHour, setOfficeHour] = useState([]);
+  const [result, setResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // loading indicator
+  // the currently opened pop-up menu event
+  // When a pop-up menu is closed, this event will be set to null
+  // This event contains the currently inspecting office hour's id
+  // as well as its time slot (precise)
+  const [currentEvent, setCurrentEvent] = useState(null);
+
   const updatePosition = () => {
     if (currStatus.isJoined === false) {
       // waiting, so user join
-      joinQueue(socket);
+      joinQueue(socket, currentEvent.id);
     } else {
       leaveQueue(socket);
     }
   };
-
-  const [officeHour, setOfficeHour] = useState([]);
-  const [result, setResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // loading indicator
 
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
@@ -146,6 +151,7 @@ export function CalendarPageDefaultController() {
       message={currStatus.message}
       determineMessage={updatePosition}
       updatePosition={updatePosition}
+      setCurrentEvent={setCurrentEvent}
     />
   );
 }
@@ -253,6 +259,7 @@ const getRenderList = registered => {
           endTime[0],
           endTime[1]
         ),
+        id: oh.id
       });
     }
 

@@ -18,6 +18,7 @@ export function CalendarPageDefault(props) {
   const onPressEvent = event => {
     setOpenMenu(true);
     setTitle(event.title);
+    props.setCurrentEvent(event);
   };
 
   return (
@@ -42,6 +43,7 @@ export function CalendarPageDefault(props) {
                 message={props.message}
                 setOpenMenu={setOpenMenu}
                 updatePosition={updatePosition}
+                setCurrentEvent={props.setCurrentEvent}
               />
             )}
           </View>
@@ -72,7 +74,10 @@ function PopupMenu(props) {
         <View style={{ bottom: '10%' }}>
           <TouchableOpacity
             style={themedStyles.closeMenuBotton}
-            onPress={() => props.setOpenMenu(false)}
+            onPress={() => {
+              props.setOpenMenu(false);
+              props.setCurrentEvent(null);
+            }}
           >
             <CrossMark />
           </TouchableOpacity>
