@@ -39,7 +39,6 @@ export function CalendarPageDefault(props) {
             {isOpenMenu && (
               <PopupMenu
                 title={title}
-                determineMessage={props.determineMessage}
                 message={props.message}
                 setOpenMenu={setOpenMenu}
                 updatePosition={updatePosition}
@@ -87,7 +86,6 @@ function PopupMenu(props) {
           <TouchableOpacity
             style={themedStyles.waitlistButton}
             onPress={() => {
-              props.determineMessage();
               updatePosition();
             }
           }
