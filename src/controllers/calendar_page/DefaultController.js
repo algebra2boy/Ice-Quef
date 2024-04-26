@@ -104,6 +104,7 @@ export function CalendarPageDefaultController() {
     if (currStatus.isJoined === false) {
       // waiting, so user join
       joinQueue(socket, currentEvent.id);
+      console.log('Joined queue');
     } else {
       leaveQueue(socket);
     }
@@ -149,7 +150,6 @@ export function CalendarPageDefaultController() {
     <CalendarPageDefault
       regLst={result}
       message={currStatus.message}
-      determineMessage={updatePosition}
       updatePosition={updatePosition}
       setCurrentEvent={setCurrentEvent}
     />
