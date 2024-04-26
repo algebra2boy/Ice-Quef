@@ -6,6 +6,7 @@ import { ThemeContext } from '../../style/AppTheme';
 import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit';
 
+
 export function CalendarPageDefault(props) {
   const hourStyle = getHourStyle();
 
