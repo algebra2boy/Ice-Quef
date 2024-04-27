@@ -60,7 +60,7 @@ export function ProfilePageDefault({}) {
                 text="Log out"
                 onPress={() => {
                   navigation.popToTop();
-                  pass.updateLogStatus();
+                  pass.updateLoginStatus();
                 }}
               />
             </View>

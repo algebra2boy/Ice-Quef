@@ -26,7 +26,7 @@ export function CalendarPageDefault(props) {
         <>
           <View style={{ flex: 20 }}>
             <Calendar
-              events={props.regLst}
+              events={props.renderableList}
               height={400}
               mode="3days"
               theme={eventCellTheme()}

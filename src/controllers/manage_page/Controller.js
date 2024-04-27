@@ -9,8 +9,14 @@ import { ManagePageDeleteConfirm } from '../../views/manage_page/DeleteConfirm';
 import { ManagePageDeleteSuccess } from '../../views/manage_page/DeleteSuccess';
 import { ManagePageDeleteFail } from '../../views/manage_page/DeleteFail';
 
+// Stack Navigator for Manage Page
 const Stack = createNativeStackNavigator();
 
+/**
+ * Controller for manage page
+ * 
+ * @returns { ReactElement } A navigator between manage pages
+ */
 export function ManagePageController() {
   return (
     <Stack.Navigator
