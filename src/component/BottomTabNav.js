@@ -22,7 +22,7 @@ const images = [
 /**
  * Responsible for the bottom tab navigation bar in the main screen.
  * Three buttons: 1. Calendar, 2. Manage, 3. Profile
- * 
+ *
  * @returns { ReactElement } Bottom tab navigator in main screen
  */
 export function BottomTabNavigator() {

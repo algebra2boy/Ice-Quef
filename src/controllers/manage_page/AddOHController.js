@@ -3,11 +3,11 @@ import { ManagePageAddOH } from '../../views/manage_page/AddOH';
 import { PerformSearch } from '../../models/OfficeHourSearcher';
 
 /**
- * The controller for add office hour page. 
- * It controls: 1. searching office hour, 
+ * The controller for add office hour page.
+ * It controls: 1. searching office hour,
  * 2. adding office hour to student's registered list,
  * 3. refreshing views related to student's office hour list
- * 
+ *
  * @returns The add office hour page
  */
 export function ManagePageAddOHController() {

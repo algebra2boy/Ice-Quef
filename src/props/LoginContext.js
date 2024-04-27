@@ -24,6 +24,8 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ currentLoginStatus, updateLoginStatus }}>{children}</LoginContext.Provider>
+    <LoginContext.Provider value={{ currentLoginStatus, updateLoginStatus }}>
+      {children}
+    </LoginContext.Provider>
   );
 };

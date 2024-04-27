@@ -6,7 +6,7 @@ const Stack = createNativeStackNavigator();
 
 /**
  * Controller for calendar page
- * 
+ *
  * @returns { ReactElement } A navigator between calendar pages
  */
 export function CalendarPageController() {

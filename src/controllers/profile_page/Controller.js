@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 
 /**
  * Controller for profile page
- * 
+ *
  * @returns { ReactElement } A navigator between profile pages
  */
 export function ProfilePageController() {

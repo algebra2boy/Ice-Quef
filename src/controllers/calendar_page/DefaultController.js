@@ -16,10 +16,10 @@ const joinStatus = {
 };
 
 /**
- * Calendar page's default controller. 
- * Controls 1. the office hour blocks to be rendered in the calendar, 
+ * Calendar page's default controller.
+ * Controls 1. the office hour blocks to be rendered in the calendar,
  * 2. the student's join status
- * 
+ *
  * @returns { ReactElement } The default calendar page
  */
 export function CalendarPageDefaultController() {
@@ -126,7 +126,7 @@ export function CalendarPageDefaultController() {
     }
   };
 
-  // Triggered whenever there is a change in office hour list. 
+  // Triggered whenever there is a change in office hour list.
   // Such as: adding or removing office hours
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
@@ -177,7 +177,7 @@ export function CalendarPageDefaultController() {
 
 /**
  * Convert a list of registered office hours into
- * renderable info. 
+ * renderable info.
  *
  * @param { List } registered A list of registered office hours
  * @return { List } A list of rendable office hours (all time)

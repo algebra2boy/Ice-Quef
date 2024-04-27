@@ -7,7 +7,7 @@ import { UserContext } from '../../props/UserInfo';
 
 /**
  * The controller of the default manage page.
- * 
+ *
  * @returns { ReactElement } The default manage page.
  */
 export function ManagePageDefaultController() {

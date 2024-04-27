@@ -37,7 +37,6 @@ export function LoginPageDefault(props) {
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
     } else {
-
     } // log in failed
   };
 
@@ -79,7 +78,11 @@ export function LoginPageDefault(props) {
                 />
                 <KolynTextLabel
                   text={status}
-                  style={status===loginStatus.success ? themedStyles.hintSuccess : themedStyles.hintFail}
+                  style={
+                    status === loginStatus.success
+                      ? themedStyles.hintSuccess
+                      : themedStyles.hintFail
+                  }
                 />
               </View>
             </View>

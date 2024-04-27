@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 
 /**
  * Controller for manage page
- * 
+ *
  * @returns { ReactElement } A navigator between manage pages
  */
 export function ManagePageController() {
