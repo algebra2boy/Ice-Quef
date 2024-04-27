@@ -52,6 +52,40 @@ export function CalendarPageDefaultController() {
         };
     }, []);
 
+    useEffect(() => {
+        if (userEmail && currentEvent && currentEvent.id) {
+            const checkData = {
+                studentEmail: userEmail,
+                officeHourID: currentEvent.id,
+            };
+
+            socket.emit('check existence', checkData);
+
+            socket.on('check existence response', response => {
+                const { status, data, error } = response;
+                if (status === 'success') {
+                    if (data.isInQueue) {
+                        setCurrStatus({
+                            message: joinStatus.joined(data.position),
+                            isJoined: true,
+                        });
+                    } else {
+                        setCurrStatus({
+                            message: joinStatus.notJoined(data.position),
+                            isJoined: false,
+                        });
+                    }
+                } else {
+                    console.error(error);
+                }
+            });
+
+            return () => {
+                socket.off('check existence response');
+            };
+        }
+    }, [userEmail, currentEvent]);
+
     const joinQueue = (currentOfficeHourID) => {
         const joinData = {
             studentEmail: userEmail,
