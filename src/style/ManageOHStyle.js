@@ -24,12 +24,24 @@ export const day = num => {
   }
 };
 
+/**
+ * Resembles a bold text
+ * 
+ * @param { string } text The text to be displayed 
+ * @returns { Text } The text label
+ */
 export function Bold({ text }) {
   const themedStyles = ManageOHStyles();
 
   return <Text style={themedStyles.itemLabelL}>{text}</Text>;
 }
 
+/**
+ * Resembles a normal text
+ * 
+ * @param { string } text The text to be displayed 
+ * @returns { Text } The text label
+ */
 export function NonBold({ text }) {
   const themedStyles = ManageOHStyles();
 

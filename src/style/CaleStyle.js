@@ -2,6 +2,14 @@ import { useContext } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { ThemeContext } from './AppTheme';
 
+/**
+ * Resembles an office hour block for a specific
+ * time period
+ * 
+ * @param { Object } event 
+ * @param { Props } touchableOpacityProps 
+ * @returns { ReactElement } An office hour block
+ */
 export const renderEvent = (event, touchableOpacityProps) => {
   const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
