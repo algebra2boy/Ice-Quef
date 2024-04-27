@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ThemeContext } from '../style/AppTheme';
 
-
 export function PasswordHintText({ passwordHint, passwordConditions }) {
   const themedStyles = ThemedStyles();
 
@@ -56,5 +55,5 @@ function ThemedStyles() {
       fontFamily: currentTheme.mainFont,
       fontSize: currentTheme.fontSizes.tiny,
     },
-});
+  });
 }

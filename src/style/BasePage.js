@@ -1,9 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import loadFont from '../props/FontLoader';
 import * as KolynStyle from './KolynStyleKit';
 import loadImages from '../props/ImageLoader';
+import { ThemeContext } from './AppTheme';
 
 const ios = Platform.OS == 'ios';
 
@@ -40,7 +41,10 @@ export function BasePage({ components }) {
 }
 
 function ThemedStyles() {
+  const themeManager = useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
   return StyleSheet.create({
-    screen: StyleSheet.flatten([KolynStyle.kolynScreen()]),
+    screen: StyleSheet.flatten([KolynStyle.kolynScreen(currentTheme.bgColor)]),
   });
 }

@@ -9,11 +9,12 @@ import { LoginContext } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
 
-export function ProfilePageDefault({ }) {
+export function ProfilePageDefault({}) {
   const themedStyles = ThemedStyles();
   const user = useContext(UserContext);
   const pass = useContext(LoginContext);
   const navigation = useNavigation();
+  const smallFont = getSmallFont();
 
   return (
     <BasePage
@@ -45,13 +46,13 @@ export function ProfilePageDefault({ }) {
 
               <View style={{ height: '10%' }} />
 
-              <KolynButton 
+              <KolynButton
+                extraLabelStyle={{ fontSize: smallFont }}
                 text="Change password"
-                onPress={()=>{
-                  navigation.navigate("ProfilePageResetPassword");
+                onPress={() => {
+                  navigation.navigate('ProfilePageResetPassword');
                 }}
               />
-
             </View>
 
             <View style={{ top: height * 0.1 }}>
@@ -81,6 +82,13 @@ function EditIcon({ onPress }) {
     </Pressable>
   );
 }
+
+const getSmallFont = () => {
+  const themeManager = useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
+  return currentTheme.fontSizes.small;
+};
 
 function ThemedStyles() {
   const themeManager = useContext(ThemeContext);

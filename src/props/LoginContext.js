@@ -1,4 +1,4 @@
-import { useState, createContext }from 'react';
+import { useState, createContext } from 'react';
 import { resetNavigatorTabIndex } from './NavigatorTabIndexController';
 
 export const LoginContext = createContext(null);

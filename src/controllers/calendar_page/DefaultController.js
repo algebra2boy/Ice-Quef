@@ -250,16 +250,16 @@ const getRenderList = registered => {
           currentDate.getMonth(),
           currentDate.getDate(),
           startTime[0],
-          startTime[1]
+          startTime[1],
         ),
         end: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
           currentDate.getDate(),
           endTime[0],
-          endTime[1]
+          endTime[1],
         ),
-        id: oh.id
+        id: oh.id,
       });
     }
 

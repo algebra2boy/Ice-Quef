@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { ProfilePageResetPassword } from "../../views/profile_page/ResetPassword";
-import { PageVariant } from "../../props/PasswordEnum";
+import { useState } from 'react';
+import { ProfilePageResetPassword } from '../../views/profile_page/ResetPassword';
+import { PageVariant } from '../../props/PasswordEnum';
 
 export function ProfilePageResetPasswordController() {
   // The password user entered to confirm authentication
@@ -27,20 +27,16 @@ export function ProfilePageResetPasswordController() {
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
   // When the "Next" button in page 1 is pressed
-  const verifyUser = () => {
-
-  };
+  const verifyUser = () => {};
 
   // When the "Next" button in page 2 is pressed
-  const setNewPassword = (newPassword) => {
-
-  };
+  const setNewPassword = newPassword => {};
 
   // When the "Next" button in page 3 is pressed
   // Just go back to profile page
 
   return (
-    <ProfilePageResetPassword 
+    <ProfilePageResetPassword
       passwordText={passwordText}
       onChangePasswordText={onChangePasswordText}
       repasswordText={repasswordText}

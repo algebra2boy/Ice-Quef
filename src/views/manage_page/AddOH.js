@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, FlatList, Text, StyleSheet } from 'react-native';
+import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { day, Bold, NonBold, ManageOHStyles } from '../../style/ManageOHStyle';
@@ -75,7 +75,7 @@ export function ManagePageAddOH(props) {
   return (
     <BasePage
       components={
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}>
           <View style={themedStyles.root}>
             <View style={{ height: height * 0.65 }}>
               <KolynTitleLabel title="Add office hours" />

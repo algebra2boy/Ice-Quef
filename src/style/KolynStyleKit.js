@@ -27,6 +27,7 @@ export function kolynInputTextfield(background, font) {
     padding: 10,
     fontFamily: font,
     alignSelf: 'center',
+    borderRadius: 10,
   };
 }
 
@@ -39,6 +40,7 @@ export function kolynButton(buttonBackground) {
     elevation: 3,
     backgroundColor: buttonBackground,
     alignSelf: 'center',
+    borderRadius: 10,
   };
 }
 

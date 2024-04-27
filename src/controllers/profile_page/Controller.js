@@ -10,7 +10,10 @@ export function ProfilePageController() {
       screenOptions={{ headerShown: false, gestureEnabled: false }}
     >
       <Stack.Screen name="ProfilePageDefault" component={ProfilePageDefaultController} />
-      <Stack.Screen name="ProfilePageResetPassword" component={ProfilePageResetPasswordController} />
+      <Stack.Screen
+        name="ProfilePageResetPassword"
+        component={ProfilePageResetPasswordController}
+      />
     </Stack.Navigator>
   );
 }
