@@ -1,119 +1,28 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, Dimensions, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
 import { BasePage } from '../../style/BasePage';
 import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '../../component';
-import ServerAddress from '../../props/Server';
-import encryptPassword from '../../props/encrypt';
-import { UserContext } from '../../props/UserInfo';
 import { passwordHint, confirmPasswordHint } from '../../props/PasswordEnum';
 import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
 import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
 
+const height = Dimensions.get('window').height;
+// The hints for email
 const emailHint = {
   0: 'Enter your UMass email',
 };
-const height = Dimensions.get('window').height;
 
-export function SignupPageDefault({}) {
+/**
+ * Resembles the default sign up page.
+ *
+ * @param {Props} props 
+ * @returns { ReactElement } The default sign up page
+ */
+export function SignupPageDefault(props) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repassword, setRePassword] = useState('');
-  const [emailCondition, setEmailCondition] = useState(false);
-  const [passwordConditions, setPasswordConditions] = useState([false, false, false, false]);
-  const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
-
-  const user = useContext(UserContext);
-
-  const checkEmail = email => {
-    if (email === undefined) return;
-
-    const isEnoughLength = () => {
-      return email.length >= 13;
-    };
-
-    const isUMass = () => {
-      return email.endsWith('@umass.edu');
-    };
-
-    setEmailCondition(isEnoughLength() && isUMass());
-  };
-
-  const onRegisterPressed = async () => {
-    // console.log("email: " + emailCondition);
-    // console.log("password: " + passwordConditions);
-    // console.log("repassword: " + confirmPasswordCondition);
-
-    // validate email address
-    if (!emailCondition) {
-      Alert.alert('Error', 'Please enter valid email associate with UMass domain');
-      return;
-    }
-
-    // password match
-    if (!confirmPasswordCondition) {
-      Alert.alert('Error', "Passwords doesn't match!");
-      return;
-    }
-
-    // password validation
-    if (passwordConditions.includes(false)) {
-      Alert.alert('Error', "At least one of the password requirements don't meet");
-      return;
-    }
-
-    // package data
-    try {
-      // Encrypt the password
-      const hashedPassword = await encryptPassword(password);
-      // Package data with the hashed password
-      const registrationData = {
-        email: email.toLowerCase(),
-        password: hashedPassword,
-      };
-
-      try {
-        // HTTP POST
-        const response = await fetch(ServerAddress() + 'api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(registrationData),
-        });
-
-        // get response
-        const serverResponse = await response.json();
-
-        if (response.ok) {
-          // success
-          const userToken = serverResponse.token;
-
-          user.setEmail(email.toLowerCase());
-          user.setToken(userToken);
-          Alert.alert('Success', 'You have been registered successfully!');
-
-          navigation.navigate('Calendar');
-          navigation.navigate('BottomTab');
-          //TODO: idk which page will be navigated to after a successful registration.
-        } else {
-          // edge case
-          Alert.alert('Registration Failed', serverResponse.message || 'An error occurred');
-        }
-      } catch (error) {
-        // network error
-        console.error(error);
-        Alert.alert('Error', 'Could not connect to the server.');
-      }
-    } catch (error) {
-      // Handle errors as before
-      Alert.alert('Error', error.toString());
-    }
-  };
 
   return (
     <BasePage
@@ -131,10 +40,10 @@ export function SignupPageDefault({}) {
               <KolynTitleLabel title="Create an account" />
               <KolynTextLabel text="Email" />
               <KolynTextfield
-                value={email}
+                value={props.email}
                 setValue={email => {
-                  setEmail(email);
-                  checkEmail(email);
+                  props.setEmail(email);
+                  props.checkEmail(email);
                 }}
                 placeholder=""
                 keyboardType="email-address"
@@ -143,21 +52,21 @@ export function SignupPageDefault({}) {
               <EmailHintText
                 themedStyles={themedStyles}
                 emailHint={emailHint}
-                emailCondition={emailCondition}
+                emailCondition={props.emailCondition}
               />
 
               <KolynTextLabel text="Password" />
               <KolynTextfield
-                value={password}
+                value={props.password}
                 setValue={password => {
-                  setPassword(password);
-                  checkPassword(password, setPasswordConditions);
+                  props.setPassword(password);
+                  checkPassword(password, props.setPasswordConditions);
                   checkConfirmPassword(
                     password,
                     password,
-                    repassword,
+                    props.repassword,
                     false,
-                    setConfirmPasswordCondition,
+                    props.setConfirmPasswordCondition,
                   );
                 }}
                 placeholder=""
@@ -166,20 +75,20 @@ export function SignupPageDefault({}) {
               />
               <PasswordHintText
                 passwordHint={passwordHint}
-                passwordConditions={passwordConditions}
+                passwordConditions={props.passwordConditions}
               />
 
               <KolynTextLabel text="Confirm Password" />
               <KolynTextfield
-                value={repassword}
+                value={props.repassword}
                 setValue={repassword => {
-                  setRePassword(repassword);
+                  props.setRePassword(repassword);
                   checkConfirmPassword(
                     repassword,
-                    password,
+                    props.password,
                     repassword,
                     true,
-                    setConfirmPasswordCondition,
+                    props.setConfirmPasswordCondition,
                   );
                 }}
                 placeholder=""
@@ -188,14 +97,14 @@ export function SignupPageDefault({}) {
               />
               <ConfirmPasswordHintText
                 confirmPasswordHint={confirmPasswordHint}
-                confirmPasswordCondition={confirmPasswordCondition}
+                confirmPasswordCondition={props.confirmPasswordCondition}
               />
             </View>
             <View style={{ top: height * 0.1 }}>
               <KolynButton
                 text="Register"
                 onPress={() => {
-                  onRegisterPressed();
+                  props.onRegisterPressed();
                 }}
               />
               <View style={{ top: 20 }}>
@@ -214,6 +123,14 @@ export function SignupPageDefault({}) {
   );
 }
 
+/**
+ * The hint view for email input textfield.
+ *
+ * @param { Style } themedStyles The style for this view
+ * @param { List } emailHint The list of email hints
+ * @param { boolean } emailCondition The current email's condition indicated by a boolean
+ * @returns { View } The view for email hint
+ */
 function EmailHintText({ themedStyles, emailHint, emailCondition }) {
   return (
     <View>

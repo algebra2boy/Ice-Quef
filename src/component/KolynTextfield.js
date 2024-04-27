@@ -46,7 +46,7 @@ const GetPlaceholderColor = () => {
   const currentTheme = themeManager.theme;
 
   return currentTheme.disableColor;
-}
+};
 
 function ThemedStyles() {
   const themeManager = useContext(ThemeContext);

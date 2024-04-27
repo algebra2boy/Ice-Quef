@@ -5,10 +5,10 @@ import ServerAddress from '../../props/Server';
 import { LoginContext, loginStatus } from '../../props/LoginContext';
 
 /**
- * The controller for the log in page. 
+ * The controller for the log in page.
  * It controls the user's log in status and
  * the log in button.
- * 
+ *
  * @returns { ReactElement } The log in page
  */
 export function LoginPageDefaultController() {
@@ -71,7 +71,5 @@ export function LoginPageDefaultController() {
     }
   }
 
-  return (
-    <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} />
-  );
+  return <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} />;
 }
