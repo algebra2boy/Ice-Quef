@@ -24,7 +24,13 @@ export const checkPassword = (password, setPasswordConditions) => {
   ]);
 };
 
-export const checkConfirmPassword = (val, password, repassword, isEnterFromRePassword, setConfirmPasswordCondition) => {
+export const checkConfirmPassword = (
+  val,
+  password,
+  repassword,
+  isEnterFromRePassword,
+  setConfirmPasswordCondition,
+) => {
   const isTheSame = () => {
     if (isEnterFromRePassword) {
       return val === password;

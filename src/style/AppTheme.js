@@ -16,6 +16,7 @@ const palette = {
   colorVioletPurple: '#9370DB',
   colorSunshineYellow: '#fcffc7',
   colorGoldenrodOrange: '#fcdb44',
+  colorSeaBlue: '#3c89b2',
 };
 
 /**
@@ -23,7 +24,6 @@ const palette = {
  * @enum { font }
  */
 const fontFamily = {
-  balooBhai: 'BalooBhai-Regular',
   quenda: 'Quenda-Medium',
 };
 
@@ -41,7 +41,8 @@ const myFontSize = {
 
 /* --- Official themes --- */
 const defaultTheme = {
-  mainColor: palette.colorLightblue,
+  mainColor: palette.colorSeaBlue,
+  bgColor: palette.colorLightblue,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -54,6 +55,7 @@ const defaultTheme = {
 
 const greenTheme = {
   mainColor: palette.colorEmeraldGreen,
+  bgColor: palette.colorWhite,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -66,6 +68,7 @@ const greenTheme = {
 
 const redTheme = {
   mainColor: palette.colorScarletRed,
+  bgColor: palette.colorWhite,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -78,6 +81,7 @@ const redTheme = {
 
 const purpleTheme = {
   mainColor: palette.colorVioletPurple,
+  bgColor: palette.colorWhite,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -90,6 +94,7 @@ const purpleTheme = {
 
 const yellowTheme = {
   mainColor: palette.colorGoldenrodOrange,
+  bgColor: palette.colorWhite,
   subColor: palette.colorBlack,
   primaryColor: palette.colorSunshineYellow,
   disableColor: palette.colorGainsboro,
@@ -102,6 +107,7 @@ const yellowTheme = {
 
 const blackGoldenTheme = {
   mainColor: palette.colorBlack,
+  bgColor: palette.colorWhite,
   subColor: palette.colorGoldenrodOrange,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,

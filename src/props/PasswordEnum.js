@@ -1,19 +1,19 @@
 export const PageVariant = {
   NewPassword: 'Set a new password',
-  ChangeSuccess: 'Password changed successfully!'
+  ChangeSuccess: 'Password changed successfully!',
 };
 
 export const Authentication = {
   default: '',
   success: '',
   empty: 'Please enter your password.',
-  notMatch: 'Your password is incorrect. Please try again.'
+  notMatch: 'Your password is incorrect. Please try again.',
 };
 
 export const ConfirmNewPassword = {
   default: '',
   success: '',
-  notMatch: 'The two passwords does not match.'
+  notMatch: 'The two passwords does not match.',
 };
 
 export const passwordHint = {

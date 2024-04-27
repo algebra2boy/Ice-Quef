@@ -7,7 +7,7 @@ import { Asset } from 'expo-asset';
  * @return { boolean } Returns true if all images were successfully loaded,
  * returns false otherwise.
  */
-const images = [require('../../assets/images/3D_Logo.png')];
+const images = [require('../../assets/images/icon8.png')];
 
 function loadImages() {
   const [isLoaded, setIsLoaded] = useState(false);

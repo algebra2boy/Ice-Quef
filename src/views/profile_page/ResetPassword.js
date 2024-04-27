@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
-import { BasePage } from "../../style/BasePage";
-import { KolynTitleLabel, KolynButton, KolynTextfield, KolynTextLabel } from "../../component";
-import { passwordHint, confirmPasswordHint, PageVariant } from "../../props/PasswordEnum";
-import { PasswordHintText, ConfirmPasswordHintText } from "../../component/PasswordHintText";
-import { checkPassword, checkConfirmPassword } from "../../props/PasswordSetter";
+import { ScrollView, View, StyleSheet, Dimensions } from 'react-native';
+import { BasePage } from '../../style/BasePage';
+import { KolynTitleLabel, KolynButton, KolynTextfield, KolynTextLabel } from '../../component';
+import { passwordHint, confirmPasswordHint, PageVariant } from '../../props/PasswordEnum';
+import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
+import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
 
 const height = Dimensions.get('window').height;
 
@@ -45,7 +45,7 @@ export function ProfilePageResetPassword(props) {
             <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Change password" />
 
-              {pageVariant == PageVariant.NewPassword &&
+              {pageVariant == PageVariant.NewPassword && (
                 <View>
                   <KolynTextLabel text="Enter your old password" />
                   <KolynTextfield
@@ -61,7 +61,13 @@ export function ProfilePageResetPassword(props) {
                     setValue={input => {
                       onChangeRePasswordText(input);
                       checkPassword(input, setPasswordConditions);
-                      checkConfirmPassword(input, repasswordText, rerepasswordText, false, setConfirmPasswordCondition);
+                      checkConfirmPassword(
+                        input,
+                        repasswordText,
+                        rerepasswordText,
+                        false,
+                        setConfirmPasswordCondition,
+                      );
                     }}
                     value={repasswordText}
                     isSecure={true}
@@ -72,12 +78,18 @@ export function ProfilePageResetPassword(props) {
                     passwordConditions={passwordConditions}
                   />
 
-                <KolynTextLabel text="Re-enter new password" />
+                  <KolynTextLabel text="Re-enter new password" />
                   <KolynTextfield
                     placeholder="Enter password"
                     setValue={input => {
                       onChangeReRePasswordText(input);
-                      checkConfirmPassword(input, repasswordText, rerepasswordText, true, setConfirmPasswordCondition);
+                      checkConfirmPassword(
+                        input,
+                        repasswordText,
+                        rerepasswordText,
+                        true,
+                        setConfirmPasswordCondition,
+                      );
                     }}
                     value={rerepasswordText}
                     isSecure={true}
@@ -87,50 +99,50 @@ export function ProfilePageResetPassword(props) {
                     confirmPasswordCondition={confirmPasswordCondition}
                   />
                 </View>
-              }
+              )}
 
-              {pageVariant == PageVariant.ChangeSuccess &&
+              {pageVariant == PageVariant.ChangeSuccess && (
                 <View>
                   <KolynTextLabel text={pageVariant} />
                 </View>
-              }
-
+              )}
             </View>
 
             <View style={{ top: height * 0.1 }}>
-                {pageVariant == PageVariant.NewPassword &&
-                  <View>
-                    <KolynButton
-                      onPress={()=>{
-                        onChangePageVariant(PageVariant.ChangeSuccess)
-                      }}
-                      text={"Next"}
-                    />
-                  </View>
-                }
-                {pageVariant == PageVariant.ChangeSuccess &&
-                  <View>
-                    <KolynButton
-                      onPress={()=>{
-                        navigation.goBack();
-                      }}
-                      text={"Next"}
-                    />
-                  </View>
-                }
+              {pageVariant == PageVariant.NewPassword && (
+                <View>
+                  <KolynButton
+                    onPress={() => {
+                      onChangePageVariant(PageVariant.ChangeSuccess);
+                    }}
+                    text={'Next'}
+                  />
+                </View>
+              )}
+              {pageVariant == PageVariant.ChangeSuccess && (
+                <View>
+                  <KolynButton
+                    onPress={() => {
+                      navigation.goBack();
+                    }}
+                    text={'Next'}
+                  />
+                </View>
+              )}
 
               <View style={{ top: 20 }}>
-                {pageVariant != PageVariant.ChangeSuccess &&
+                {pageVariant != PageVariant.ChangeSuccess && (
                   <View>
                     <KolynButton
-                      onPress={()=>{navigation.goBack();}}
-                      text={"Cancel"}
+                      onPress={() => {
+                        navigation.goBack();
+                      }}
+                      text={'Cancel'}
                     />
                   </View>
-                }
+                )}
               </View>
             </View>
-
           </View>
         </ScrollView>
       }
@@ -139,10 +151,10 @@ export function ProfilePageResetPassword(props) {
 }
 
 function ThemedStyles() {
-    return StyleSheet.create({
-      root: {
-        alignItems: 'center',
-        padding: 20,
-      },
+  return StyleSheet.create({
+    root: {
+      alignItems: 'center',
+      padding: 20,
+    },
   });
 }

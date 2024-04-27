@@ -13,23 +13,23 @@ export function ManagePageAddOHController() {
 
   const debounce = (func, wait) => {
     let timeout;
-  
+
     // debounce return function
     const executedFunction = (...args) => {
       const later = () => {
         clearTimeout(timeout);
         func(...args);
       };
-  
+
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
     };
-  
+
     // cancel method to clear the timeout after
     executedFunction.cancel = () => {
       clearTimeout(timeout);
     };
-  
+
     return executedFunction;
   };
 

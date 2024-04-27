@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Platform } from 'react-native';
 import { TextInput, StyleSheet } from 'react-native';
 import { ThemeContext } from '../style/AppTheme';
 import * as KolynStyle from '../style/KolynStyleKit';
@@ -35,6 +36,7 @@ export function KolynTextfield({
       keyboardType={keyboardType}
       secureTextEntry={isSecure}
       textContentType="oneTimeCode"
+      blurOnSubmit={Platform.OS !== 'web'}
     />
   );
 }
@@ -42,7 +44,7 @@ export function KolynTextfield({
 function GetPlaceholderColor() {
   const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
-  
+
   return currentTheme.disableColor;
 }
 

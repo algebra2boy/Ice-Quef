@@ -34,8 +34,8 @@ export function LoginPageDefault(props) {
     // if (userToken != null) {
     //   // validate user
     //   user.setToken(userToken);
-      navigation.navigate('Calendar');
-      navigation.navigate('BottomTab');
+    navigation.navigate('Calendar');
+    navigation.navigate('BottomTab');
     // } else {
     // } // didn't login successfully
   };

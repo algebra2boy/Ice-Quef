@@ -1,5 +1,5 @@
 import { Image, Dimensions } from 'react-native';
-import Title from '../../assets/images/3D_Logo.png';
+import Title from '../../assets/images/icon8.png';
 
 /**
  * Resembles the app's logo

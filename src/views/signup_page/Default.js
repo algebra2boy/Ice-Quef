@@ -152,7 +152,13 @@ export function SignupPageDefault({}) {
                 setValue={password => {
                   setPassword(password);
                   checkPassword(password, setPasswordConditions);
-                  checkConfirmPassword(password, password, repassword, false, setConfirmPasswordCondition);
+                  checkConfirmPassword(
+                    password,
+                    password,
+                    repassword,
+                    false,
+                    setConfirmPasswordCondition,
+                  );
                 }}
                 placeholder=""
                 keyboardType="default"
@@ -168,7 +174,13 @@ export function SignupPageDefault({}) {
                 value={repassword}
                 setValue={repassword => {
                   setRePassword(repassword);
-                  checkConfirmPassword(repassword, password, repassword, true, setConfirmPasswordCondition);
+                  checkConfirmPassword(
+                    repassword,
+                    password,
+                    repassword,
+                    true,
+                    setConfirmPasswordCondition,
+                  );
                 }}
                 placeholder=""
                 keyboardType="default"
