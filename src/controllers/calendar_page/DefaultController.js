@@ -6,12 +6,22 @@ import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { UserContext } from '../../props/UserInfo';
 import socket from '../../socket.config';
 
+/**
+ * @enum { (int)=>string | boolean } The student's join status
+ */
 const joinStatus = {
   joined: index => `Your current position: ${index}.`,
   notJoined: pplInQueue => `${pplInQueue} ${pplInQueue === 1 ? 'person' : 'people'} in the queue`,
   isJoined: false,
 };
 
+/**
+ * Calendar page's default controller. 
+ * Controls 1. the office hour blocks to be rendered in the calendar, 
+ * 2. the student's join status
+ * 
+ * @returns { ReactElement } Controller
+ */
 export function CalendarPageDefaultController() {
   const user = useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
@@ -22,14 +32,27 @@ export function CalendarPageDefaultController() {
     console.log('Connected to the server');
   });
 
-  // const [registered, setRegistered] = useState([]);
+  // Just simply all office hours the student currently
+  // has registered in the database
+  const [officeHour, setOfficeHour] = useState([]);
+  // The office hours to be rendered in the calendar page.
+  // Notice that this list is massive since it includes all office hour slots
+  const [renderableList, setRenderableList] = useState(null);
+  // Checks whether the page is fetching office hour from database
+  const [isLoading, setIsLoading] = useState(true); // loading indicator
+  // the currently opened pop-up menu event
+  // When a pop-up menu is closed, this event will be set to null
+  // This event contains the currently inspecting office hour's id
+  // as well as its time slot (precise)
+  const [currentEvent, setCurrentEvent] = useState(null);
+  // The current student's join queue status
   const [currStatus, setCurrStatus] = useState({
     // Initialize to 0 for testing purpose only
     message: joinStatus.notJoined(0),
     isJoined: false,
   });
-  // const [isLoading, setIsLoading] = useState(true); // loading indicator
 
+  // TODO: Add comments
   const joinQueue = (socket, currentOfficeHourID) => {
     const joinData = {
       studentEmail: userEmail,
@@ -57,6 +80,7 @@ export function CalendarPageDefaultController() {
     });
   };
 
+  // TODO: Add comments
   const leaveQueue = socket => {
     if (!socket) {
       console.log('Socket not connected');
@@ -91,15 +115,7 @@ export function CalendarPageDefaultController() {
     });
   };
 
-  const [officeHour, setOfficeHour] = useState([]);
-  const [result, setResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // loading indicator
-  // the currently opened pop-up menu event
-  // When a pop-up menu is closed, this event will be set to null
-  // This event contains the currently inspecting office hour's id
-  // as well as its time slot (precise)
-  const [currentEvent, setCurrentEvent] = useState(null);
-
+  // Updates the current position of student in queue
   const updatePosition = () => {
     if (currStatus.isJoined === false) {
       // waiting, so user join
@@ -110,6 +126,8 @@ export function CalendarPageDefaultController() {
     }
   };
 
+  // Triggered whenever there is a change in office hour list. 
+  // Such as: adding or removing office hours
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
       try {
@@ -126,9 +144,10 @@ export function CalendarPageDefaultController() {
     fetchUserOfficeHour();
   }, [updateTrigger]);
 
+  // Refresh renderables if there is a change in office hour list
   useEffect(() => {
     const calculateResult = () => {
-      setResult(getRenderList(officeHour));
+      setRenderableList(getRenderableList(officeHour));
     };
 
     calculateResult();
@@ -148,7 +167,7 @@ export function CalendarPageDefaultController() {
 
   return (
     <CalendarPageDefault
-      regLst={result}
+      renderableList={renderableList}
       message={currStatus.message}
       updatePosition={updatePosition}
       setCurrentEvent={setCurrentEvent}
@@ -158,11 +177,12 @@ export function CalendarPageDefaultController() {
 
 /**
  * Convert a list of registered office hours into
- * renderable info. It's a list to be rendered.
+ * renderable info. 
  *
- * @param {*} registered a list of registered office hours
+ * @param { List } registered A list of registered office hours
+ * @return { List } A list of rendable office hours (all time)
  */
-const getRenderList = registered => {
+const getRenderableList = registered => {
   /**
    * Determine the info needed for the 'blocks'.
    * It will return a list because oh is repeated.

@@ -4,6 +4,9 @@ import encryptPassword from '../../props/encrypt';
 import ServerAddress from '../../props/Server';
 import { LoginContext } from '../../props/LoginContext';
 
+/**
+ * @enum {(string)=>string | string} The status of log in
+ */
 const loginStatus = {
   default: '',
   success: 'You have been logged in successfully!',
@@ -13,8 +16,15 @@ const loginStatus = {
   unknown: serverMsg => serverMsg || 'An unknown error has occurred.',
 };
 
+/**
+ * Resembles the log in page
+ * 
+ * @returns { ReactElement } The log in page
+ */
 export function LoginPageDefaultController() {
+  // The log in status
   const [status, setStatus] = useState(loginStatus.default);
+  // The success status
   const [isSuccess, setSuccess] = useState(false);
 
   const pass = useContext(LoginContext);
@@ -22,7 +32,7 @@ export function LoginPageDefaultController() {
   useEffect(() => {
     setStatus(loginStatus.default);
     setSuccess(false);
-  }, [pass.logStatus]);
+  }, [pass.currentLoginStatus]);
 
   async function LogInButtonPressed(email, password) {
     try {
