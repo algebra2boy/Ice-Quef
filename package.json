@@ -16,7 +16,6 @@
     "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
-    "@testing-library/react-native": "^12.4.4",
     "crypto-js": "^4.2.0",
     "expo": "~50.0.6",
     "expo-splash-screen": "~0.26.4",
@@ -35,7 +34,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "^18.2.61"
+    "@testing-library/react-native": "^12.4.5",
+    "@types/react": "^18.2.61",
+    "eslint-plugin-testing-library": "^6.2.2"
   },
   "private": true,
   "jest": {
