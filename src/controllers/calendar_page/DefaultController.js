@@ -16,94 +16,81 @@ export function CalendarPageDefaultController() {
     const user = useContext(UserContext);
     const userEmail = user.email; // get user email address (account name)
     const updateTrigger = useOfficeHourUpdate().updateTrigger;
-
-    // Set up socket event listener for receiving response from socket server
-    socket.on('connect', () => {
-        console.log('Connected to the server');
-    });
-
-    // const [registered, setRegistered] = useState([]);
     const [currStatus, setCurrStatus] = useState({
         // Initialize to 0 for testing purpose only
         message: joinStatus.notJoined(0),
         isJoined: false,
     });
-    // const [isLoading, setIsLoading] = useState(true); // loading indicator
+    const [officeHour, setOfficeHour] = useState([]);
+    const [result, setResult] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentEvent, setCurrentEvent] = useState(null);
 
-    const joinQueue = (socket, currentOfficeHourID) => {
+    useEffect(() => {
+        socket.on('connect', () => {
+            console.log('Connected to the server');
+        });
+
+        const updateQueuePositions = (response) => {
+            if (response.status === 'updated') {
+                console.log('Queue positions updated:', response.data);
+                const newPosition = response.data;
+
+                setCurrStatus({
+                    message: joinStatus.joined(newPosition),
+                    isJoined: true
+                });
+
+            }
+        };
+
+        socket.on('update queue positions', updateQueuePositions);
+
+        return () => {
+            socket.off('connect');
+            socket.off('update queue positions', updateQueuePositions);
+        };
+    }, []);
+
+    const joinQueue = (currentOfficeHourID) => {
         const joinData = {
             studentEmail: userEmail,
             officeHourID: currentOfficeHourID,
         };
 
-        socket.emit('join queue', joinData, response => {
-            console.log('Server response:', response);
-        });
-
-        socket.off('join queue response');
-        socket.on('join queue response', response => {
+        socket.emit('join queue', joinData);
+        socket.once('join queue response', response => {
             const {status, data, error} = response;
             if (status === 'success') {
-                const queueIndex = data;
-                console.log('Joined queue at position:', queueIndex);
-                setCurrStatus({...currStatus, message: joinStatus.joined(queueIndex), isJoined: true});
-                joinStatus.isJoined = true;
+                setCurrStatus({...currStatus, message: joinStatus.joined(data), isJoined: true});
             } else {
                 console.log(error);
             }
         });
     };
 
-    const leaveQueue = (socket, currentOfficeHourID) => {
-        if (!socket) {
-            console.log('Socket not connected');
-            return;
-        }
-
+    const leaveQueue = (currentOfficeHourID) => {
         const leaveData = {
             studentEmail: userEmail,
             officeHourID: currentOfficeHourID,
         };
 
-        socket.emit('leave queue', leaveData, response => {
-            console.log('Server response:', response);
-        });
-
-        socket.off('leave queue response');
-        socket.on('leave queue response', response => {
+        socket.emit('leave queue', leaveData);
+        socket.once('leave queue response', response => {
             const {status, data, error} = response;
             if (status === 'success') {
-                const pplInQueue = data;
-                console.log('Number of people in queue:', pplInQueue);
-                setCurrStatus({
-                    ...currStatus,
-                    message: joinStatus.notJoined(pplInQueue),
-                    isJoined: false,
-                });
-                joinStatus.isJoined = false;
+                setCurrStatus({...currStatus, message: joinStatus.notJoined(data), isJoined: false});
             } else {
                 console.log(error);
             }
         });
     };
 
-    const [officeHour, setOfficeHour] = useState([]);
-    const [result, setResult] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // loading indicator
-    // the currently opened pop-up menu event
-    // When a pop-up menu is closed, this event will be set to null
-    // This event contains the currently inspecting office hour's id
-    // as well as its time slot (precise)
-    const [currentEvent, setCurrentEvent] = useState(null);
-
     const updatePosition = () => {
-        if (currStatus.isJoined === false) {
-            // waiting, so user join
-            joinQueue(socket, currentEvent.id);
-            console.log('Joined queue');
+        if (!currStatus.isJoined) {
+            joinQueue(currentEvent.id);
         } else {
-            leaveQueue(socket, currentEvent.id);
-            console.log('Left queue');
+            leaveQueue(currentEvent.id);
         }
     };
 
