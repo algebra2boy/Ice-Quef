@@ -2,6 +2,13 @@ import { useState } from 'react';
 import { ProfilePageResetPassword } from '../../views/profile_page/ResetPassword';
 import { PageVariant } from '../../props/PasswordEnum';
 
+/**
+ * The controller for reset password page. It controls: 
+ * 1. Checking whether the password is correct
+ * 2. Setting a new password
+ * 
+ * @returns { ReactElement } The reset password page
+ */
 export function ProfilePageResetPasswordController() {
   // The password user entered to confirm authentication
   const [passwordText, onChangePasswordText] = useState('');
