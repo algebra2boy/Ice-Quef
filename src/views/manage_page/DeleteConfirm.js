@@ -10,6 +10,12 @@ import { deleteUserOfficeHour } from '../../props/AddDropOfficeHour';
 
 const height = Dimensions.get('window').height;
 
+/**
+ * Display a confirmation page to delete an office hour
+ * 
+ * @param { Object } route 
+ * @returns { ReactElement } The confirmation page to delete an office hour
+ */
 export function ManagePageDeleteConfirm({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
@@ -19,6 +25,7 @@ export function ManagePageDeleteConfirm({ route }) {
   const officeHour = route.params?.officeHour;
   const { triggerUpdate } = useOfficeHourUpdate();
 
+  // TODO: refactor this part
   const deleteFromDB = async () => {
     const requestStatus = await deleteUserOfficeHour(userToken, officeHour.id);
     if (requestStatus) {

@@ -6,6 +6,12 @@ import { day, Bold, NonBold } from '../../style/ManageOHStyle';
 
 const height = Dimensions.get('window').height;
 
+/**
+ * Displays when removing office hour fails.
+ * 
+ * @param { Object } route 
+ * @returns { ReactElement } The page to display when removing office hour fails.
+ */
 export function ManagePageDeleteFail({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();

@@ -42,5 +42,10 @@ export function ManagePageDefaultController() {
     return <LoadingPage text="Loading office hours..." />;
   }
 
-  return <ManagePageDefault ohList={officeHour} />;
+  return (
+    <ManagePageDefault 
+      officeHour={officeHour} 
+      setOfficeHour={setOfficeHour}
+    />
+  );
 }

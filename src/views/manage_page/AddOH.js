@@ -3,37 +3,14 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
-import { day, Bold, NonBold, ManageOHStyles } from '../../style/ManageOHStyle';
+import { ManageOHStyles } from '../../style/ManageOHStyle';
 import { ThemeContext } from '../../style/AppTheme';
 import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
-import { SpringButton } from '../../style/SpringButton';
 import { KolynTextLabel } from '../../component';
+import { RenderItem } from '../../component/OfficeHourButton';
 
 const height = Dimensions.get('window').height;
-
-const RenderItem = (officeHour, styles, navigation) => {
-  return (
-    <SpringButton
-      text={
-        <Text>
-          <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
-          <NonBold text={officeHour.facultyName + '\n'} />
-          <NonBold
-            text={day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime}
-          />
-        </Text>
-      }
-      onPress={() => {
-        navigation.navigate('ManagePageAddConfirm', {
-          officeHour: officeHour,
-        });
-      }}
-      buttonStyle={styles.item}
-      labelStyle={styles.itemLabel}
-    />
-  );
-};
 
 /**
  * Resembles the add office hour page
@@ -134,12 +111,24 @@ function SearchBar({ text, setText, placeholder }) {
   return <KolynTextfield value={text} setValue={onChangeText} placeholder={placeholder} />;
 }
 
+/**
+ * The flat list of office hours, which is updated each time
+ * the search bar is modified.
+ * 
+ * @param { List } elementState The office hourss
+ * @param { StyleSheet } styles The styles
+ * @param { Function } onRefresh The function to refresh the list
+ * @param { boolean } isRefreshing Whether the list is refreshing
+ * @param { Object } navigation The navigation 
+ * @returns { ReactElement } The flat list of office hours
+ */
 function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navigation }) {
   return (
     <FlatList
       data={elementState}
       showsVerticalScrollIndicator={false}
-      renderItem={item => RenderItem(item.item, styles, navigation)}
+      renderItem={item => RenderItem(item.item, styles, navigation, 'ManagePageAddConfirm')
+      }
       keyExtractor={item => item.id}
       onRefresh={onRefresh}
       refreshing={isRefreshing}
@@ -148,6 +137,12 @@ function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navig
   );
 }
 
+/**
+ * The loading view when the search is in progress.
+ * 
+ * @param { string } text The text to display 
+ * @returns { View } The loading view
+ */
 function LoadingView({ text }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -156,6 +151,12 @@ function LoadingView({ text }) {
   );
 }
 
+/**
+ * The hint text.
+ *
+ * @param { StyleSheet } themedStyles The themed styles
+ * @returns { ReactElement } The hint text
+ */
 function Hint({ themedStyles }) {
   function Label({ text }) {
     return <Text style={themedStyles.hintLabel}>{text}</Text>;
