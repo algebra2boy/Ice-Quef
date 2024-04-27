@@ -1,37 +1,20 @@
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, StyleSheet, FlatList, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, FlatList } from 'react-native';
 import { BasePage } from '../../style/BasePage';
-import { day, Bold, NonBold, ManageOHStyles } from '../../style/ManageOHStyle';
+import { ManageOHStyles } from '../../style/ManageOHStyle';
 import { KolynButton, KolynTitleLabel } from '../../component';
-import { SpringButton } from '../../style/SpringButton';
-
-const RenderItem = (officeHour, themedStyles, navigation) => {
-  return (
-    <SpringButton
-      text={
-        <Text>
-          <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
-          <NonBold text={officeHour.facultyName + '\n'} />
-          <NonBold
-            text={day(officeHour.day) + ' ' + officeHour.startTime + ' - ' + officeHour.endTime}
-          />
-        </Text>
-      }
-      onPress={() => {
-        navigation.navigate('ManagePageInfo', {
-          officeHour: officeHour,
-        });
-      }}
-      buttonStyle={themedStyles.item}
-      labelStyle={themedStyles.itemLabel}
-    />
-  );
-};
+import { RenderItem } from '../../component/OfficeHourButton';
 
 const height = Dimensions.get('window').height;
 
-export function ManagePageDefault({ ohList }) {
+/**
+ * Resembles the default page for the manage office hours page.
+ * 
+ * @param { Props } props
+ * @returns { ReactElement } The default page for the manage office hours page
+ */
+export function ManagePageDefault(props) {
   const navigation = useNavigation();
   const manageOHStyles = ManageOHStyles();
   const themedStyles = ThemedStyles();
@@ -39,16 +22,12 @@ export function ManagePageDefault({ ohList }) {
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // The entire list for the course items
-  const [elementState, setElementState] = useState(ohList);
-
-  const mySetElementState = newElementState => {
-    setElementState(newElementState);
-  };
+  const officeHour = props.officeHour;
+  const setOfficeHour = props.setOfficeHour;
 
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-    mySetElementState(elementState);
+    setOfficeHour(officeHour);
   };
 
   // Refresh the flat list
@@ -66,9 +45,9 @@ export function ManagePageDefault({ ohList }) {
             <View style={{ height: height * 0.5 }}>
               <KolynTitleLabel title="Manage office hours" />
               <FlatList
-                data={elementState}
+                data={officeHour}
                 showsVerticalScrollIndicator={false}
-                renderItem={item => RenderItem(item.item, manageOHStyles, navigation)}
+                renderItem={item => RenderItem(item.item, manageOHStyles, navigation, 'ManagePageInfo')}
                 keyExtractor={item => item.id}
                 onRefresh={onRefresh}
                 refreshing={isRefreshing}
