@@ -2,19 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { LoginPageDefault } from '../../views/login_page/Default';
 import encryptPassword from '../../props/encrypt';
 import ServerAddress from '../../props/Server';
-import { LoginContext } from '../../props/LoginContext';
-
-/**
- * @enum {(string)=>string | string} The status of log in
- */
-const loginStatus = {
-  default: '',
-  success: 'You have been logged in successfully!',
-  notMatch: serverMsg => serverMsg || 'Log in failed. Your email or password was not found.',
-  serverFail: serverMsg => serverMsg || 'Could not connect to the server, please try again later.',
-  edgeCase: serverMsg => serverMsg || 'An error has occurred, please try again later.',
-  unknown: serverMsg => serverMsg || 'An unknown error has occurred.',
-};
+import { LoginContext, loginStatus } from '../../props/LoginContext';
 
 /**
  * Resembles the log in page
@@ -24,14 +12,11 @@ const loginStatus = {
 export function LoginPageDefaultController() {
   // The log in status
   const [status, setStatus] = useState(loginStatus.default);
-  // The success status
-  const [isSuccess, setSuccess] = useState(false);
 
   const pass = useContext(LoginContext);
 
   useEffect(() => {
     setStatus(loginStatus.default);
-    setSuccess(false);
   }, [pass.currentLoginStatus]);
 
   async function LogInButtonPressed(email, password) {
@@ -60,7 +45,6 @@ export function LoginPageDefaultController() {
         if (serverResponse.status === 'success' && response.ok) {
           // success
           setStatus(loginStatus.success);
-          setSuccess(true);
           return serverResponse.token;
         } else if (serverResponse.status) {
           setStatus(loginStatus.notMatch);
@@ -82,6 +66,6 @@ export function LoginPageDefaultController() {
   }
 
   return (
-    <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} isSuccess={isSuccess} />
+    <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} />
   );
 }
