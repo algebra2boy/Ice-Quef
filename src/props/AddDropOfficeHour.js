@@ -1,6 +1,6 @@
-import ServerAddress from '../../props/Server';
+import ServerAddress from './Server';
 
-export async function addUserOfficeHour(userEmail, userToken, officeHourID) {
+export async function addUserOfficeHour(userToken, officeHourID) {
   const requestURL = ServerAddress() + `api/officeHour/add/${officeHourID}`;
   try {
     const response = await fetch(requestURL, {
@@ -25,7 +25,7 @@ export async function addUserOfficeHour(userEmail, userToken, officeHourID) {
   }
 }
 
-export async function deleteUserOfficeHour(userEmail, userToken, officeHourID) {
+export async function deleteUserOfficeHour(userToken, officeHourID) {
   const requestURL = ServerAddress() + `api/officeHour/remove/${officeHourID}`;
   try {
     const response = await fetch(requestURL, {

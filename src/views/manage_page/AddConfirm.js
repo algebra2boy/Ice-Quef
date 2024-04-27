@@ -5,7 +5,7 @@ import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
 import { UserContext } from '../../props/UserInfo';
-import { addUserOfficeHour } from '../../controllers/manage_page/AddDropController';
+import { addUserOfficeHour } from '../../props/AddDropOfficeHour';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 
 const height = Dimensions.get('window').height;
@@ -22,7 +22,6 @@ export function ManagePageAddConfirm({ route }) {
   const themedStyles = ThemedStyles();
 
   const user = useContext(UserContext);
-  const userEmail = user.email;
   const userToken = user.token;
 
   const officeHour = route.params?.officeHour;
@@ -31,7 +30,7 @@ export function ManagePageAddConfirm({ route }) {
   const { triggerUpdate } = useOfficeHourUpdate();
 
   const addOHToDB = async () => {
-    const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID);
+    const requestStatus = await addUserOfficeHour(userToken, officeHourID);
     if (requestStatus) {
       // true means successful
       console.log('trigger addition');

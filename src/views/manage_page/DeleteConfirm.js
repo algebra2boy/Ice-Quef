@@ -6,7 +6,7 @@ import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
 import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 import { UserContext } from '../../props/UserInfo';
-import { deleteUserOfficeHour } from '../../controllers/manage_page/AddDropController';
+import { deleteUserOfficeHour } from '../../props/AddDropOfficeHour';
 
 const height = Dimensions.get('window').height;
 
@@ -15,13 +15,12 @@ export function ManagePageDeleteConfirm({ route }) {
   const themedStyles = ThemedStyles();
 
   const user = useContext(UserContext);
-  const userEmail = user.email;
   const userToken = user.token;
   const officeHour = route.params?.officeHour;
   const { triggerUpdate } = useOfficeHourUpdate();
 
   const deleteFromDB = async () => {
-    const requestStatus = await deleteUserOfficeHour(userEmail, userToken, officeHour.id);
+    const requestStatus = await deleteUserOfficeHour(userToken, officeHour.id);
     if (requestStatus) {
       console.log('trigger deletion');
       triggerUpdate();
