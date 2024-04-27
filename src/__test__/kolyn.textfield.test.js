@@ -1,18 +1,15 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import '@testing-library/react-native/extend-expect'
 import { KolynTextfield } from '../component';
 import { ThemeProvider } from '../style/AppTheme';
+import { Default } from '../views/'
 
-describe('Textfield', () => {
-  it('puts text', async () => {
-    const tree = renderer
-      .create(
-        <ThemeProvider>
-          <KolynTextfield />
-        </ThemeProvider>,
-      )
-      .toJSON();
+test('', async () => {
+  const component = (
+    <ThemeProvider>
+      <KolynTextfield />
+    </ThemeProvider>
+  );
 
-    //console.log(tree);
-  });
+  expect(component).toMatchSnapshot();
 });
