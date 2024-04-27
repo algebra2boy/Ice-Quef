@@ -20,7 +20,7 @@ const joinStatus = {
  * Controls 1. the office hour blocks to be rendered in the calendar, 
  * 2. the student's join status
  * 
- * @returns { ReactElement } Controller
+ * @returns { ReactElement } The default calendar page
  */
 export function CalendarPageDefaultController() {
   const user = useContext(UserContext);

@@ -5,15 +5,23 @@ import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { UserContext } from '../../props/UserInfo';
 
+/**
+ * The controller of the default manage page.
+ * 
+ * @returns { ReactElement } The default manage page.
+ */
 export function ManagePageDefaultController() {
   const user = useContext(UserContext);
   const userEmail = user.email; // get user email address (account name)
 
   const updateTrigger = useOfficeHourUpdate().updateTrigger;
 
+  // The list of currently registered office hours
   const [officeHour, setOfficeHour] = useState([]);
+  // The indicator of whether the list is loading
   const [isLoading, setIsLoading] = useState(true); // loading indicator
 
+  // Triggers when office hour list is modified
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
       try {
