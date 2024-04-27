@@ -13,7 +13,7 @@ import { SpringButton } from '../style/SpringButton';
  */
 export function KolynButton({ text, onPress, extraLabelStyle = null, testID = undefined }) {
   const themedStyles = ThemedStyles();
-  console.log(extraLabelStyle);
+  // console.log(extraLabelStyle);
   return (
     <SpringButton
       text={text}
