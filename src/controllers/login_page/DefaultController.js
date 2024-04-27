@@ -13,12 +13,16 @@ export function LoginPageDefaultController() {
   // The log in status
   const [status, setStatus] = useState(loginStatus.default);
 
-  const pass = useContext(LoginContext);
+  const loginContext = useContext(LoginContext);
 
+  // If the user is on this page, they must be either
+  // just opened the app or logged out. Set the login
+  // status to default, which is "not logged in yet".
   useEffect(() => {
     setStatus(loginStatus.default);
-  }, [pass.currentLoginStatus]);
+  }, [loginContext.currentLoginStatus]);
 
+  // Function to handle the log in button press
   async function LogInButtonPressed(email, password) {
     try {
       // Encrypt the password
