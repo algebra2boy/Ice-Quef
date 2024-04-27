@@ -40,20 +40,17 @@ export function CalendarPageDefaultController() {
             console.log('Server response:', response);
         });
 
-        // Receive the response sent back from server after "join queue" event is sent
+        socket.off('join queue response');
         socket.on('join queue response', response => {
             const {status, data, error} = response;
-
             if (status === 'success') {
                 const queueIndex = data;
-
                 console.log('Joined queue at position:', queueIndex);
                 setCurrStatus({...currStatus, message: joinStatus.joined(queueIndex), isJoined: true});
                 joinStatus.isJoined = true;
             } else {
                 console.log(error);
             }
-            // socket.close();
         });
     };
 
@@ -67,17 +64,16 @@ export function CalendarPageDefaultController() {
             studentEmail: userEmail,
             officeHourID: currentOfficeHourID,
         };
+
         socket.emit('leave queue', leaveData, response => {
             console.log('Server response:', response);
         });
 
-        // Receive the response sent back from server after "queue queue" event is sent
+        socket.off('leave queue response');
         socket.on('leave queue response', response => {
             const {status, data, error} = response;
-
             if (status === 'success') {
                 const pplInQueue = data;
-
                 console.log('Number of people in queue:', pplInQueue);
                 setCurrStatus({
                     ...currStatus,
