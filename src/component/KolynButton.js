@@ -7,8 +7,8 @@ import { SpringButton } from '../style/SpringButton';
 /**
  * Resembles an animated button
  *
- * @param { string } text: The button's text label
- * @param { func } onPress: Function to be exected after animation finishes
+ * @param { string } text The button's text label
+ * @param { func } onPress Function to be exected after animation finishes
  * @return { ReactElement } The button
  */
 export function KolynButton({ text, onPress, extraLabelStyle = null, testID = undefined }) {

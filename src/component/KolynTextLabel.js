@@ -3,12 +3,24 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as KolynStyle from '../style/KolynStyleKit';
 import { ThemeContext } from '../style/AppTheme';
 
+/**
+ * Resembles a normal size text label
+ *
+ * @param { string } text The title
+ * @return { Text } The text label
+ */
 export function KolynTextLabel({ text, style }) {
   const themedStyles = ThemedStyles();
 
   return <Text style={StyleSheet.flatten([themedStyles.text, style])}>{text}</Text>;
 }
 
+/**
+ * Resembles a big size title label
+ *
+ * @param { string } text The title
+ * @return { Text } The text label
+ */
 export function KolynTitleLabel({ title }) {
   const themedStyles = ThemedStyles();
 
@@ -18,8 +30,8 @@ export function KolynTitleLabel({ title }) {
 /**
  * Resembles a medium size title label
  *
- * @param { string } text: The title
- * @return { View }  A view that contains the text label
+ * @param { string } text The title
+ * @return { Text } The text label
  */
 export function KolynSubtitleLabel({ title }) {
   const themedStyles = ThemedStyles();
