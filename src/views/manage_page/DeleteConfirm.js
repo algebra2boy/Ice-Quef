@@ -1,12 +1,8 @@
-import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
-import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
-import { UserContext } from '../../props/UserInfo';
-import { deleteUserOfficeHour } from '../../props/AddDropOfficeHour';
 
 const height = Dimensions.get('window').height;
 
@@ -16,30 +12,12 @@ const height = Dimensions.get('window').height;
  * @param { Object } route 
  * @returns { ReactElement } The confirmation page to delete an office hour
  */
-export function ManagePageDeleteConfirm({ route }) {
+export function ManagePageDeleteConfirm(props) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
 
-  const user = useContext(UserContext);
-  const userToken = user.token;
-  const officeHour = route.params?.officeHour;
-  const { triggerUpdate } = useOfficeHourUpdate();
-
-  // TODO: refactor this part
-  const deleteFromDB = async () => {
-    const requestStatus = await deleteUserOfficeHour(userToken, officeHour.id);
-    if (requestStatus) {
-      console.log('trigger deletion');
-      triggerUpdate();
-      navigation.navigate('ManagePageDeleteSuccess', {
-        officeHour: officeHour,
-      });
-    } else {
-      navigation.navigate('ManagePageDeleteFail', {
-        officeHour: officeHour,
-      });
-    }
-  };
+  const deleteFromDB = props.deleteFromDB;
+  const officeHour = props.officeHour;
 
   return (
     <BasePage
