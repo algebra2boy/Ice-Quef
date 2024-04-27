@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 /**
  * Loads fonts from bundles
  *
- * @return { boolean } Returns true if all fonts were successfully loaded,
+ * @return { boolean } True if all fonts were successfully loaded,
  * returns false otherwise.
  */
 function loadFont() {

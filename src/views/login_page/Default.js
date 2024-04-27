@@ -10,10 +10,10 @@ import { loginStatus } from '../../props/LoginContext';
 const height = Dimensions.get('window').height;
 
 /**
- * Resembles the login page
+ * Resembles the log in page
  *
- * @param { Props } { navigation }
- * @return { ReactElement } The login page
+ * @param { Props } props
+ * @return { ReactElement } The log in page
  */
 export function LoginPageDefault(props) {
   const themedStyles = ThemedStyles();

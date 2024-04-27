@@ -12,9 +12,9 @@ const height = Dimensions.get('window').height;
 
 /**
  * This page serves as a transition between add office hour
- * page and successfully added office hour page
+ * page and successfully added office hour page.
  *
- * @param {Prop} objects received from add office hour page
+ * @param {Prop} route Objects received from add office hour page
  * @returns {ReactElement} The add confirm page
  */
 export function ManagePageAddConfirm({ route }) {

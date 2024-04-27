@@ -1,5 +1,12 @@
 import ServerAddress from './Server';
 
+/**
+ * Function used to add an office hour
+ * 
+ * @param { string } userToken 
+ * @param { string } officeHourID 
+ * @returns { boolean } True if addition was successful, false otherwise
+ */
 export async function addUserOfficeHour(userToken, officeHourID) {
   const requestURL = ServerAddress() + `api/officeHour/add/${officeHourID}`;
   try {
@@ -25,6 +32,13 @@ export async function addUserOfficeHour(userToken, officeHourID) {
   }
 }
 
+/**
+ * Function used to remove an office hour
+ * 
+ * @param { string } userToken 
+ * @param { string } officeHourID 
+ * @returns { boolean } True if removal was successful, false otherwise
+ */
 export async function deleteUserOfficeHour(userToken, officeHourID) {
   const requestURL = ServerAddress() + `api/officeHour/remove/${officeHourID}`;
   try {

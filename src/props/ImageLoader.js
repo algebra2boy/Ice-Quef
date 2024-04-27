@@ -4,7 +4,7 @@ import { Asset } from 'expo-asset';
 /**
  * Loads and caches images from bundles
  *
- * @return { boolean } Returns true if all images were successfully loaded,
+ * @return { boolean } True if all images were successfully loaded,
  * returns false otherwise.
  */
 const images = [require('../../assets/images/icon8.png')];
