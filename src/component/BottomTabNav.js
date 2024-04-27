@@ -9,17 +9,28 @@ import {
   ProfilePageController,
 } from '../controllers';
 
+// Creates a bottom tab navigator
 const Tab = createBottomTabNavigator();
+
+// The images for the bottom tab navigator
 const images = [
   require('../../assets/images/calendar.png'),
   require('../../assets/images/cog.png'),
   require('../../assets/images/profile.png'),
 ];
 
+/**
+ * Responsible for the bottom tab navigation bar in the main screen.
+ * Three buttons: 1. Calendar, 2. Manage, 3. Profile
+ * 
+ * @returns { ReactElement } Bottom tab navigator in main screen
+ */
 export function BottomTabNavigator() {
   const themedStyles = ThemedStyles();
   const mainColor = GetMainColor();
 
+  // Tab navigator does not accept custom components
+  // so the code cannot be refactored to use a custom component
   return (
     <Tab.Navigator
       screenOptions={() => ({
@@ -99,11 +110,11 @@ export function BottomTabNavigator() {
   );
 }
 
-function GetMainColor() {
+const GetMainColor = () => {
   const themeManager = useContext(ThemeContext);
   const currentTheme = themeManager.theme;
   return currentTheme.mainColor;
-}
+};
 
 function ThemedStyles() {
   const themeManager = useContext(ThemeContext);
