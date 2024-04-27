@@ -1,3 +1,5 @@
+// Enums used for pages that involve password
+
 export const PageVariant = {
   NewPassword: 'Set a new password',
   ChangeSuccess: 'Password changed successfully!',

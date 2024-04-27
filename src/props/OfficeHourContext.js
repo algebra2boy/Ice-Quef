@@ -4,6 +4,12 @@ const OfficeHourUpdateContext = createContext();
 
 export const useOfficeHourUpdate = () => useContext(OfficeHourUpdateContext);
 
+/**
+ * Triggers when the student's registered office hour list is modified
+ * 
+ * @param { ReactElement } children 
+ * @returns Void
+ */
 export const OfficeHourUpdateWrapper = ({ children }) => {
   const [updateTrigger, setUpdateTrigger] = useState(0);
 
