@@ -3,16 +3,18 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
-import { UserContext } from '../../props/UserInfo';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
-import { LoginContext } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
 
-export function ProfilePageDefault({}) {
+/**
+ * The default age of the profile page.
+ * 
+ * @param { Props } props 
+ * @returns The default age of the profile page.
+ */
+export function ProfilePageDefault(props) {
   const themedStyles = ThemedStyles();
-  const user = useContext(UserContext);
-  const pass = useContext(LoginContext);
   const navigation = useNavigation();
   const smallFont = getSmallFont();
 
@@ -41,7 +43,7 @@ export function ProfilePageDefault({}) {
                   />
                   */}
                 </View>
-                <KolynTextLabel text={user.email} />
+                <KolynTextLabel text={props.user.email} />
               </View>
 
               <View style={{ height: '10%' }} />
@@ -60,7 +62,7 @@ export function ProfilePageDefault({}) {
                 text="Log out"
                 onPress={() => {
                   navigation.popToTop();
-                  pass.updateLoginStatus();
+                  props.loginContext.updateLoginStatus();
                 }}
               />
             </View>
@@ -71,6 +73,12 @@ export function ProfilePageDefault({}) {
   );
 }
 
+/**
+ * Resembles the edit icon, shape of a pen
+ * 
+ * @param { Func } onPress Invokes after this icon is pressed 
+ * @returns 
+ */
 function EditIcon({ onPress }) {
   const themedStyles = ThemedStyles();
 
