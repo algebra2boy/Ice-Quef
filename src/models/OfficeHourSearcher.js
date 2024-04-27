@@ -5,16 +5,26 @@ import ServerAddress from '../props/Server';
  * Perform a search based on given user input and find all matching
  * office hours and return them.
  *
- * @param facultyName
- * @param courseCode
- * @param searchLimit
- * @return { List } matchOfficeHours an list of office hours that
- *                   match the given input to be used for display
+ * @param { string } facultyName
+ * @param { string } courseCode
+ * @param { int } searchLimit
+ * @return { List } matchOfficeHours An list of office hours that
+ *                   match the given input to be used
  */
 export async function PerformSearch(facultyName = '', courseCode = '', searchLimit = 5) {
   return await FetchOfficeHoursSearch(facultyName, courseCode, searchLimit);
 }
 
+/**
+ * Fetch the office hours from the server based on given user input 
+ * and find all matching office hours and return them.
+ *
+ * @param { string } facultyName
+ * @param { string } courseCode
+ * @param { int } searchLimit
+ * @return { List } matchOfficeHours An list of office hours that
+ *                   match the given input to be used
+ */
 async function FetchOfficeHoursSearch(facultyName, courseName, searchLimit) {
   try {
     let query = `searchLimit=${encodeURIComponent(searchLimit)}`;
@@ -56,9 +66,17 @@ async function FetchOfficeHoursSearch(facultyName, courseName, searchLimit) {
   }
 }
 
-export async function FetchOfficeHours(addressFilter = '') {
+/**
+ * Fetch the office hours from the server based on filter
+ * and find all matching office hours and return them.
+ *
+ * @param { string } filter The filter
+ * @return { List } matchOfficeHours An list of office hours that
+ *                   match the given input to be used
+ */
+export async function FetchOfficeHours(filter = '') {
   try {
-    const response = await fetch(ServerAddress() + `api/officeHour/list${addressFilter}`, {
+    const response = await fetch(ServerAddress() + `api/officeHour/list${filter}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
