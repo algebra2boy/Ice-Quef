@@ -106,6 +106,7 @@ export function SignupPageDefault(props) {
                 onPress={() => {
                   props.onRegisterPressed();
                 }}
+                testID="registerButton"
               />
               <View style={{ top: 20 }}>
                 <KolynButton
@@ -113,6 +114,7 @@ export function SignupPageDefault(props) {
                   onPress={() => {
                     navigation.goBack();
                   }}
+                  testID="gobackButton"
                 />
               </View>
             </View>
