@@ -2,6 +2,15 @@ import { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ThemeContext } from '../style/AppTheme';
 
+/**
+ * A group of text that containing rules of a valid password.
+ * When a requirement is fulfilled, it will have a different
+ * color from the unfulfilled ones.
+ *
+ * @param { List } passwordHint The group of password's hints
+ * @param { List } passwordConditions The group of password's fulfilling state
+ * @returns { View } A view containing a group of text
+ */
 export function PasswordHintText({ passwordHint, passwordConditions }) {
   const themedStyles = ThemedStyles();
 
@@ -23,6 +32,15 @@ export function PasswordHintText({ passwordHint, passwordConditions }) {
   );
 }
 
+/**
+ * A group of text that containing rules of a valid confirm password.
+ * When a requirement is fulfilled, it will have a different
+ * color from the unfulfilled ones.
+ *
+ * @param { List } confirmPasswordHint the group of password's hints
+ * @param { List } confirmPasswordCondition the group of password's fulfilling state
+ * @returns { View } A view containing a group of text
+ */
 export function ConfirmPasswordHintText({ confirmPasswordHint, confirmPasswordCondition }) {
   const themedStyles = ThemedStyles();
 

@@ -5,14 +5,15 @@ import { KolynButton, KolynTextfield, KolynLogo, KolynTextLabel } from '../../co
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
 import { ThemeContext } from '../../style/AppTheme';
+import { loginStatus } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
 
 /**
- * Resembles the login page
+ * Resembles the log in page
  *
- * @param { Props } { navigation }
- * @return { ReactElement } The login page
+ * @param { Props } props
+ * @return { ReactElement } The log in page
  */
 export function LoginPageDefault(props) {
   const themedStyles = ThemedStyles();
@@ -25,7 +26,6 @@ export function LoginPageDefault(props) {
 
   const pressLogInButton = props.pressLogInButton;
   const status = props.status;
-  const isSuccess = props.isSuccess;
 
   const onLogInPressed = async () => {
     const userToken = await pressLogInButton(email, password);
@@ -37,7 +37,6 @@ export function LoginPageDefault(props) {
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
     } else {
-
     } // log in failed
   };
 
@@ -79,7 +78,11 @@ export function LoginPageDefault(props) {
                 />
                 <KolynTextLabel
                   text={status}
-                  style={isSuccess ? themedStyles.hintSuccess : themedStyles.hintFail}
+                  style={
+                    status === loginStatus.success
+                      ? themedStyles.hintSuccess
+                      : themedStyles.hintFail
+                  }
                 />
               </View>
             </View>
