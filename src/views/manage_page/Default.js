@@ -61,6 +61,7 @@ export function ManagePageDefault(props) {
                 onPress={() => {
                   navigation.navigate('ManagePageAddOH');
                 }}
+                testID="addButton"
               />
             </View>
           </View>
