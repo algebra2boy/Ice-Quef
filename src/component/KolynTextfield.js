@@ -37,6 +37,7 @@ export function KolynTextfield({
       secureTextEntry={isSecure}
       textContentType="oneTimeCode"
       blurOnSubmit={Platform.OS !== 'web'}
+      testID="kolyntextfield"
     />
   );
 }

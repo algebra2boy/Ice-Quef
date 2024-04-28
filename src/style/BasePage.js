@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useState, useEffect } from 'react';
 import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import loadFont from '../props/FontLoader';
