@@ -68,6 +68,7 @@ export function LoginPageDefault(props) {
                   placeholder="Enter email"
                   keyboardType="email-address"
                   isSecure={false}
+                  testID="emailField"
                 />
                 <KolynTextfield
                   value={password}
@@ -75,6 +76,7 @@ export function LoginPageDefault(props) {
                   placeholder="Enter password"
                   keyboardType="default"
                   isSecure={true}
+                  testID="passwordField"
                 />
                 <KolynTextLabel
                   text={status}
@@ -88,9 +90,17 @@ export function LoginPageDefault(props) {
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onLogInPressed} testID={'loginButton'} />
+              <KolynButton 
+                text="Log In" 
+                onPress={onLogInPressed} 
+                testID="loginButton" 
+              />
               <View style={{ top: 20 }}>
-                <KolynButton text="Sign Up" onPress={onSignUpPress} />
+                <KolynButton 
+                  text="Sign Up" 
+                  onPress={onSignUpPress} 
+                  testID="signupButton"
+                />
               </View>
             </View>
           </View>
