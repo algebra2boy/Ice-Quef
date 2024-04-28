@@ -6,6 +6,12 @@ import { ThemeContext } from '../../style/AppTheme';
 import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit';
 
+/**
+ * Resembles the default calendar page.
+ *
+ * @param { Props } props
+ * @returns { ReactElement } The default calendar page
+ */
 export function CalendarPageDefault(props) {
   const hourStyle = getHourStyle();
 
@@ -26,7 +32,7 @@ export function CalendarPageDefault(props) {
         <>
           <View style={{ flex: 20 }}>
             <Calendar
-              events={props.regLst}
+              events={props.renderableList}
               height={400}
               mode="3days"
               theme={eventCellTheme()}
@@ -62,6 +68,12 @@ const getHourStyle = () => {
   };
 };
 
+/**
+ * Resembles a pop-up menu for an office hour block.
+ *
+ * @param { Props } props
+ * @returns { ReactElement } The pop-up menu
+ */
 function PopupMenu(props) {
   const themedStyles = ThemedStyles();
   const updatePosition = props.updatePosition;
@@ -96,6 +108,11 @@ function PopupMenu(props) {
   );
 }
 
+/**
+ * Resembles a cross mark.
+ *
+ * @returns { ReactElement } The cross mark
+ */
 function CrossMark() {
   const themedStyles = ThemedStyles();
 

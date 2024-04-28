@@ -6,6 +6,12 @@ import { day, NonBold } from '../../style/ManageOHStyle';
 
 const height = Dimensions.get('window').height;
 
+/**
+ * Page to display information about an office hour.
+ *
+ * @param { Object } route
+ * @returns { ReactElement } The page to display information about an office hour
+ */
 export function ManagePageInformation({ route }) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();

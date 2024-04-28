@@ -8,6 +8,12 @@ import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter'
 
 const height = Dimensions.get('window').height;
 
+/**
+ * The page for resetting password.
+ *
+ * @param { Props } props
+ * @returns { ReactElement } The resetting password page
+ */
 export function ProfilePageResetPassword(props) {
   const themedStyles = ThemedStyles();
   const navigation = useNavigation();

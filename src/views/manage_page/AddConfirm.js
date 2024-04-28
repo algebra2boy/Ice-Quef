@@ -1,51 +1,23 @@
-import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
-import { UserContext } from '../../props/UserInfo';
-import { addUserOfficeHour } from '../../controllers/manage_page/AddDropController';
-import { useOfficeHourUpdate } from '../../props/OfficeHourContext';
 
 const height = Dimensions.get('window').height;
 
 /**
  * This page serves as a transition between add office hour
- * page and successfully added office hour page
+ * page and successfully added office hour page.
  *
- * @param {Prop} objects received from add office hour page
+ * @param {Prop} route Objects received from add office hour page
  * @returns {ReactElement} The add confirm page
  */
-export function ManagePageAddConfirm({ route }) {
+export function ManagePageAddConfirm(props) {
   const navigation = useNavigation();
   const themedStyles = ThemedStyles();
-
-  const user = useContext(UserContext);
-  const userEmail = user.email;
-  const userToken = user.token;
-
-  const officeHour = route.params?.officeHour;
-  const officeHourID = officeHour.id;
-
-  const { triggerUpdate } = useOfficeHourUpdate();
-
-  const addOHToDB = async () => {
-    const requestStatus = await addUserOfficeHour(userEmail, userToken, officeHourID);
-    if (requestStatus) {
-      // true means successful
-      console.log('trigger addition');
-      triggerUpdate(); // trigger an update on the manage main page
-
-      navigation.navigate('ManagePageAddSuccess', {
-        officeHour: officeHour,
-      });
-    } else {
-      navigation.navigate('ManagePageAddFail', {
-        officeHour: officeHour,
-      });
-    }
-  };
+  const addOHToDB = props.addOHToDB;
+  const officeHour = props.officeHour;
 
   return (
     <BasePage
