@@ -22,6 +22,7 @@ export function KolynLogo() {
         },
       ]}
       resizeMode="contain"
+      testID="logo"
     />
   );
 }
