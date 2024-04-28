@@ -1,9 +1,18 @@
-import '@testing-library/react-native/extend-expect'
-import { waitFor } from '@testing-library/react-native';
-import { render } from '../test-utils';
-import { LoginPageDefault } from '../views/login_page/Default';
-import { SignupPageDefault } from '../views/signup_page/Default';
-import { KolynTextfield, KolynButton } from '../component';
+import {
+  waitFor, 
+  render, 
+  cleanup,
+  LoginPageDefault, 
+  SignupPageDefault, 
+  CalendarPageDefault, 
+  ManagePageDefault, 
+  ManagePageAddOH,
+  ProfilePageDefault,
+  KolynTextfield, 
+  KolynButton 
+} from './index'
+
+afterEach(cleanup);
 
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
@@ -120,6 +129,69 @@ describe("sign up page", () => {
     await waitFor(() => {
       screen.getByTestId("registerButton");
       screen.getByTestId("gobackButton");
+    });
+  });
+});
+
+describe("calendar", () => {
+  it("determines calendar page exists", async () => {
+    const screen = render(
+      <CalendarPageDefault />
+    );
+  });
+});
+
+describe("manage", () => {
+  it("determines elements in default manage page", async () => {
+    const screen = render(
+      <ManagePageDefault
+        officeHour={[]}
+        setOfficeHour={()=>{}}
+      />
+    );
+
+    await waitFor(() => {
+      screen.getByText("Manage office hours");
+      screen.getByTestId("addButton");
+    });
+  });
+
+  it("determines elements in add office hour page", async () => {
+    const screen = render(
+      <ManagePageAddOH
+        isRefreshing={false}
+        setIsRefreshing={()=>{}}
+        isSearching={false}
+        officeHour={[]}
+        setOfficeHour={()=>{}}
+        courseCode={""}
+        setCourseCode={()=>{}}
+        facultyName={""}
+        setFacultyName={()=>{}}
+      />
+    );
+
+    await waitFor(() => {
+      screen.getByText("Add office hours");
+      screen.getByPlaceholderText("Please enter class code. ex. CS 520");
+      screen.getByPlaceholderText("Please enter faculty's name: ex. Joe Doe");
+      screen.getByTestId("gobackButton");
+    });
+  });
+
+});
+
+describe("profile", () => {
+  it("determines profile page exists", async () => {
+    const screen = render(
+      <ProfilePageDefault />
+    );
+
+    await waitFor(() => {
+      screen.getByText("Profile");
+      screen.getByText("Email");
+      screen.getByTestId("changePassword")
+      screen.getByTestId("logoutButton");
     });
   });
 });
