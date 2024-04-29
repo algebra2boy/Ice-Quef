@@ -9,10 +9,17 @@ import { ThemeContext } from '../style/AppTheme';
  * @param { string } text The title
  * @return { Text } The text label
  */
-export function KolynTextLabel({ text, style }) {
+export function KolynTextLabel({ 
+  text, 
+  style
+}) {
   const themedStyles = ThemedStyles();
 
-  return <Text style={StyleSheet.flatten([themedStyles.text, style])}>{text}</Text>;
+  return (
+    <Text style={StyleSheet.flatten([themedStyles.text, style])}>
+      {text}
+    </Text>
+  );
 }
 
 /**
@@ -24,7 +31,11 @@ export function KolynTextLabel({ text, style }) {
 export function KolynTitleLabel({ title }) {
   const themedStyles = ThemedStyles();
 
-  return <Text style={themedStyles.title}>{title}</Text>;
+  return (
+    <Text style={themedStyles.title}>
+      {title}
+    </Text>
+  );
 }
 
 /**
@@ -36,7 +47,11 @@ export function KolynTitleLabel({ title }) {
 export function KolynSubtitleLabel({ title }) {
   const themedStyles = ThemedStyles();
 
-  return <Text style={themedStyles.subtitle}>{title}</Text>;
+  return (
+    <Text style={themedStyles.subtitle}>
+      {title}
+    </Text>
+  );
 }
 
 function ThemedStyles() {
