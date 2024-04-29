@@ -12,7 +12,13 @@ var isPressing = false;
  * @param { StyleSheet } labelStyle The label's style
  * @returns { ReactElement } The button
  */
-export const SpringButton = ({ text, onPress, buttonStyle, labelStyle, testID = undefined }) => {
+export const SpringButton = ({ 
+  text, 
+  onPress, 
+  buttonStyle, 
+  labelStyle, 
+  testID = null 
+}) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

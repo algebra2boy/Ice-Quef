@@ -22,6 +22,7 @@ export function KolynTextfield({
   keyboardType = 'default',
   isSecure = false,
   overrideStyle = null,
+  testID = null
 }) {
   const themedStyles = ThemedStyles();
   const placeholderColor = GetPlaceholderColor();
@@ -37,6 +38,7 @@ export function KolynTextfield({
       secureTextEntry={isSecure}
       textContentType="oneTimeCode"
       blurOnSubmit={Platform.OS !== 'web'}
+      testID={testID ? testID : "kolyntextfield"}
     />
   );
 }

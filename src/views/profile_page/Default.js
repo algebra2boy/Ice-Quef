@@ -18,6 +18,10 @@ export function ProfilePageDefault(props) {
   const navigation = useNavigation();
   const smallFont = getSmallFont();
 
+  const email = props.user ? props.user.email : "";
+  const updateLoginStatus = 
+    props.loginContext ? props.loginContext.updateLoginStatus : () => {};
+
   return (
     <BasePage
       components={
@@ -43,7 +47,7 @@ export function ProfilePageDefault(props) {
                   />
                   */}
                 </View>
-                <KolynTextLabel text={props.user.email} />
+                <KolynTextLabel text={email} />
               </View>
 
               <View style={{ height: '10%' }} />
@@ -54,6 +58,7 @@ export function ProfilePageDefault(props) {
                 onPress={() => {
                   navigation.navigate('ProfilePageResetPassword');
                 }}
+                testID="changePassword"
               />
             </View>
 
@@ -62,8 +67,9 @@ export function ProfilePageDefault(props) {
                 text="Log out"
                 onPress={() => {
                   navigation.popToTop();
-                  props.loginContext.updateLoginStatus();
+                  updateLoginStatus();
                 }}
+                testID="logoutButton"
               />
             </View>
           </View>
