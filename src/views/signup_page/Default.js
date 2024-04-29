@@ -74,6 +74,7 @@ export function SignupPageDefault({}) {
       const registrationData = {
         email: email.toLowerCase(),
         password: hashedPassword,
+        isTeacher: false
       };
 
       try {
