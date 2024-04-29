@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
 import { BasePage } from '../../style/BasePage';
 import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '../../component';
@@ -36,7 +36,7 @@ export function SignupPageDefault(props) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={{ flex: 6 }}>
               <KolynTitleLabel title="Create an account" />
               <KolynTextLabel text="Email" />
               <KolynTextfield
@@ -100,7 +100,7 @@ export function SignupPageDefault(props) {
                 confirmPasswordCondition={props.confirmPasswordCondition}
               />
             </View>
-            <View style={{ top: height * 0.1 }}>
+            <View style={{ flex: 1 }}>
               <KolynButton
                 text="Register"
                 onPress={() => {
