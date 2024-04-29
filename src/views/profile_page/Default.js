@@ -1,11 +1,10 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, View, Dimensions, StyleSheet, Pressable } from 'react-native';
+import { ScrollView, View, StyleSheet, Pressable } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
-
-const height = Dimensions.get('window').height;
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
 /**
  * The default age of the profile page.
@@ -34,7 +33,7 @@ export function ProfilePageDefault(props) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={kolynBigSector()}>
               <KolynTitleLabel title="Profile" />
 
               <View style={{ flexDirection: 'column' }}>
@@ -50,8 +49,6 @@ export function ProfilePageDefault(props) {
                 <KolynTextLabel text={email} />
               </View>
 
-              <View style={{ height: '10%' }} />
-
               <KolynButton
                 extraLabelStyle={{ fontSize: smallFont }}
                 text="Change password"
@@ -62,7 +59,7 @@ export function ProfilePageDefault(props) {
               />
             </View>
 
-            <View style={{ top: height * 0.1 }}>
+            <View style={kolynSmallSector()}>
               <KolynButton
                 text="Log out"
                 onPress={() => {
