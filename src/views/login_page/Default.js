@@ -1,13 +1,12 @@
 import { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { KolynButton, KolynTextfield, KolynLogo, KolynTextLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
 import { ThemeContext } from '../../style/AppTheme';
 import { loginStatus } from '../../props/LoginContext';
-
-const height = Dimensions.get('window').height;
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
 /**
  * Resembles the log in page
@@ -31,13 +30,13 @@ export function LoginPageDefault(props) {
     const userToken = await pressLogInButton(email, password);
     user.setEmail(email.toLowerCase());
 
-    if (userToken != null) {
+    //if (userToken != null) {
       // validate user
       user.setToken(userToken);
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
-    } else {
-    } // log in failed
+    //} else {
+    //} // log in failed
   };
 
   const onSignUpPress = () => {
@@ -56,7 +55,7 @@ export function LoginPageDefault(props) {
           }}
         >
           <View style={{ alignItems: 'center', padding: 20 }}>
-            <View style={{ flex: 6 }}>
+            <View style={kolynBigSector()}>
               <View>
                 <KolynLogo />
               </View>
@@ -89,7 +88,7 @@ export function LoginPageDefault(props) {
               </View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View style={kolynSmallSector()}>
               <KolynButton 
                 text="Log In" 
                 onPress={onLogInPressed} 

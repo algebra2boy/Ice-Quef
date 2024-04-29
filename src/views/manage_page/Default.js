@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ManageOHStyles } from '../../style/ManageOHStyle';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { RenderItem } from '../../component/OfficeHourButton';
-
-const height = Dimensions.get('window').height;
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
 /**
  * Resembles the default page for the manage office hours page.
@@ -42,7 +41,7 @@ export function ManagePageDefault(props) {
       components={
         <View>
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={kolynBigSector()}>
               <KolynTitleLabel title="Manage office hours" />
               <FlatList
                 data={officeHour}
@@ -57,7 +56,7 @@ export function ManagePageDefault(props) {
               />
             </View>
 
-            <View style={{ top: height * 0.1 }}>
+            <View style={kolynSmallSector()}>
               <KolynButton
                 text="Add"
                 onPress={() => {
