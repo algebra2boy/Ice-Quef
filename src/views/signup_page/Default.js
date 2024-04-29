@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
 import { BasePage } from '../../style/BasePage';
 import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '../../component';
