@@ -10,7 +10,7 @@ const height = Dimensions.get('window').height;
 
 /**
  * Resembles the default page for the manage office hours page.
- * 
+ *
  * @param { Props } props
  * @returns { ReactElement } The default page for the manage office hours page
  */
@@ -47,7 +47,9 @@ export function ManagePageDefault(props) {
               <FlatList
                 data={officeHour}
                 showsVerticalScrollIndicator={false}
-                renderItem={item => RenderItem(item.item, manageOHStyles, navigation, 'ManagePageInfo')}
+                renderItem={item =>
+                  RenderItem(item.item, manageOHStyles, navigation, 'ManagePageInfo')
+                }
                 keyExtractor={item => item.id}
                 onRefresh={onRefresh}
                 refreshing={isRefreshing}

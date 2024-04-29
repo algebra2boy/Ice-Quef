@@ -10,9 +10,9 @@ const height = Dimensions.get('window').height;
 
 /**
  * The page for resetting password.
- * 
- * @param { Props } props 
- * @returns { ReactElement } The resetting password page 
+ *
+ * @param { Props } props
+ * @returns { ReactElement } The resetting password page
  */
 export function ProfilePageResetPassword(props) {
   const themedStyles = ThemedStyles();

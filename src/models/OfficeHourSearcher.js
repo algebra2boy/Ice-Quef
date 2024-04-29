@@ -16,7 +16,7 @@ export async function PerformSearch(facultyName = '', courseCode = '', searchLim
 }
 
 /**
- * Fetch the office hours from the server based on given user input 
+ * Fetch the office hours from the server based on given user input
  * and find all matching office hours and return them.
  *
  * @param { string } facultyName

@@ -10,8 +10,8 @@ const height = Dimensions.get('window').height;
  * Displays when removing office hour succeed.
  * Notice that actually removing the office hour is not done here.
  * Instead, it was done previously.
- * 
- * @param { Object } route 
+ *
+ * @param { Object } route
  * @returns { ReactElement } The page to display when removing office hour succeed.
  */
 export function ManagePageDeleteSuccess({ route }) {

@@ -8,8 +8,8 @@ const height = Dimensions.get('window').height;
 
 /**
  * Displays when adding office hour fails.
- * 
- * @param { Object } route 
+ *
+ * @param { Object } route
  * @returns { ReactElement } The page to display when adding office hour fails.
  */
 export function ManagePageAddFail({ route }) {

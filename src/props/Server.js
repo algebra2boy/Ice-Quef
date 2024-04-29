@@ -1,7 +1,7 @@
 import config from '../../config.json';
 /**
  * The server's address
- * 
+ *
  * @returns { string } The server's address
  */
 function ServerAddress() {

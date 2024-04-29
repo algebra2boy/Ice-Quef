@@ -27,11 +27,6 @@ export function CalendarPageDefaultController() {
   const userEmail = user.email; // get user email address (account name)
   const updateTrigger = useOfficeHourUpdate().updateTrigger;
 
-  // Set up socket event listener for receiving response from socket server
-  socket.on('connect', () => {
-    console.log('Connected to the server');
-  });
-
   // Just simply all office hours the student currently
   // has registered in the database
   const [officeHour, setOfficeHour] = useState([]);
@@ -52,82 +47,106 @@ export function CalendarPageDefaultController() {
     isJoined: false,
   });
 
-  // TODO: Add comments
-  const joinQueue = (socket, currentOfficeHourID) => {
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Connected to the server');
+    });
+
+    const updateQueuePositions = response => {
+      if (response.status === 'updated') {
+        console.log('Queue positions updated:', response.data);
+        const newPosition = response.data;
+
+        setCurrStatus({
+          message: joinStatus.joined(newPosition),
+          isJoined: true,
+        });
+      }
+      socket.on('update queue positions', updateQueuePositions);
+
+      return () => {
+        socket.off('connect');
+        socket.off('update queue positions', updateQueuePositions);
+      };
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userEmail && currentEvent && currentEvent.id) {
+      const checkData = {
+        studentEmail: userEmail,
+        officeHourID: currentEvent.id,
+      };
+
+      socket.emit('check existence', checkData);
+
+      socket.on('check existence response', response => {
+        const { status, data, error } = response;
+        if (status === 'success') {
+          if (data.isInQueue) {
+            setCurrStatus({
+              message: joinStatus.joined(data.position),
+              isJoined: true,
+            });
+          } else {
+            setCurrStatus({
+              message: joinStatus.notJoined(data.position),
+              isJoined: false,
+            });
+          }
+        } else {
+          console.error(error);
+        }
+      });
+
+      return () => {
+        socket.off('check existence response');
+      };
+    }
+  }, [userEmail, currentEvent]);
+
+  const joinQueue = currentOfficeHourID => {
     const joinData = {
       studentEmail: userEmail,
-      officeHourID: currentOfficeHourID, //TODO: change office hour INDEX to a variable
+      officeHourID: currentOfficeHourID,
     };
 
-    socket.emit('join queue', joinData, response => {
-      console.log('Server response:', response);
-    });
-
-    // Receive the response sent back from server after "join queue" event is sent
-    socket.on('join queue response', response => {
+    socket.emit('join queue', joinData);
+    socket.once('join queue response', response => {
       const { status, data, error } = response;
-
       if (status === 'success') {
-        const queueIndex = data;
-
-        console.log('Joined queue at position:', queueIndex);
-        setCurrStatus({ ...currStatus, message: joinStatus.joined(queueIndex), isJoined: true });
-        joinStatus.isJoined = true;
+        setCurrStatus({ ...currStatus, message: joinStatus.joined(data), isJoined: true });
       } else {
         console.log(error);
       }
-      // socket.close();
     });
   };
 
-  // TODO: Add comments
-  const leaveQueue = socket => {
-    if (!socket) {
-      console.log('Socket not connected');
-      return;
-    }
-
+  const leaveQueue = currentOfficeHourID => {
     const leaveData = {
       studentEmail: userEmail,
-      officeHourID: officeHour[0].id, //TODO: change office hour INDEX to a variable
+      officeHourID: currentOfficeHourID,
     };
-    socket.emit('leave queue', leaveData, response => {
-      console.log('Server response:', response);
-    });
 
-    // Receive the response sent back from server after "queue queue" event is sent
-    socket.on('leave queue response', response => {
+    socket.emit('leave queue', leaveData);
+    socket.once('leave queue response', response => {
       const { status, data, error } = response;
-
       if (status === 'success') {
-        const pplInQueue = data;
-
-        console.log('Number of people in queue:', pplInQueue);
-        setCurrStatus({
-          ...currStatus,
-          message: joinStatus.notJoined(pplInQueue),
-          isJoined: false,
-        });
-        joinStatus.isJoined = false;
+        setCurrStatus({ ...currStatus, message: joinStatus.notJoined(data), isJoined: false });
       } else {
         console.log(error);
       }
     });
   };
 
-  // Updates the current position of student in queue
   const updatePosition = () => {
-    if (currStatus.isJoined === false) {
-      // waiting, so user join
-      joinQueue(socket, currentEvent.id);
-      console.log('Joined queue');
+    if (!currStatus.isJoined) {
+      joinQueue(currentEvent.id);
     } else {
-      leaveQueue(socket);
+      leaveQueue(currentEvent.id);
     }
   };
 
-  // Triggered whenever there is a change in office hour list.
-  // Such as: adding or removing office hours
   useEffect(() => {
     const fetchUserOfficeHour = async () => {
       try {
@@ -144,7 +163,6 @@ export function CalendarPageDefaultController() {
     fetchUserOfficeHour();
   }, [updateTrigger]);
 
-  // Refresh renderables if there is a change in office hour list
   useEffect(() => {
     const calculateResult = () => {
       setRenderableList(getRenderableList(officeHour));
@@ -156,14 +174,6 @@ export function CalendarPageDefaultController() {
   if (isLoading) {
     return <LoadingPage text="Loading office hours..." />;
   }
-
-  // const determineMessage = () => {
-  //     if (currStatus === joinStatus.notJoined) {
-  //         setCurrStatus(joinStatus.joined(1));
-  //     } else {
-  //         setCurrStatus(joinStatus.notJoined);
-  //     }
-  // };
 
   return (
     <CalendarPageDefault
@@ -182,6 +192,7 @@ export function CalendarPageDefaultController() {
  * @param { List } registered A list of registered office hours
  * @return { List } A list of rendable office hours (all time)
  */
+
 const getRenderableList = registered => {
   /**
    * Determine the info needed for the 'blocks'.
@@ -195,7 +206,6 @@ const getRenderableList = registered => {
       var month = parseInt(date[0]) - 1;
       var day = parseInt(date[1]);
       var year = parseInt(date[2]);
-
       return new Date(year, month, day);
     };
 

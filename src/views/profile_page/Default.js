@@ -9,8 +9,8 @@ const height = Dimensions.get('window').height;
 
 /**
  * The default age of the profile page.
- * 
- * @param { Props } props 
+ *
+ * @param { Props } props
  * @returns The default age of the profile page.
  */
 export function ProfilePageDefault(props) {
@@ -81,9 +81,9 @@ export function ProfilePageDefault(props) {
 
 /**
  * Resembles the edit icon, shape of a pen
- * 
- * @param { Func } onPress Invokes after this icon is pressed 
- * @returns 
+ *
+ * @param { Func } onPress Invokes after this icon is pressed
+ * @returns
  */
 function EditIcon({ onPress }) {
   const themedStyles = ThemedStyles();

@@ -5,9 +5,9 @@ import { ThemeContext } from './AppTheme';
 /**
  * Resembles an office hour block for a specific
  * time period
- * 
- * @param { Object } event 
- * @param { Props } touchableOpacityProps 
+ *
+ * @param { Object } event
+ * @param { Props } touchableOpacityProps
  * @returns { ReactElement } An office hour block
  */
 export const renderEvent = (event, touchableOpacityProps) => {

@@ -8,8 +8,8 @@ const height = Dimensions.get('window').height;
 
 /**
  * Displays when removing office hour fails.
- * 
- * @param { Object } route 
+ *
+ * @param { Object } route
  * @returns { ReactElement } The page to display when removing office hour fails.
  */
 export function ManagePageDeleteFail({ route }) {

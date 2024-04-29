@@ -10,8 +10,8 @@ const height = Dimensions.get('window').height;
  * Displays when adding office hour succeed.
  * Notice that actually adding the office hour is not done here.
  * Instead, it was done previously.
- * 
- * @param { Object } route 
+ *
+ * @param { Object } route
  * @returns { ReactElement } The page to display when adding office hour succeed
  */
 export function ManagePageAddSuccess({ route }) {

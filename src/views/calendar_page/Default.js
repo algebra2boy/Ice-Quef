@@ -8,8 +8,8 @@ import * as KolynStyle from '../../style/KolynStyleKit';
 
 /**
  * Resembles the default calendar page.
- * 
- * @param { Props } props 
+ *
+ * @param { Props } props
  * @returns { ReactElement } The default calendar page
  */
 export function CalendarPageDefault(props) {
@@ -70,8 +70,8 @@ const getHourStyle = () => {
 
 /**
  * Resembles a pop-up menu for an office hour block.
- * 
- * @param { Props } props 
+ *
+ * @param { Props } props
  * @returns { ReactElement } The pop-up menu
  */
 function PopupMenu(props) {
