@@ -136,8 +136,17 @@ describe("sign up page", () => {
 describe("calendar", () => {
   it("determines calendar page exists", async () => {
     const screen = render(
-      <CalendarPageDefault />
+      <CalendarPageDefault
+        renderableList={[]}
+        message={""}
+        updatePosition={()=>{}}
+        setCurrentEvent={()=>{}}
+      />
     );
+
+    await waitFor(() => {
+
+    });
   });
 });
 
