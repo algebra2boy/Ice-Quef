@@ -56,7 +56,7 @@ export function LoginPageDefault(props) {
           }}
         >
           <View style={{ alignItems: 'center', padding: 20 }}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={{ flex: 6 }}>
               <View>
                 <KolynLogo />
               </View>
@@ -89,7 +89,7 @@ export function LoginPageDefault(props) {
               </View>
             </View>
 
-            <View style={{ top: height * 0.1 }}>
+            <View style={{ flex: 1 }}>
               <KolynButton 
                 text="Log In" 
                 onPress={onLogInPressed} 
