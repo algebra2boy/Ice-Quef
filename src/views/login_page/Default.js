@@ -5,14 +5,15 @@ import { KolynButton, KolynTextfield, KolynLogo, KolynTextLabel } from '../../co
 import { BasePage } from '../../style/BasePage';
 import { UserContext } from '../../props/UserInfo';
 import { ThemeContext } from '../../style/AppTheme';
+import { loginStatus } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
 
 /**
- * Resembles the login page
+ * Resembles the log in page
  *
- * @param { Props } { navigation }
- * @return { ReactElement } The login page
+ * @param { Props } props
+ * @return { ReactElement } The log in page
  */
 export function LoginPageDefault(props) {
   const themedStyles = ThemedStyles();
@@ -25,19 +26,18 @@ export function LoginPageDefault(props) {
 
   const pressLogInButton = props.pressLogInButton;
   const status = props.status;
-  const isSuccess = props.isSuccess;
 
   const onLogInPressed = async () => {
     const userToken = await pressLogInButton(email, password);
     user.setEmail(email.toLowerCase());
 
-    // if (userToken != null) {
-    //   // validate user
-    //   user.setToken(userToken);
+    if (userToken != null) {
+      // validate user
+      user.setToken(userToken);
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
-    // } else {
-    // } // didn't login successfully
+    } else {
+    } // log in failed
   };
 
   const onSignUpPress = () => {
@@ -68,6 +68,7 @@ export function LoginPageDefault(props) {
                   placeholder="Enter email"
                   keyboardType="email-address"
                   isSecure={false}
+                  testID="emailField"
                 />
                 <KolynTextfield
                   value={password}
@@ -75,18 +76,31 @@ export function LoginPageDefault(props) {
                   placeholder="Enter password"
                   keyboardType="default"
                   isSecure={true}
+                  testID="passwordField"
                 />
                 <KolynTextLabel
                   text={status}
-                  style={isSuccess ? themedStyles.hintSuccess : themedStyles.hintFail}
+                  style={
+                    status === loginStatus.success
+                      ? themedStyles.hintSuccess
+                      : themedStyles.hintFail
+                  }
                 />
               </View>
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton text="Log In" onPress={onLogInPressed} testID={'loginButton'} />
+              <KolynButton 
+                text="Log In" 
+                onPress={onLogInPressed} 
+                testID="loginButton" 
+              />
               <View style={{ top: 20 }}>
-                <KolynButton text="Sign Up" onPress={onSignUpPress} />
+                <KolynButton 
+                  text="Sign Up" 
+                  onPress={onSignUpPress} 
+                  testID="signupButton"
+                />
               </View>
             </View>
           </View>

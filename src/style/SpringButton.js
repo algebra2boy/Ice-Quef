@@ -6,13 +6,19 @@ var isPressing = false;
 /**
  * Resembles an animated button
  *
- * @param { string | Text } text: The text label for button
- * @param { func } onPress: Function to be executed after animation finishes
- * @param { StyleSheet } buttonStyle: The button's style
- * @param { StyleSheet } labelStyle: The label's style
+ * @param { string | Text } text The text label for button
+ * @param { func } onPress Function to be executed after animation finishes
+ * @param { StyleSheet } buttonStyle The button's style
+ * @param { StyleSheet } labelStyle The label's style
  * @returns { ReactElement } The button
  */
-export const SpringButton = ({ text, onPress, buttonStyle, labelStyle, testID = undefined }) => {
+export const SpringButton = ({ 
+  text, 
+  onPress, 
+  buttonStyle, 
+  labelStyle, 
+  testID = null 
+}) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
