@@ -32,6 +32,7 @@ export function LoginPageDefaultController() {
       const loginData = {
         email: email.toLowerCase(),
         password: hashedPassword,
+        isTeacher: false
       };
 
       try {
