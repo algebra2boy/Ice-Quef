@@ -18,7 +18,6 @@ export function KolynButton({
   testID = null 
 }) {
   const themedStyles = ThemedStyles();
-  console.log(extraLabelStyle);
   return (
     <SpringButton
       text={text}
