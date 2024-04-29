@@ -1,2 +1,4 @@
 **/.DS_Store
-Ice_Quef/config.json
+config.json
+node_modules
+.expo/

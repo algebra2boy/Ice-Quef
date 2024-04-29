@@ -11,9 +11,10 @@ Platforms: iOS, Android, Web
 
 ## How to run
 
-### With Script
-`cd Ice_Quef`
+### First step: Download [expo go](https://github.com/algebra2boy/Ice-Quef/blob/misc/redirectory/README.md#get-a-hang-of-react-native-expo) on your mobile device
 
+
+### With Script
 `chmod +x run.sh`
 
 `./run.sh <*YourNgrokURL>`
@@ -23,9 +24,12 @@ Then you are good to go
 ### With npm
 If backend hostname is already set in the ***config.json*** file, then you are all set for configeration.
 
-`cd Ice_Quef`
+`npm install`
+
+`npm update`
 
 `npm start`
+
 
 
 ## Table of contents
