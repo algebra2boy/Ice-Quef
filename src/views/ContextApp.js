@@ -5,8 +5,8 @@ import { OfficeHourUpdateWrapper } from '../props/OfficeHourContext';
 
 /**
  * Wrapper for all the providers
- * 
- * @param { ReactElement } children The app 
+ *
+ * @param { ReactElement } children The app
  * @returns { ReactElement } The app with providers
  */
 function ContextApp({ children }) {

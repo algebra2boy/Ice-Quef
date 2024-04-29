@@ -6,8 +6,8 @@ export const useOfficeHourUpdate = () => useContext(OfficeHourUpdateContext);
 
 /**
  * Triggers when the student's registered office hour list is modified
- * 
- * @param { ReactElement } children 
+ *
+ * @param { ReactElement } children
  * @returns Void
  */
 export const OfficeHourUpdateWrapper = ({ children }) => {

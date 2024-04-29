@@ -17,7 +17,7 @@ const emailHint = {
 /**
  * Resembles the default sign up page.
  *
- * @param {Props} props 
+ * @param {Props} props
  * @returns { ReactElement } The default sign up page
  */
 export function SignupPageDefault(props) {

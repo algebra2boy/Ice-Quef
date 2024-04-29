@@ -1,14 +1,14 @@
-import { SpringButton } from "../style/SpringButton";
-import { Text } from "react-native";
-import { Bold, NonBold, day } from "../style/ManageOHStyle";
-import { useNavigation } from "@react-navigation/native";
+import { SpringButton } from '../style/SpringButton';
+import { Text } from 'react-native';
+import { Bold, NonBold, day } from '../style/ManageOHStyle';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Resembles a button with information of office hour text label.
- * 
- * @param { Object } officeHour 
- * @param { Style } themedStyles 
- * @param { Func } onPress 
+ *
+ * @param { Object } officeHour
+ * @param { Style } themedStyles
+ * @param { Func } onPress
  * @returns { ReactElement } The button
  */
 export function RenderItem(officeHour, themedStyles, navigation, pageName) {
@@ -23,7 +23,7 @@ export function RenderItem(officeHour, themedStyles, navigation, pageName) {
           />
         </Text>
       }
-      onPress={() => navigation.navigate(pageName, {officeHour: officeHour})}
+      onPress={() => navigation.navigate(pageName, { officeHour: officeHour })}
       buttonStyle={themedStyles.item}
       labelStyle={themedStyles.itemLabel}
     />

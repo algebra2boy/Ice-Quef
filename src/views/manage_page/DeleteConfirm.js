@@ -8,8 +8,8 @@ const height = Dimensions.get('window').height;
 
 /**
  * Display a confirmation page to delete an office hour
- * 
- * @param { Object } route 
+ *
+ * @param { Object } route
  * @returns { ReactElement } The confirmation page to delete an office hour
  */
 export function ManagePageDeleteConfirm(props) {

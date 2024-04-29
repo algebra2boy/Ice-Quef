@@ -117,12 +117,12 @@ function SearchBar({ text, setText, placeholder }) {
 /**
  * The flat list of office hours, which is updated each time
  * the search bar is modified.
- * 
+ *
  * @param { List } elementState The office hourss
  * @param { StyleSheet } styles The styles
  * @param { Function } onRefresh The function to refresh the list
  * @param { boolean } isRefreshing Whether the list is refreshing
- * @param { Object } navigation The navigation 
+ * @param { Object } navigation The navigation
  * @returns { ReactElement } The flat list of office hours
  */
 function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navigation }) {
@@ -130,8 +130,7 @@ function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navig
     <FlatList
       data={elementState}
       showsVerticalScrollIndicator={false}
-      renderItem={item => RenderItem(item.item, styles, navigation, 'ManagePageAddConfirm')
-      }
+      renderItem={item => RenderItem(item.item, styles, navigation, 'ManagePageAddConfirm')}
       keyExtractor={item => item.id}
       onRefresh={onRefresh}
       refreshing={isRefreshing}
@@ -142,8 +141,8 @@ function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navig
 
 /**
  * The loading view when the search is in progress.
- * 
- * @param { string } text The text to display 
+ *
+ * @param { string } text The text to display
  * @returns { View } The loading view
  */
 function LoadingView({ text }) {

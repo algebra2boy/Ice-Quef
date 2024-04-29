@@ -1,8 +1,8 @@
 /**
- * Checks whether a given password is valid, 
+ * Checks whether a given password is valid,
  * updates the password conditions list
- * 
- * @param { string } password 
+ *
+ * @param { string } password
  * @param { List } setPasswordConditions List of conditions for password
  * @returns Void
  */
@@ -33,12 +33,12 @@ export const checkPassword = (password, setPasswordConditions) => {
 };
 
 /**
- * Checks whether the confirm password is correct, 
+ * Checks whether the confirm password is correct,
  * updates the confirm password conditions list
- * 
+ *
  * @param { string } val The confirm password
  * @param { string } password The password
- * @param { string } repassword The re-entered password 
+ * @param { string } repassword The re-entered password
  * @param { boolean } isEnterFromRePassword check if this function is invoked from re-enter password textfield
  * @param { List } setConfirmPasswordCondition List of conditions for confirm password
  */
