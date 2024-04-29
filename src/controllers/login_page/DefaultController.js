@@ -2,28 +2,29 @@ import { useState, useEffect, useContext } from 'react';
 import { LoginPageDefault } from '../../views/login_page/Default';
 import encryptPassword from '../../props/encrypt';
 import ServerAddress from '../../props/Server';
-import { LoginContext } from '../../props/LoginContext';
+import { LoginContext, loginStatus } from '../../props/LoginContext';
 
-const loginStatus = {
-  default: '',
-  success: 'You have been logged in successfully!',
-  notMatch: serverMsg => serverMsg || 'Log in failed. Your email or password was not found.',
-  serverFail: serverMsg => serverMsg || 'Could not connect to the server, please try again later.',
-  edgeCase: serverMsg => serverMsg || 'An error has occurred, please try again later.',
-  unknown: serverMsg => serverMsg || 'An unknown error has occurred.',
-};
-
+/**
+ * The controller for the log in page.
+ * It controls the user's log in status and
+ * the log in button.
+ *
+ * @returns { ReactElement } The log in page
+ */
 export function LoginPageDefaultController() {
+  // The log in status
   const [status, setStatus] = useState(loginStatus.default);
-  const [isSuccess, setSuccess] = useState(false);
 
-  const pass = useContext(LoginContext);
+  const loginContext = useContext(LoginContext);
 
+  // If the user is on this page, they must be either
+  // just opened the app or logged out. Set the login
+  // status to default, which is "not logged in yet".
   useEffect(() => {
     setStatus(loginStatus.default);
-    setSuccess(false);
-  }, [pass.logStatus]);
+  }, [loginContext.currentLoginStatus]);
 
+  // Function to handle the log in button press
   async function LogInButtonPressed(email, password) {
     try {
       // Encrypt the password
@@ -51,7 +52,6 @@ export function LoginPageDefaultController() {
         if (serverResponse.status === 'success' && response.ok) {
           // success
           setStatus(loginStatus.success);
-          setSuccess(true);
           return serverResponse.token;
         } else if (serverResponse.status) {
           setStatus(loginStatus.notMatch);
@@ -72,7 +72,5 @@ export function LoginPageDefaultController() {
     }
   }
 
-  return (
-    <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} isSuccess={isSuccess} />
-  );
+  return <LoginPageDefault pressLogInButton={LogInButtonPressed} status={status} />;
 }

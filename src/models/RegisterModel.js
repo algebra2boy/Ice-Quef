@@ -4,7 +4,7 @@ import { FetchOfficeHours } from './OfficeHourSearcher';
 /**
  * A stub list used for testing prior to connect to back end
  *
- * @returns an list of mock up office hour
+ * @returns { List } an list of mock up office hour
  */
 export const GetSampleList = () => {
   return [

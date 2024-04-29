@@ -3,17 +3,24 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
-import { UserContext } from '../../props/UserInfo';
 import { KolynButton, KolynTitleLabel, KolynTextLabel } from '../../component';
-import { LoginContext } from '../../props/LoginContext';
 
 const height = Dimensions.get('window').height;
 
-export function ProfilePageDefault({ }) {
+/**
+ * The default age of the profile page.
+ *
+ * @param { Props } props
+ * @returns The default age of the profile page.
+ */
+export function ProfilePageDefault(props) {
   const themedStyles = ThemedStyles();
-  const user = useContext(UserContext);
-  const pass = useContext(LoginContext);
   const navigation = useNavigation();
+  const smallFont = getSmallFont();
+
+  const email = props.user ? props.user.email : "";
+  const updateLoginStatus = 
+    props.loginContext ? props.loginContext.updateLoginStatus : () => {};
 
   return (
     <BasePage
@@ -40,18 +47,19 @@ export function ProfilePageDefault({ }) {
                   />
                   */}
                 </View>
-                <KolynTextLabel text={user.email} />
+                <KolynTextLabel text={email} />
               </View>
 
               <View style={{ height: '10%' }} />
 
-              <KolynButton 
+              <KolynButton
+                extraLabelStyle={{ fontSize: smallFont }}
                 text="Change password"
-                onPress={()=>{
-                  navigation.navigate("ProfilePageResetPassword");
+                onPress={() => {
+                  navigation.navigate('ProfilePageResetPassword');
                 }}
+                testID="changePassword"
               />
-
             </View>
 
             <View style={{ top: height * 0.1 }}>
@@ -59,8 +67,9 @@ export function ProfilePageDefault({ }) {
                 text="Log out"
                 onPress={() => {
                   navigation.popToTop();
-                  pass.updateLogStatus();
+                  updateLoginStatus();
                 }}
+                testID="logoutButton"
               />
             </View>
           </View>
@@ -70,6 +79,12 @@ export function ProfilePageDefault({ }) {
   );
 }
 
+/**
+ * Resembles the edit icon, shape of a pen
+ *
+ * @param { Func } onPress Invokes after this icon is pressed
+ * @returns
+ */
 function EditIcon({ onPress }) {
   const themedStyles = ThemedStyles();
 
@@ -81,6 +96,13 @@ function EditIcon({ onPress }) {
     </Pressable>
   );
 }
+
+const getSmallFont = () => {
+  const themeManager = useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
+  return currentTheme.fontSizes.small;
+};
 
 function ThemedStyles() {
   const themeManager = useContext(ThemeContext);

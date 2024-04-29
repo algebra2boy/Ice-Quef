@@ -5,12 +5,11 @@ import * as SplashScreen from 'expo-splash-screen';
 /**
  * Loads fonts from bundles
  *
- * @return { boolean } Returns true if all fonts were successfully loaded,
+ * @return { boolean } True if all fonts were successfully loaded,
  * returns false otherwise.
  */
 function loadFont() {
   const [fontsLoaded] = Font.useFonts({
-    'BalooBhai-Regular': require('../../assets/fonts/BalooBhai-Regular.ttf'),
     'Quenda-Medium': require('../../assets/fonts/Quenda-Medium.otf'),
   });
 

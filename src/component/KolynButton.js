@@ -7,20 +7,24 @@ import { SpringButton } from '../style/SpringButton';
 /**
  * Resembles an animated button
  *
- * @param { string } text: The button's text label
- * @param { func } onPress: Function to be exected after animation finishes
+ * @param { string } text The button's text label
+ * @param { func } onPress Function to be exected after animation finishes
  * @return { ReactElement } The button
  */
-export function KolynButton({ text, onPress, testID = undefined }) {
+export function KolynButton({ 
+  text, 
+  onPress, 
+  extraLabelStyle = null, 
+  testID = null 
+}) {
   const themedStyles = ThemedStyles();
-
   return (
     <SpringButton
       text={text}
       onPress={onPress}
       buttonStyle={themedStyles.casualButton}
-      labelStyle={themedStyles.casualButtonLabel}
-      testID={testID}
+      labelStyle={StyleSheet.flatten([themedStyles.casualButtonLabel, extraLabelStyle])}
+      testID={testID ? testID : "kolynbutton"}
     />
   );
 }
