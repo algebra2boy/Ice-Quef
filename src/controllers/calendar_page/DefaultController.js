@@ -52,22 +52,24 @@ export function CalendarPageDefaultController() {
       console.log('Connected to the server');
     });
 
-    const updateQueuePositions = response => {
+    const updateQueuePositions = (response) => {
       if (response.status === 'updated') {
         console.log('Queue positions updated:', response.data);
         const newPosition = response.data;
 
         setCurrStatus({
           message: joinStatus.joined(newPosition),
-          isJoined: true,
+          isJoined: true
         });
-      }
-      socket.on('update queue positions', updateQueuePositions);
 
-      return () => {
-        socket.off('connect');
-        socket.off('update queue positions', updateQueuePositions);
-      };
+      }
+    };
+
+    socket.on('update queue positions', updateQueuePositions);
+
+    return () => {
+      socket.off('connect');
+      socket.off('update queue positions', updateQueuePositions);
     };
   }, []);
 
