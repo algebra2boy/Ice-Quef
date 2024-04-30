@@ -1,4 +1,5 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -59,4 +60,24 @@ export function kolynDivider(color) {
     backgroundColor: color,
     alignSelf: 'center',
   };
+}
+
+export function kolynSector(webFlex, style=null) {
+  return StyleSheet.flatten([
+    Platform.OS === 'web' ? { flex: webFlex } : style
+  ]);
+}
+
+export function kolynBigSector() {
+  return Platform.OS === 'web' ? { flex: 7 } : { height: height * 0.5 };
+}
+
+export function kolynSmallSector() {
+  return Platform.OS === 'web' ? { flex: 1 } : { top: height * 0.1 };
+}
+
+export function kolynSmallSectorOr(style) {
+  return (
+    Platform.OS === 'web' ? { flex: 1 } : style
+  );
 }

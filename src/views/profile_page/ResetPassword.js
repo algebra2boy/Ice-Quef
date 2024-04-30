@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, View, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { KolynTitleLabel, KolynButton, KolynTextfield, KolynTextLabel } from '../../component';
 import { passwordHint, confirmPasswordHint, PageVariant } from '../../props/PasswordEnum';
 import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
 import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
-
-const height = Dimensions.get('window').height;
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
 /**
  * The page for resetting password.
@@ -48,7 +47,7 @@ export function ProfilePageResetPassword(props) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={kolynBigSector()}>
               <KolynTitleLabel title="Change password" />
 
               {pageVariant == PageVariant.NewPassword && (
@@ -114,7 +113,7 @@ export function ProfilePageResetPassword(props) {
               )}
             </View>
 
-            <View style={{ top: height * 0.1 }}>
+            <View style={kolynSmallSector()}>
               {pageVariant == PageVariant.NewPassword && (
                 <View>
                   <KolynButton

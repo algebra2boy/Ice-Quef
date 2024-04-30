@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Dimensions, Platform } from 'react-native';
 import { ThemeContext } from '../../style/AppTheme';
 import { BasePage } from '../../style/BasePage';
 import { KolynButton, KolynTextfield, KolynTitleLabel, KolynTextLabel } from '../../component';
 import { passwordHint, confirmPasswordHint } from '../../props/PasswordEnum';
 import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
 import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
-const height = Dimensions.get('window').height;
 // The hints for email
 const emailHint = {
   0: 'Enter your UMass email',
@@ -36,7 +36,7 @@ export function SignupPageDefault(props) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={kolynBigSector()}>
               <KolynTitleLabel title="Create an account" />
               <KolynTextLabel text="Email" />
               <KolynTextfield
@@ -100,7 +100,9 @@ export function SignupPageDefault(props) {
                 confirmPasswordCondition={props.confirmPasswordCondition}
               />
             </View>
-            <View style={{ top: height * 0.1 }}>
+            <View style={Platform.OS==='web' ? 
+                          { top: 20, flex: 1 } : 
+                          { top: Dimensions.get('window').height * 0.1 }}>
               <KolynButton
                 text="Register"
                 onPress={() => {

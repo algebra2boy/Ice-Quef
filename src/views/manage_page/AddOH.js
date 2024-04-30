@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, FlatList, Text, StyleSheet, Platform } from 'react-native';
+import { View, FlatList, Text, StyleSheet, Platform, Dimensions } from 'react-native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { KolynButton, KolynTextfield, KolynTitleLabel } from '../../component';
 import { ManageOHStyles } from '../../style/ManageOHStyle';
@@ -9,8 +9,7 @@ import * as KolynStyle from '../../style/KolynStyleKit';
 import { BasePage } from '../../style/BasePage';
 import { KolynTextLabel } from '../../component';
 import { RenderItem } from '../../component/OfficeHourButton';
-
-const height = Dimensions.get('window').height;
+import { kolynSector } from '../../style/KolynStyleKit';
 
 /**
  * Resembles the add office hour page
@@ -56,7 +55,7 @@ export function ManagePageAddOH(props) {
           onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.65 }}>
+            <View style={kolynSector(8, { height: Dimensions.get('window').height * 0.65 })}>
               <KolynTitleLabel title="Add office hours" />
               <Hint themedStyles={themedStyles} />
               <SearchBar
@@ -83,7 +82,7 @@ export function ManagePageAddOH(props) {
               )}
             </View>
             <View>
-              <View style={{ top: 60 - height * 0.05 }}>
+              <View style={{ top: 60 - Dimensions.get('window').height * 0.05 }}>
                 <KolynButton
                   text="Go back"
                   onPress={() => {
