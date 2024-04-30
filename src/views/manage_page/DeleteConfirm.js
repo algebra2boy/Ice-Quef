@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, Dimensions, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, Bold, NonBold } from '../../style/ManageOHStyle';
-
-const height = Dimensions.get('window').height;
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
 /**
  * Display a confirmation page to delete an office hour
@@ -31,7 +30,7 @@ export function ManagePageDeleteConfirm(props) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={kolynBigSector()}>
               <KolynTitleLabel title="Confirm deleting" />
 
               <Text>
@@ -45,7 +44,7 @@ export function ManagePageDeleteConfirm(props) {
               </Text>
             </View>
 
-            <View style={{ top: height * 0.1 }}>
+            <View style={kolynSmallSector()}>
               <KolynButton
                 text="Delete"
                 onPress={async () => {

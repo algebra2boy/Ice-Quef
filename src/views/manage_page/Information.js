@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, NonBold } from '../../style/ManageOHStyle';
-
-const height = Dimensions.get('window').height;
+import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
 /**
  * Page to display information about an office hour.
@@ -30,7 +29,7 @@ export function ManagePageInformation({ route }) {
           }}
         >
           <View style={themedStyles.root}>
-            <View style={{ height: height * 0.5 }}>
+            <View style={kolynBigSector()}>
               <KolynTitleLabel
                 title={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'}
               />
@@ -70,7 +69,7 @@ export function ManagePageInformation({ route }) {
               </View>
             </View>
 
-            <View style={{ top: height * 0.1 }}>
+            <View style={kolynSmallSector()}>
               <View style={{ top: 60 }}>
                 <KolynButton
                   text="Go back"
