@@ -33,6 +33,7 @@ export function LoginPageDefaultController() {
       const loginData = {
         email: email.toLowerCase(),
         password: hashedPassword,
+        isTeacher: false
       };
 
       try {
@@ -40,9 +41,9 @@ export function LoginPageDefaultController() {
         const response = await fetch(ServerAddress() + 'api/auth/login', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(loginData),
+          body: JSON.stringify(loginData)
         });
 
         // get response

@@ -58,13 +58,13 @@ export function SignupPageDefaultController() {
 
     // password match
     if (!confirmPasswordCondition) {
-      Alert.alert('Error', "Passwords doesn't match!");
+      Alert.alert('Error', 'Passwords doesn\'t match!');
       return;
     }
 
     // password validation
     if (passwordConditions.includes(false)) {
-      Alert.alert('Error', "At least one of the password requirements don't meet");
+      Alert.alert('Error', 'At least one of the password requirements don\'t meet');
       return;
     }
 
@@ -76,6 +76,7 @@ export function SignupPageDefaultController() {
       const registrationData = {
         email: email.toLowerCase(),
         password: hashedPassword,
+        isTeacher: false
       };
 
       try {
@@ -83,9 +84,9 @@ export function SignupPageDefaultController() {
         const response = await fetch(ServerAddress() + 'api/auth/signup', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(registrationData),
+          body: JSON.stringify(registrationData)
         });
 
         // get response
