@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createContext } from 'react';
+import * as FileSystem from 'expo-file-system'
 
 /**
  * All colors for app theme
@@ -94,9 +95,9 @@ const purpleTheme = {
 
 const yellowTheme = {
   mainColor: palette.colorGoldenrodOrange,
-  bgColor: palette.colorWhite,
+  bgColor: palette.colorSunshineYellow,
   subColor: palette.colorBlack,
-  primaryColor: palette.colorSunshineYellow,
+  primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
   checkBoxColor: palette.colorEmeraldGreen,
   errorColor: palette.colorScarletRed,
@@ -107,7 +108,7 @@ const yellowTheme = {
 
 const blackGoldenTheme = {
   mainColor: palette.colorBlack,
-  bgColor: palette.colorWhite,
+  bgColor: palette.colorGainsboro,
   subColor: palette.colorGoldenrodOrange,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -127,6 +128,19 @@ const blackGoldenTheme = {
  */
 const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme, blackGoldenTheme];
 
+export const theme_mini_icon = () => {
+  return themes.map(theme => 
+    {
+      return (
+        {
+          mainColor: theme.mainColor, 
+          index: theme.index
+        }
+      );
+    }
+  );
+}
+
 /**
  * Tracks the current theme
  * @Context { Theme }
@@ -141,9 +155,92 @@ export const ThemeContext = createContext(themes);
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themes[0]);
 
+  const getDirectorUri = () => {
+    return FileSystem.documentDirectory + 'files/';
+  }
+
+  const getFileUri = () => {
+    return getDirectorUri() + 'theme.txt';
+  }
+
+  /**
+   * Writes index into file directory for persistent storage
+   * 
+   * @param {int} index New theme index
+   */
+  const writeIndexToThemeFile = async (index) => {
+    const directoryUri = getDirectorUri();
+    const fileUri = getFileUri();
+
+    try {
+      // Check if the directory exists, create it if it doesn't
+      const directoryExists = await FileSystem.getInfoAsync(directoryUri);
+      if (!directoryExists.exists) {
+        await FileSystem.makeDirectoryAsync(directoryUri, { intermediates: true });
+        //console.log('Theme text file created successfully!');
+      } else {
+        //console.log("Theme text file aleady exists.");
+      }
+  
+      // Write some text to the file
+      await FileSystem.writeAsStringAsync(fileUri, index+"", {encoding: 'utf8'});
+    } catch (error) {
+      console.error('Error creating text file:', error);
+    }
+  }
+
+  /**
+   * Reads the stored theme index from file directory
+   * 
+   * @returns stored theme index
+   */
+  const readFromThemeFileToGetIndex = async () => {
+    const fileUri = getFileUri();
+    try {
+      // Read the contents of the file
+      const fileContents = await FileSystem.readAsStringAsync(fileUri);
+      //console.log('File contents:', fileContents);
+      return fileContents;
+    } catch (error) {
+      console.error('Error reading text file:', error);
+      return undefined;
+    }
+  }
+
+  /**
+   * Changes the current app theme to the one stored in index
+   * 
+   * @param {int} themeIndex Theme's index
+   */
   const changeTheme = themeIndex => {
     setTheme(themes[themeIndex]);
+    writeIndexToThemeFile(themeIndex);
   };
 
-  return <ThemeContext.Provider value={{ theme, changeTheme }}>{children}</ThemeContext.Provider>;
+  /**
+   * @Func {Void} Changes the app theme to the one stored in
+   * theme file
+   */
+  const changeToStoredTheme = async () => {
+    await readFromThemeFileToGetIndex()
+    .then(index => {
+      setTheme(themes[parseInt(index)]);
+    })
+  }
+
+  // Change the theme when app is loaded the first time
+  useEffect(() => {
+    const change = async () => {
+      await changeToStoredTheme();
+    }
+    change();
+  }, []);
+
+  return (
+    <ThemeContext.Provider value={{ 
+      theme, 
+      changeTheme,
+      changeToStoredTheme
+    }}>{children}</ThemeContext.Provider>
+  );
 };

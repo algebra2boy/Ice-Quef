@@ -62,10 +62,8 @@ export function kolynDivider(color) {
   };
 }
 
-export function kolynSector(webFlex, style=null) {
-  return StyleSheet.flatten([
-    Platform.OS === 'web' ? { flex: webFlex } : style
-  ]);
+export function kolynSector(webFlex, style = null) {
+  return StyleSheet.flatten([Platform.OS === 'web' ? { flex: webFlex } : style]);
 }
 
 export function kolynBigSector() {
@@ -77,7 +75,5 @@ export function kolynSmallSector() {
 }
 
 export function kolynSmallSectorOr(style) {
-  return (
-    Platform.OS === 'web' ? { flex: 1 } : style
-  );
+  return Platform.OS === 'web' ? { flex: 1 } : style;
 }
