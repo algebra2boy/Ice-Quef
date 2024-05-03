@@ -16,7 +16,6 @@ import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
  */
 export function LoginPageDefault(props) {
   const themedStyles = ThemedStyles();
-  const themeManager = useContext(ThemeContext);
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');

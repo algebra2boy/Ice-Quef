@@ -21,6 +21,7 @@ const palette = {
 
   colorCoralRed: '#ff8c84',
   colorScarletRed: '#eb4034',
+  colorUMassRed: '#971B2F',
 
   colorTaroPurple: '#cda8ff',
   colorVioletPurple: '#9370DB',
@@ -128,6 +129,19 @@ const blackGoldenTheme = {
   fontSizes: myFontSize,
   index: 5,
 };
+
+const umassTheme = {
+  mainColor: palette.colorUMassRed,
+  bgColor: palette.colorBlack,
+  subColor: palette.colorWhite,
+  primaryColor: palette.colorSlateGray,
+  disableColor: palette.colorGainsboro,
+  checkBoxColor: palette.colorEmeraldGreen,
+  errorColor: palette.colorCoralRed,
+  mainFont: fontFamily.quenda,
+  fontSizes: myFontSize,
+  index: 6,
+};
 /* --- End of Official themes --- */
 
 /**
@@ -136,7 +150,15 @@ const blackGoldenTheme = {
  * add the theme you created to this list
  * @list { Theme }
  */
-const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme, blackGoldenTheme];
+const themes = [
+  defaultTheme, 
+  greenTheme, 
+  redTheme, 
+  purpleTheme, 
+  yellowTheme, 
+  blackGoldenTheme,
+  umassTheme
+];
 
 export const themeMiniIcon = () => {
   return themes.map(theme => {
@@ -233,6 +255,10 @@ export const ThemeProvider = ({ children }) => {
     });
   };
 
+  const shouldUseUmassIcon = () => {
+    return theme.mainColor === umassTheme.mainColor;
+  }
+
   // Change the theme when app is loaded the first time
   useEffect(() => {
     const change = async () => {
@@ -247,6 +273,7 @@ export const ThemeProvider = ({ children }) => {
         theme,
         changeTheme,
         changeToStoredTheme,
+        shouldUseUmassIcon,
       }}
     >
       {children}
