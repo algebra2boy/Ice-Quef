@@ -17,9 +17,8 @@ export function ProfilePageDefault(props) {
   const navigation = useNavigation();
   const smallFont = getSmallFont();
 
-  const email = props.user ? props.user.email : "";
-  const updateLoginStatus = 
-    props.loginContext ? props.loginContext.updateLoginStatus : () => {};
+  const email = props.user ? props.user.email : '';
+  const updateLoginStatus = props.loginContext ? props.loginContext.updateLoginStatus : () => {};
 
   return (
     <BasePage
@@ -61,13 +60,22 @@ export function ProfilePageDefault(props) {
 
             <View style={kolynSmallSector()}>
               <KolynButton
-                text="Log out"
+                text="Change theme"
                 onPress={() => {
-                  navigation.popToTop();
-                  updateLoginStatus();
+                  navigation.navigate("ProfilePageTheme")
                 }}
                 testID="logoutButton"
               />
+              <View style={{ top: 20 }}>
+                <KolynButton
+                  text="Log out"
+                  onPress={() => {
+                    navigation.popToTop();
+                    updateLoginStatus();
+                  }}
+                  testID="logoutButton"
+                />
+              </View>
             </View>
           </View>
         </ScrollView>

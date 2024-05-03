@@ -5,6 +5,7 @@ import { LoadingPage } from '../../component/LoadingPage';
 import { GetUserOfficeHour } from '../../models/RegisterModel';
 import { UserContext } from '../../props/UserInfo';
 import socket from '../../socket.config';
+import { ThemeContext } from '../../style/AppTheme';
 
 /**
  * @enum { (int)=>string | boolean } The student's join status
@@ -24,8 +25,12 @@ const joinStatus = {
  */
 export function CalendarPageDefaultController() {
   const user = useContext(UserContext);
+  // Used for fixing the 'hour style' bug
+  const themeManager = useContext(ThemeContext);
+
   const userEmail = user.email; // get user email address (account name)
-  const updateTrigger = useOfficeHourUpdate().updateTrigger;
+  const officeHourUpdate = useOfficeHourUpdate();
+  const updateTrigger = officeHourUpdate.updateTrigger;
 
   // Just simply all office hours the student currently
   // has registered in the database
@@ -46,6 +51,11 @@ export function CalendarPageDefaultController() {
     message: joinStatus.notJoined(0),
     isJoined: false,
   });
+  
+  // Used for fixing the 'hour style' bug
+  useEffect(() => {
+    officeHourUpdate.triggerUpdate();
+  }, [themeManager.theme])
 
   useEffect(() => {
     socket.on('connect', () => {

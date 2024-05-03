@@ -63,3 +63,14 @@ export const eventCellTheme = () => {
     },
   };
 };
+
+export const getHourStyle = () => {
+  const themeManager = useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
+  return {
+    fontFamily: currentTheme.mainFont,
+    fontSize: currentTheme.fontSizes.small,
+    color: currentTheme.mainColor,
+  };
+};

@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useReducer, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
-import { renderEvent, eventCellTheme } from '../../style/CaleStyle';
+import { renderEvent, eventCellTheme, getHourStyle } from '../../style/CaleStyle';
 import * as KolynStyle from '../../style/KolynStyleKit';
 
 /**
@@ -13,8 +13,6 @@ import * as KolynStyle from '../../style/KolynStyleKit';
  * @returns { ReactElement } The default calendar page
  */
 export function CalendarPageDefault(props) {
-  const hourStyle = getHourStyle();
-
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [title, setTitle] = useState('');
 
@@ -29,44 +27,31 @@ export function CalendarPageDefault(props) {
   return (
     <BasePage
       components={
-        <>
-          <View style={{ flex: 20 }}>
-            <Calendar
-              events={props.renderableList}
-              height={400}
-              mode="3days"
-              theme={eventCellTheme()}
-              renderEvent={renderEvent}
-              hourStyle={hourStyle}
-              showWeekNumber={true}
-              onPressEvent={onPressEvent}
+        <View style={{ flex: 20 }}>
+          <Calendar
+            events={props.renderableList}
+            height={400}
+            mode="3days"
+            theme={eventCellTheme()}
+            renderEvent={renderEvent}
+            hourStyle={getHourStyle()}
+            showWeekNumber={true}
+            onPressEvent={onPressEvent}
+          />
+          {isOpenMenu && (
+            <PopupMenu
+              title={title}
+              message={props.message}
+              setOpenMenu={setOpenMenu}
+              updatePosition={updatePosition}
+              setCurrentEvent={props.setCurrentEvent}
             />
-            {isOpenMenu && (
-              <PopupMenu
-                title={title}
-                message={props.message}
-                setOpenMenu={setOpenMenu}
-                updatePosition={updatePosition}
-                setCurrentEvent={props.setCurrentEvent}
-              />
-            )}
-          </View>
-        </>
+          )}
+        </View>
       }
     />
   );
 }
-
-const getHourStyle = () => {
-  const themeManager = useContext(ThemeContext);
-  const currentTheme = themeManager.theme;
-
-  return {
-    fontFamily: currentTheme.mainFont,
-    fontSize: currentTheme.fontSizes.small,
-    color: currentTheme.mainColor,
-  };
-};
 
 /**
  * Resembles a pop-up menu for an office hour block.

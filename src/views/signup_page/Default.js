@@ -100,9 +100,13 @@ export function SignupPageDefault(props) {
                 confirmPasswordCondition={props.confirmPasswordCondition}
               />
             </View>
-            <View style={Platform.OS==='web' ? 
-                          { top: 20, flex: 1 } : 
-                          { top: Dimensions.get('window').height * 0.1 }}>
+            <View
+              style={
+                Platform.OS === 'web'
+                  ? { top: 20, flex: 1 }
+                  : { top: Dimensions.get('window').height * 0.1 }
+              }
+            >
               <KolynButton
                 text="Register"
                 onPress={() => {

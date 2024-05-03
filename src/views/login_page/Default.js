@@ -16,13 +16,13 @@ import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
  */
 export function LoginPageDefault(props) {
   const themedStyles = ThemedStyles();
+  const themeManager = useContext(ThemeContext);
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const user = useContext(UserContext);
-
   const pressLogInButton = props.pressLogInButton;
   const status = props.status;
 
@@ -89,17 +89,9 @@ export function LoginPageDefault(props) {
             </View>
 
             <View style={kolynSmallSector()}>
-              <KolynButton 
-                text="Log In" 
-                onPress={onLogInPressed} 
-                testID="loginButton" 
-              />
+              <KolynButton text="Log In" onPress={onLogInPressed} testID="loginButton" />
               <View style={{ top: 20 }}>
-                <KolynButton 
-                  text="Sign Up" 
-                  onPress={onSignUpPress} 
-                  testID="signupButton"
-                />
+                <KolynButton text="Sign Up" onPress={onSignUpPress} testID="signupButton" />
               </View>
             </View>
           </View>
