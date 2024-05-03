@@ -27,7 +27,7 @@ export function ProfilePageTheme(props) {
 
           <View style={kolynSmallSector()}>
             <View style={{ top: 20 }}>
-              <KolynButton onPress={navigation.goBack} text={'Cancel'} />
+              <KolynButton onPress={navigation.goBack} text={'Go back'} />
             </View>
           </View>
         </View>
