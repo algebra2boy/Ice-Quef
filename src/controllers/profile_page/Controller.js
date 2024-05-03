@@ -22,10 +22,7 @@ export function ProfilePageController() {
         name="ProfilePageResetPassword"
         component={ProfilePageResetPasswordController}
       />
-      <Stack.Screen
-        name="ProfilePageTheme"
-        component={ProfilePageTheme}
-      />
+      <Stack.Screen name="ProfilePageTheme" component={ProfilePageTheme} />
     </Stack.Navigator>
   );
 }
