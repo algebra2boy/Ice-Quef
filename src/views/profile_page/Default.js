@@ -62,7 +62,7 @@ export function ProfilePageDefault(props) {
               <KolynButton
                 text="Change theme"
                 onPress={() => {
-                  navigation.navigate("ProfilePageTheme")
+                  navigation.navigate('ProfilePageTheme');
                 }}
                 testID="logoutButton"
               />

@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, View, StyleSheet, Pressable } from 'react-native';
+import { ScrollView, View, StyleSheet, Pressable, FlatList } from 'react-native';
 import { BasePage } from '../../style/BasePage';
-import * as KolynStyle from '../../style/KolynStyleKit'
-import { theme_mini_icon, ThemeContext } from '../../style/AppTheme';
+import { themeMiniIcon, ThemeContext } from '../../style/AppTheme';
 import { KolynTitleLabel, KolynButton } from '../../component';
 import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
@@ -15,89 +14,79 @@ export function ProfilePageTheme(props) {
   return (
     <BasePage
       components={
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexDirection: 'column',
-            flexGrow: 1,
-            justifyContent: 'space-between',
-          }}
-        >
-          <View style={themedStyles.background}>
-            <View style={kolynBigSector()}>
-              <KolynTitleLabel title="Change app theme" />
-              <ThemeButtons 
-                changeTheme={themeManager.changeTheme}
-                containerStyle={themedStyles.themeButtonsContainer}
-                themeButtonStyle={themedStyles.themeCircle}
-                themePressableStyle={themedStyles.themePressable}
-              />
-            </View>
+        <View style={themedStyles.background}>
+          <View style={kolynBigSector()}>
+            <KolynTitleLabel title="Change app theme" />
+            <ThemeButtons
+              changeTheme={themeManager.changeTheme}
+              containerStyle={themedStyles.themeButtonsContainer}
+              themeButtonStyle={themedStyles.themeCircle}
+              themePressableStyle={themedStyles.themePressable}
+            />
+          </View>
 
-            <View style={kolynSmallSector()}>
-              <View style={{ top: 20 }}>
-                <KolynButton
-                  onPress={navigation.goBack}
-                  text={'Cancel'}
-                />
-              </View>
+          <View style={kolynSmallSector()}>
+            <View style={{ top: 20 }}>
+              <KolynButton onPress={navigation.goBack} text={'Cancel'} />
             </View>
           </View>
-        </ScrollView>
+        </View>
       }
     />
   );
 }
 
 function ThemeButtons({ changeTheme, containerStyle, themeButtonStyle, themePressableStyle }) {
+  const themeIcons = themeMiniIcon();
+
   return (
-    <View
-      style={containerStyle}
-    >
-      {theme_mini_icon().map(theme => (
-        <ChangeThemeButton 
-          backgroundColor={theme.mainColor}
-          id={theme.index+""}
-          onPress={() => {changeTheme(theme.index)}}
-          buttonStyle={themeButtonStyle}
-          pressableStyle={themePressableStyle}
-          key={theme.index}
-        />
-      ))}
-  </View>
+    <View style={containerStyle}>
+      <FlatList 
+        data={themeIcons}
+        renderItem={theme => 
+        {
+          return (
+            <ChangeThemeButton
+              backgroundColor={theme.item.mainColor}
+              id={theme.item.index + ''}
+              onPress={() => {
+                changeTheme(theme.item.index);
+              }}
+              buttonStyle={themeButtonStyle}
+              pressableStyle={themePressableStyle}
+              key={theme.item.index}
+            />
+          )
+        }}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={item=>item.index}
+        numColumns={4}
+        removeClippedSubviews={true}
+        contentContainerStyle={{gap: 20}}
+        columnWrapperStyle={{gap: 20}}
+      />
+    </View>
   );
 }
 
 function ChangeThemeButton({ backgroundColor, id, onPress, buttonStyle, pressableStyle }) {
   return (
-    <Pressable
-      onPress={onPress}
-      id={id}
-      style={pressableStyle}
-    >
-      <View style={[
-        buttonStyle,
-        {backgroundColor: backgroundColor}
-      ]}/>
+    <Pressable onPress={onPress} id={id} style={pressableStyle}>
+      <View style={[buttonStyle, { backgroundColor: backgroundColor }]} />
     </Pressable>
   );
 }
 
 function ThemedStyles() {
-  const themeManager = useContext(ThemeContext);
-  const currentTheme = themeManager.theme;
-
-  return (StyleSheet.create({
+  return StyleSheet.create({
     background: {
       alignItems: 'center',
       padding: 20,
     },
 
     themeButtonsContainer: {
-      flexDirection: 'row', 
-      justifyContent: 'space-between',
-      flex: 1, 
-      padding: 40
+      alignItems: 'center',
+      top: 20
     },
 
     themePressable: {
@@ -112,5 +101,5 @@ function ThemedStyles() {
       borderColor: 'white',
       borderWidth: 4,
     },
-  }));
+  });
 }

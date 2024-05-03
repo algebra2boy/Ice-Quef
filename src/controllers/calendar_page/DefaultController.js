@@ -51,11 +51,11 @@ export function CalendarPageDefaultController() {
     message: joinStatus.notJoined(0),
     isJoined: false,
   });
-  
+
   // Used for fixing the 'hour style' bug
   useEffect(() => {
     officeHourUpdate.triggerUpdate();
-  }, [themeManager.theme])
+  }, [themeManager.theme]);
 
   useEffect(() => {
     socket.on('connect', () => {

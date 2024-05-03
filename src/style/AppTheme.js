@@ -1,23 +1,33 @@
 import { useState, useEffect } from 'react';
 import { createContext } from 'react';
-import * as FileSystem from 'expo-file-system'
+import * as FileSystem from 'expo-file-system';
 
 /**
  * All colors for app theme
  * @enum { color }
  */
 const palette = {
-  colorDodgerblue: '#2596ff',
-  colorLightblue: '#A2CFFE',
-  colorWhite: '#fff',
+  colorWhite: '#ffffff',
   colorGainsboro: '#d9d9d9',
-  colorBlack: '#000',
+  colorSlateGray: '#737073',
+  colorBlack: '#000000',
+
+  colorLightBlue: '#A2CFFE',
+  colorDodgerBlue: '#2596ff',
+  colorSeaBlue: '#3c89b2',
+
+  colorMintGreen: '#9effc8',
   colorEmeraldGreen: '#02c262',
+
+  colorCoralRed: '#ff8c84',
   colorScarletRed: '#eb4034',
+
+  colorTaroPurple: '#cda8ff',
   colorVioletPurple: '#9370DB',
+  colorIndigoPurple: '#7e3ee4',
+
   colorSunshineYellow: '#fcffc7',
   colorGoldenrodOrange: '#fcdb44',
-  colorSeaBlue: '#3c89b2',
 };
 
 /**
@@ -43,7 +53,7 @@ const myFontSize = {
 /* --- Official themes --- */
 const defaultTheme = {
   mainColor: palette.colorSeaBlue,
-  bgColor: palette.colorLightblue,
+  bgColor: palette.colorLightBlue,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -56,7 +66,7 @@ const defaultTheme = {
 
 const greenTheme = {
   mainColor: palette.colorEmeraldGreen,
-  bgColor: palette.colorWhite,
+  bgColor: palette.colorMintGreen,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -69,7 +79,7 @@ const greenTheme = {
 
 const redTheme = {
   mainColor: palette.colorScarletRed,
-  bgColor: palette.colorWhite,
+  bgColor: palette.colorCoralRed,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -82,7 +92,7 @@ const redTheme = {
 
 const purpleTheme = {
   mainColor: palette.colorVioletPurple,
-  bgColor: palette.colorWhite,
+  bgColor: palette.colorTaroPurple,
   subColor: palette.colorBlack,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -108,7 +118,7 @@ const yellowTheme = {
 
 const blackGoldenTheme = {
   mainColor: palette.colorBlack,
-  bgColor: palette.colorGainsboro,
+  bgColor: palette.colorSlateGray,
   subColor: palette.colorGoldenrodOrange,
   primaryColor: palette.colorWhite,
   disableColor: palette.colorGainsboro,
@@ -128,18 +138,14 @@ const blackGoldenTheme = {
  */
 const themes = [defaultTheme, greenTheme, redTheme, purpleTheme, yellowTheme, blackGoldenTheme];
 
-export const theme_mini_icon = () => {
-  return themes.map(theme => 
-    {
-      return (
-        {
-          mainColor: theme.mainColor, 
-          index: theme.index
-        }
-      );
-    }
-  );
-}
+export const themeMiniIcon = () => {
+  return themes.map(theme => {
+    return {
+      mainColor: theme.mainColor,
+      index: theme.index,
+    };
+  });
+};
 
 /**
  * Tracks the current theme
@@ -157,18 +163,18 @@ export const ThemeProvider = ({ children }) => {
 
   const getDirectorUri = () => {
     return FileSystem.documentDirectory + 'files/';
-  }
+  };
 
   const getFileUri = () => {
     return getDirectorUri() + 'theme.txt';
-  }
+  };
 
   /**
    * Writes index into file directory for persistent storage
-   * 
+   *
    * @param {int} index New theme index
    */
-  const writeIndexToThemeFile = async (index) => {
+  const writeIndexToThemeFile = async index => {
     const directoryUri = getDirectorUri();
     const fileUri = getFileUri();
 
@@ -181,17 +187,17 @@ export const ThemeProvider = ({ children }) => {
       } else {
         //console.log("Theme text file aleady exists.");
       }
-  
+
       // Write some text to the file
-      await FileSystem.writeAsStringAsync(fileUri, index+"", {encoding: 'utf8'});
+      await FileSystem.writeAsStringAsync(fileUri, index + '', { encoding: 'utf8' });
     } catch (error) {
       console.error('Error creating text file:', error);
     }
-  }
+  };
 
   /**
    * Reads the stored theme index from file directory
-   * 
+   *
    * @returns stored theme index
    */
   const readFromThemeFileToGetIndex = async () => {
@@ -205,11 +211,11 @@ export const ThemeProvider = ({ children }) => {
       console.error('Error reading text file:', error);
       return undefined;
     }
-  }
+  };
 
   /**
    * Changes the current app theme to the one stored in index
-   * 
+   *
    * @param {int} themeIndex Theme's index
    */
   const changeTheme = themeIndex => {
@@ -222,25 +228,28 @@ export const ThemeProvider = ({ children }) => {
    * theme file
    */
   const changeToStoredTheme = async () => {
-    await readFromThemeFileToGetIndex()
-    .then(index => {
+    await readFromThemeFileToGetIndex().then(index => {
       setTheme(themes[parseInt(index)]);
-    })
-  }
+    });
+  };
 
   // Change the theme when app is loaded the first time
   useEffect(() => {
     const change = async () => {
       await changeToStoredTheme();
-    }
+    };
     change();
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ 
-      theme, 
-      changeTheme,
-      changeToStoredTheme
-    }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        changeTheme,
+        changeToStoredTheme,
+      }}
+    >
+      {children}
+    </ThemeContext.Provider>
   );
 };
