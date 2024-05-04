@@ -51,9 +51,7 @@ export function ManagePageAddOH(props) {
   return (
     <BasePage
       components={
-        <TouchableWithoutFeedback 
-          onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}
-        >
+        <TouchableWithoutFeedback onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}>
           <View style={themedStyles.root}>
             <View style={kolynSector(8, { height: Dimensions.get('window').height * 0.65 })}>
               <KolynTitleLabel title="Add office hours" />
