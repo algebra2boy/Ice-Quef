@@ -71,7 +71,7 @@ export function kolynBigSector() {
 }
 
 export function kolynSmallSector() {
-  return Platform.OS === 'web' ? { flex: 1 } : { top: height * 0.1 };
+  return Platform.OS === 'web' ? { flex: 1, top: 20 } : { top: height * 0.1 };
 }
 
 export function kolynSmallSectorOr(style) {

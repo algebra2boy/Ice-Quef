@@ -32,7 +32,7 @@ export function ManagePageDeleteFail({ route }) {
             <View style={kolynBigSector()}>
               <KolynTitleLabel title="Failed to delete" />
 
-              <Text>
+              <Text style={{textAlign: 'center'}}>
                 <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
                 <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold

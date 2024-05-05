@@ -87,5 +87,11 @@ export function ManageOHStyles() {
     flatListView: {
       alignSelf: 'center',
     },
+
+    flatListViewWeb: {
+      alignSelf: 'center',
+      flex: 1,
+    },
+
   });
 }
