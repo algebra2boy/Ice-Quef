@@ -34,7 +34,7 @@ export function ManagePageDeleteSuccess({ route }) {
             <View style={kolynBigSector()}>
               <KolynTitleLabel title="Successfully deleted" />
 
-              <Text>
+              <Text style={{textAlign: 'center'}}>
                 <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
                 <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold

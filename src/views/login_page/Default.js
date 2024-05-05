@@ -30,7 +30,7 @@ export function LoginPageDefault(props) {
     user.setEmail(email.toLowerCase());
 
     if (userToken != null) {
-      // validate user
+      //validate user
       user.setToken(userToken);
       navigation.navigate('Calendar');
       navigation.navigate('BottomTab');
