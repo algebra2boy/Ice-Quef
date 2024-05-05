@@ -1,5 +1,5 @@
-import { useState, useContext, useReducer, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useState, useContext } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
@@ -195,7 +195,7 @@ function ThemedStyles() {
     },
 
     closeMenuBotton: {
-      left: '35%',
+      left: Platform.OS === 'web' ? '75%' : '35%',
       width: 36,
       height: 36,
       alignSelf: 'center',
