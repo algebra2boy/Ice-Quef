@@ -54,41 +54,45 @@ export function ManagePageAddOH(props) {
         <TouchableWithoutFeedback onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}>
           <View style={themedStyles.root}>
             <View style={kolynSector(8, { height: Dimensions.get('window').height * 0.65 })}>
-              <KolynTitleLabel title="Add office hours" />
-              <Hint themedStyles={themedStyles} />
-              <SearchBar
-                text={courseCode}
-                setText={setCourseCode}
-                placeholder="Please enter class code. ex. CS 520"
-              />
-              <SearchBar
-                text={facultyName}
-                setText={setFacultyName}
-                placeholder="Please enter faculty's name: ex. Joe Doe"
-              />
-              {!isSearching && (
-                <SearchResultList
-                  elementState={officeHour}
-                  styles={manageOHStyles}
-                  onRefresh={onRefresh}
-                  isRefreshing={isRefreshing}
-                  navigation={navigation}
+              <View style={{flex: 5}}>
+                <KolynTitleLabel title="Add office hours" />
+                <Hint themedStyles={themedStyles} />
+                <SearchBar
+                  text={courseCode}
+                  setText={setCourseCode}
+                  placeholder="Please enter class code. ex. CS 520"
                 />
-              )}
-              {(courseCode !== '' || facultyName !== '') && isSearching && (
-                <LoadingView text="Loading..." />
-              )}
-            </View>
-            <View>
-              <View style={{ top: 60 - Dimensions.get('window').height * 0.05 }}>
-                <KolynButton
-                  text="Go back"
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                  testID="gobackButton"
+                <SearchBar
+                  text={facultyName}
+                  setText={setFacultyName}
+                  placeholder="Please enter faculty's name: ex. Joe Doe"
                 />
               </View>
+              <View style={{flex: 8}}>
+                {!isSearching && (
+                  <SearchResultList
+                    elementState={officeHour}
+                    styles={manageOHStyles}
+                    onRefresh={onRefresh}
+                    isRefreshing={isRefreshing}
+                    navigation={navigation}
+                  />
+                )}
+                {(courseCode !== '' || facultyName !== '') && isSearching && (
+                  <LoadingView text="Loading..." />
+                )}
+              </View>
+            </View>
+            <View style={Platform.OS === 'web' ? 
+                        { flex: 1, top : 20 } : 
+                        { top: 60 - Dimensions.get('window').height * 0.05 }}>
+              <KolynButton
+                text="Go back"
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                testID="gobackButton"
+              />
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -131,7 +135,9 @@ function SearchResultList({ elementState, styles, onRefresh, isRefreshing, navig
       keyExtractor={item => item.id}
       onRefresh={onRefresh}
       refreshing={isRefreshing}
-      contentContainerStyle={styles.flatListView}
+      contentContainerStyle={Platform.OS === 'web' ? 
+                              styles.flatListViewWeb : 
+                              styles.flatListView}
     />
   );
 }
@@ -178,6 +184,8 @@ function ThemedStyles() {
     root: {
       alignItems: 'center',
       padding: 20,
+      flex: 1,
+      flexDirection: 'col'
     },
 
     hintLabel: StyleSheet.flatten([
