@@ -54,6 +54,7 @@ export function ManagePageAddOH(props) {
         <TouchableWithoutFeedback onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}>
           <View style={themedStyles.root}>
             <View style={kolynSector(8, { height: Dimensions.get('window').height * 0.65 })}>
+
               <View style={{flex: 5}}>
                 <KolynTitleLabel title="Add office hours" />
                 <Hint themedStyles={themedStyles} />
@@ -68,6 +69,7 @@ export function ManagePageAddOH(props) {
                   placeholder="Please enter faculty's name: ex. Joe Doe"
                 />
               </View>
+
               <View style={{flex: 8}}>
                 {!isSearching && (
                   <SearchResultList
@@ -82,7 +84,9 @@ export function ManagePageAddOH(props) {
                   <LoadingView text="Loading..." />
                 )}
               </View>
+              
             </View>
+
             <View style={Platform.OS === 'web' ? 
                         { flex: 1, top : 20 } : 
                         { top: 60 - Dimensions.get('window').height * 0.05 }}>
