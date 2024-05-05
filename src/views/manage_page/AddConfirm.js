@@ -33,7 +33,7 @@ export function ManagePageAddConfirm(props) {
             <View style={kolynBigSector()}>
               <KolynTitleLabel title="Confirm adding" />
 
-              <Text>
+              <Text style={{textAlign: 'center'}}>
                 <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
                 <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold

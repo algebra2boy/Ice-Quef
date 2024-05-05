@@ -34,7 +34,7 @@ export function ManagePageAddSuccess({ route }) {
             <View style={kolynBigSector()}>
               <KolynTitleLabel title="Successfully added" />
 
-              <Text>
+              <Text style={{textAlign: 'center'}}>
                 <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
                 <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold
