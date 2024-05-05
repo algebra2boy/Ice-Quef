@@ -168,7 +168,7 @@ function Hint({ themedStyles }) {
   }
 
   return (
-    <Text>
+    <Text style={{textAlign: 'center'}}>
       <Label text={'Please enter office hour information, e.g.\n'} />
       <Label text={'By Instructor name (John Doe),\n'} />
       <Label text={'By Class (CS 520 / Biology 151).'} />
@@ -189,7 +189,7 @@ function ThemedStyles() {
     },
 
     hintLabel: StyleSheet.flatten([
-      { marginVertical: 10, textAlign: 'center' },
+      { marginVertical: 10, textAlign: 'center'},
       KolynStyle.kolynLabel(
         currentTheme.fontSizes.tiny,
         currentTheme.mainFont,
