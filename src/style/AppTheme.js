@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createContext } from 'react';
+import { Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
 /**
@@ -227,7 +228,6 @@ export const ThemeProvider = ({ children }) => {
     try {
       // Read the contents of the file
       const fileContents = await FileSystem.readAsStringAsync(fileUri);
-      //console.log('File contents:', fileContents);
       return fileContents;
     } catch (error) {
       console.error('Error reading text file:', error);
@@ -241,6 +241,8 @@ export const ThemeProvider = ({ children }) => {
    * @param {int} themeIndex Theme's index
    */
   const changeTheme = themeIndex => {
+    if (Platform.OS === 'web') return;
+
     setTheme(themes[themeIndex]);
     writeIndexToThemeFile(themeIndex);
   };
@@ -250,6 +252,8 @@ export const ThemeProvider = ({ children }) => {
    * theme file
    */
   const changeToStoredTheme = async () => {
+    if (Platform.OS === 'web') return;
+    
     await readFromThemeFileToGetIndex().then(index => {
       setTheme(themes[parseInt(index)]);
     });
@@ -264,6 +268,9 @@ export const ThemeProvider = ({ children }) => {
     const change = async () => {
       await changeToStoredTheme();
     };
+
+    if (Platform.OS === 'web') return;
+
     change();
   }, []);
 
