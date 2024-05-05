@@ -241,9 +241,9 @@ export const ThemeProvider = ({ children }) => {
    * @param {int} themeIndex Theme's index
    */
   const changeTheme = themeIndex => {
-    if (Platform.OS === 'web') return;
-
     setTheme(themes[themeIndex]);
+
+    if (Platform.OS === 'web') return;
     writeIndexToThemeFile(themeIndex);
   };
 
