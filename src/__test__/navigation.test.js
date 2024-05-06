@@ -15,13 +15,6 @@ import { screen } from '@testing-library/react-native'
 
 afterEach(cleanup);
 
-// jest.mock('@react-navigation/native', () => ({
-//   ...jest.requireActual('@react-navigation/native'),
-//   useNavigation: () => ({
-//     navigate: jest.fn(),
-//   }),
-// }));
-
 describe("log in page", () => {
   it("goes from log in page to calendar page", async () => {
     const Stack = createNativeStackNavigator();
