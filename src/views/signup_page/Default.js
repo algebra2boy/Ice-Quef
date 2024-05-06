@@ -112,7 +112,11 @@ export function SignupPageDefault(props) {
                 <KolynButton
                   text="Go Back"
                   onPress={() => {
-                    navigation.goBack();
+                    if (navigation.canGoBack()) {
+                      navigation.goBack();
+                    } else {
+                      navigation.navigate("Login");
+                    }
                   }}
                   testID="gobackButton"
                 />

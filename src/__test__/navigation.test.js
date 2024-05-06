@@ -85,3 +85,35 @@ describe("log in page", () => {
     });
   });
 });
+
+describe("sign up page", () => {
+  it("goes from sign up page back to log in page", async () => {
+    const Stack = createNativeStackNavigator();
+
+    render(
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Signup"
+          screenOptions={{headerShown: false, gestureEnabled: false}}
+        >
+          <Stack.Screen 
+            name="Login" 
+            component={LoginPageDefault} 
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignupPageDefaultController}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+
+    await waitFor(() => {
+      fireEvent.press(screen.getByTestId("gobackButton"));
+    });
+    await waitFor(() => {
+      const elementWithTestId = screen.queryByTestId('gobackButton');
+      expect(elementWithTestId).toBeNull();
+    });
+  });
+});
