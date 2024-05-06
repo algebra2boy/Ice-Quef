@@ -117,3 +117,7 @@ describe("sign up page", () => {
     });
   });
 });
+
+describe("manage office hour page", () => {
+  
+});
