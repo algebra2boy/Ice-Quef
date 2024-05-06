@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, View, StyleSheet, Pressable, FlatList } from 'react-native';
+import { View, StyleSheet, Pressable, FlatList } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { themeMiniIcon, ThemeContext } from '../../style/AppTheme';
 import { KolynTitleLabel, KolynButton } from '../../component';
