@@ -18,9 +18,8 @@ export function ProfilePageDefault(props) {
   const navigation = useNavigation();
   const smallFont = getSmallFont();
 
-  const email = props.user ? props.user.email : "";
-  const updateLoginStatus = 
-    props.loginContext ? props.loginContext.updateLoginStatus : () => {};
+  const email = props.user ? props.user.email : '';
+  const updateLoginStatus = props.loginContext ? props.loginContext.updateLoginStatus : () => {};
 
   return (
     <BasePage

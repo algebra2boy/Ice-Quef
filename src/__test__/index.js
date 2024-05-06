@@ -1,4 +1,4 @@
-import '@testing-library/react-native/extend-expect'
+import '@testing-library/react-native/extend-expect';
 import { waitFor, fireEvent, cleanup } from '@testing-library/react-native';
 import { render } from '../test-utils';
 import { LoginPageDefault } from '../views/login_page/Default';
@@ -10,16 +10,16 @@ import { ProfilePageDefault } from '../views/profile_page/Default';
 import { KolynTextfield, KolynButton } from '../component';
 
 export {
-  waitFor, 
+  waitFor,
   fireEvent,
   cleanup,
-  render, 
-  LoginPageDefault, 
-  SignupPageDefault, 
-  CalendarPageDefault, 
-  ManagePageDefault, 
+  render,
+  LoginPageDefault,
+  SignupPageDefault,
+  CalendarPageDefault,
+  ManagePageDefault,
   ManagePageAddOH,
   ProfilePageDefault,
-  KolynTextfield, 
-  KolynButton 
-}
+  KolynTextfield,
+  KolynButton,
+};

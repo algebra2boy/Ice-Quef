@@ -115,7 +115,7 @@ export function SignupPageDefault(props) {
                     if (navigation.canGoBack()) {
                       navigation.goBack();
                     } else {
-                      navigation.navigate("Login");
+                      navigation.navigate('Login');
                     }
                   }}
                   testID="gobackButton"

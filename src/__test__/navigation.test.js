@@ -1,54 +1,36 @@
-import {
-  waitFor, 
-  fireEvent,
-  cleanup,
-  render, 
-  LoginPageDefault, 
-} from './index'
+import { waitFor, fireEvent, cleanup, render, LoginPageDefault } from './index';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { loginStatus } from '../props/LoginContext';
 import { SignupPageDefaultController } from '../controllers/signup_page/DefaultController';
 import { CalendarPageDefaultController } from '../controllers/calendar_page/DefaultController';
+import { ManagePageDefault, ManagePageAddOH } from './index';
 import { BottomTabNavigator } from '../component/BottomTabNav';
-import { screen } from '@testing-library/react-native'
+import { screen } from '@testing-library/react-native';
 
 afterEach(cleanup);
 
-describe("log in page", () => {
-  it("goes from log in page to calendar page", async () => {
+describe('log in page', () => {
+  it('goes from log in page to calendar page', async () => {
     const Stack = createNativeStackNavigator();
 
     render(
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Login"
-          screenOptions={{headerShown: false, gestureEnabled: false}}
+          screenOptions={{ headerShown: false, gestureEnabled: false }}
         >
-          <Stack.Screen 
-            name="Login" 
-          >
-            {()=>(
-              <LoginPageDefault 
-                pressLogInButton={() => true}
-                status={loginStatus.success} 
-              />
-            )}
+          <Stack.Screen name="Login">
+            {() => <LoginPageDefault pressLogInButton={() => true} status={loginStatus.success} />}
           </Stack.Screen>
-          <Stack.Screen
-            name="Calendar"
-            component={CalendarPageDefaultController}
-          />
-          <Stack.Screen
-            name="BottomTab"
-            component={BottomTabNavigator}
-          />
+          <Stack.Screen name="Calendar" component={CalendarPageDefaultController} />
+          <Stack.Screen name="BottomTab" component={BottomTabNavigator} />
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer>,
     );
 
     await waitFor(() => {
-      fireEvent.press(screen.getByTestId("loginButton"));
+      fireEvent.press(screen.getByTestId('loginButton'));
     });
     await waitFor(() => {
       const elementWithTestId = screen.queryByTestId('loginButton');
@@ -56,60 +38,48 @@ describe("log in page", () => {
     });
   });
 
-  it("goes from log in page to sign up page", async () => {
+  it('goes from log in page to sign up page', async () => {
     const Stack = createNativeStackNavigator();
 
     render(
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Login"
-          screenOptions={{headerShown: false, gestureEnabled: false}}
+          screenOptions={{ headerShown: false, gestureEnabled: false }}
         >
-          <Stack.Screen 
-            name="Login" 
-            component={LoginPageDefault} 
-          />
-          <Stack.Screen
-            name="Signup"
-            component={SignupPageDefaultController}
-          />
+          <Stack.Screen name="Login" component={LoginPageDefault} />
+          <Stack.Screen name="Signup" component={SignupPageDefaultController} />
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer>,
     );
 
     await waitFor(() => {
-      fireEvent.press(screen.getByTestId("signupButton"));
+      fireEvent.press(screen.getByTestId('signupButton'));
     });
     await waitFor(() => {
-      expect(screen.getByTestId("gobackButton")).toBeOnTheScreen();
+      expect(screen.getByTestId('gobackButton')).toBeOnTheScreen();
     });
   });
 });
 
-describe("sign up page", () => {
-  it("goes from sign up page back to log in page", async () => {
+describe('sign up page', () => {
+  it('goes from sign up page back to log in page', async () => {
     const Stack = createNativeStackNavigator();
 
     render(
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Signup"
-          screenOptions={{headerShown: false, gestureEnabled: false}}
+          screenOptions={{ headerShown: false, gestureEnabled: false }}
         >
-          <Stack.Screen 
-            name="Login" 
-            component={LoginPageDefault} 
-          />
-          <Stack.Screen
-            name="Signup"
-            component={SignupPageDefaultController}
-          />
+          <Stack.Screen name="Login" component={LoginPageDefault} />
+          <Stack.Screen name="Signup" component={SignupPageDefaultController} />
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer>,
     );
 
     await waitFor(() => {
-      fireEvent.press(screen.getByTestId("gobackButton"));
+      fireEvent.press(screen.getByTestId('gobackButton'));
     });
     await waitFor(() => {
       const elementWithTestId = screen.queryByTestId('gobackButton');
@@ -118,6 +88,43 @@ describe("sign up page", () => {
   });
 });
 
-describe("manage office hour page", () => {
-  
+describe('manage office hour page', () => {
+  it('from default page, goes to the add office hour page', async () => {
+    const Stack = createNativeStackNavigator();
+
+    render(
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="ManagePageDefault"
+          screenOptions={{ headerShown: false, gestureEnabled: false }}
+        >
+          <Stack.Screen name="ManagePageDefault" component={
+            () => <ManagePageDefault officehour={[]} setOfficeHour={()=>{}}/>
+          } />
+          <Stack.Screen name="ManagePageAddOH" component={
+            () => 
+            <ManagePageAddOH 
+              isRefreshing = {()=>{}}
+              setIsRefreshing = {()=>{}}
+              isSearching = {()=>{}}
+              officeHour = {[]}
+              setOfficeHour = {()=>{}}
+              courseCode = ""
+              setCourseCode = {()=>{}}
+              facultyName = ""
+              setFacultyName = {()=>{}}
+            />
+          } />
+        </Stack.Navigator>
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      fireEvent.press(screen.getByTestId('addButton'));
+    });
+    await waitFor(() => {
+      const elementWithTestId = screen.queryByTestId('addButton');
+      expect(elementWithTestId).toBeNull();
+    });
+  });
 });

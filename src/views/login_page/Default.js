@@ -90,17 +90,9 @@ export function LoginPageDefault(props) {
             </View>
 
             <View style={{ top: height * 0.1 }}>
-              <KolynButton 
-                text="Log In" 
-                onPress={onLogInPressed} 
-                testID="loginButton" 
-              />
+              <KolynButton text="Log In" onPress={onLogInPressed} testID="loginButton" />
               <View style={{ top: 20 }}>
-                <KolynButton 
-                  text="Sign Up" 
-                  onPress={onSignUpPress} 
-                  testID="signupButton"
-                />
+                <KolynButton text="Sign Up" onPress={onSignUpPress} testID="signupButton" />
               </View>
             </View>
           </View>
