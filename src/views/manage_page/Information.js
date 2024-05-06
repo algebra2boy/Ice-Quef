@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import { KolynButton, KolynTitleLabel } from '../../component';
 import { BasePage } from '../../style/BasePage';
 import { day, NonBold } from '../../style/ManageOHStyle';
@@ -31,16 +31,16 @@ export function ManagePageInformation({ route }) {
           <View style={themedStyles.root}>
             <View style={kolynBigSector()}>
               <KolynTitleLabel
-                title={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'}
+                title={officeHour.courseDepartment + ' ' + officeHour.courseNumber}
               />
 
-              <View style={{ flex: 1, bottom: 40 }}>
+              <View style={{ flex: 1, justifyContent: 'cetner', alignSelf: 'center' }}>
                 <Text>
                   <NonBold text={officeHour.facultyName} />
                 </Text>
               </View>
 
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: Platform.OS === 'web' ? 2 : 1 }}>
                 <KolynButton
                   text="Delete"
                   onPress={() => {
@@ -51,7 +51,7 @@ export function ManagePageInformation({ route }) {
                 />
               </View>
 
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }}>
                 <Text>
                   <NonBold text={'Start: ' + officeHour.initialDate.replaceAll(':', '/') + '\n'} />
                   <NonBold text={'End: ' + officeHour.terminalDate.replaceAll(':', '/') + '\n\n'} />

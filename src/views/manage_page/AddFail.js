@@ -32,7 +32,7 @@ export function ManagePageAddFail({ route }) {
             <View style={kolynBigSector()}>
               <KolynTitleLabel title="Failed to add" />
 
-              <Text>
+              <Text style={{textAlign: 'center'}}>
                 <Bold text={officeHour.courseDepartment + ' ' + officeHour.courseNumber + '\n'} />
                 <NonBold text={officeHour.facultyName + '\n'} />
                 <NonBold
