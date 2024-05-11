@@ -253,7 +253,7 @@ export const ThemeProvider = ({ children }) => {
    */
   const changeToStoredTheme = async () => {
     if (Platform.OS === 'web') return;
-    
+    await writeIndexToThemeFile(0);
     await readFromThemeFileToGetIndex().then(index => {
       setTheme(themes[parseInt(index)]);
     });

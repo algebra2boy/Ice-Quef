@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ProfilePageResetPassword } from '../../views/profile_page/ResetPassword';
 import { PageVariant } from '../../props/PasswordEnum';
+import { UserContext } from '../../props/UserInfo';
+import encryptPassword from '../../props/encrypt';
+import ServerAddress from '../../props/Server';
 
 /**
  * The controller for reset password page. It controls:
@@ -10,6 +13,8 @@ import { PageVariant } from '../../props/PasswordEnum';
  * @returns { ReactElement } The reset password page
  */
 export function ProfilePageResetPasswordController() {
+  const userEmail = useContext(UserContext).email;
+
   // The password user entered to confirm authentication
   const [passwordText, onChangePasswordText] = useState('');
   // "Set a new password" field
@@ -34,10 +39,57 @@ export function ProfilePageResetPasswordController() {
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
   // When the "Next" button in page 1 is pressed
-  const verifyUser = () => {};
+  const setNewPassword = async () => {
+    try {
 
-  // When the "Next" button in page 2 is pressed
-  const setNewPassword = newPassword => {};
+
+      if (passwordConditions.some(e => e === false)) {
+        onChangePageVariant(PageVariant.InvalidNewPassword);
+        return;
+      }
+
+      if (confirmPasswordCondition === false) {
+        onChangePageVariant(PageVariant.NewPasswordDontMatch);
+        return;
+      }
+
+      const encrypted_old_pw = await encryptPassword(passwordText);
+      const encrypted_new_pw = await encryptPassword(repasswordText);
+      try {
+        const response = await fetch(ServerAddress() + 'api/auth/reset', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'email': userEmail,
+            'oldPassword': encrypted_old_pw,
+            'newPassword': encrypted_new_pw,
+            'isTeacher': false
+          })
+        });
+
+        const serverResponse = await response.json();
+
+        if (response.ok) {
+          console.log('Change sucesss');
+          onChangePageVariant(PageVariant.ChangeSuccess);
+        } else {
+          console.log('WrongOldPassword');
+          console.log(serverResponse);
+          console.log(userEmail);
+          console.log(passwordText);
+          console.log(repasswordText);
+          onChangePageVariant(PageVariant.WrongOldPassword);
+        }
+      } catch (error) {
+        console.log('NetworkFailure');
+        onChangePageVariant(PageVariant.NetworkFailure);
+      }
+    } catch (error) {
+      onChangePageVariant(PageVariant.UnknownError);
+    }
+  };
 
   // When the "Next" button in page 3 is pressed
   // Just go back to profile page
@@ -56,7 +108,6 @@ export function ProfilePageResetPasswordController() {
       setPasswordConditions={setPasswordConditions}
       confirmPasswordCondition={confirmPasswordCondition}
       setConfirmPasswordCondition={setConfirmPasswordCondition}
-      verifyUser={verifyUser}
       setNewPassword={setNewPassword}
     />
   );
