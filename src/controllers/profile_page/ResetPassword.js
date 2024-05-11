@@ -63,7 +63,8 @@ export function ProfilePageResetPasswordController() {
           body: JSON.stringify({
             "email": userEmail,
             "oldPassword": passwordText,
-            "newPassword": repasswordText
+            "newPassword": repasswordText,
+            "isTeacher": false
           }),
         });
 
