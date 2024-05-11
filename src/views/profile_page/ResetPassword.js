@@ -4,8 +4,8 @@ import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { BasePage } from '../../style/BasePage';
 import { ThemeContext } from '../../style/AppTheme';
 import { KolynTitleLabel, KolynButton, KolynTextfield, KolynTextLabel } from '../../component';
-import { passwordHint, confirmPasswordHint, PageVariant } from '../../props/PasswordEnum';
-import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
+import { passwordHint, PageVariant } from '../../props/PasswordEnum';
+import { PasswordHintText } from '../../component/PasswordHintText';
 import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
 import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
@@ -30,15 +30,16 @@ export function ProfilePageResetPassword(props) {
   const onChangeReRePasswordText = props.onChangeReRePasswordText;
   // The current page
   const pageVariant = props.pageVariant;
-  const onChangePageVariant = props.onChangePageVariant;
   // For setting a new password
   const passwordConditions = props.passwordConditions;
   const setPasswordConditions = props.setPasswordConditions;
-  const confirmPasswordCondition = props.confirmPasswordCondition;
   const setConfirmPasswordCondition = props.setConfirmPasswordCondition;
 
   const setNewPassword = props.setNewPassword;
 
+  // For the following conditional rendering condition,
+  // if the page is not success, it must be still staying
+  // in the change password page
   return (
     <BasePage
       components={
@@ -123,7 +124,7 @@ export function ProfilePageResetPassword(props) {
               {pageVariant != PageVariant.ChangeSuccess && (
                 <View>
                   <KolynButton
-                    onPress={() => setNewPassword(passwordText, repasswordText)}
+                    onPress={setNewPassword}
                     text={'Next'}
                   />
                 </View>
