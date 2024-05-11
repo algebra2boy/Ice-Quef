@@ -13,7 +13,7 @@ import ServerAddress from '../../props/Server';
  * @returns { ReactElement } The reset password page
  */
 export function ProfilePageResetPasswordController() {
-  const userEmail = useContext(UserContext);
+  const userEmail = useContext(UserContext).email;
 
   // The password user entered to confirm authentication
   const [passwordText, onChangePasswordText] = useState('');
@@ -39,16 +39,10 @@ export function ProfilePageResetPasswordController() {
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
   // When the "Next" button in page 1 is pressed
-  const setNewPassword = async (old_password, new_password) => {
+  const setNewPassword = async () => {
     try {
-      const encrypted_old_pw = await encryptPassword(old_password);
-      const encrypted_new_pw = await encryptPassword(new_password);
-
-      const resetData = {
-        email: userEmail,
-        oldPassword: encrypted_old_pw,
-        newPassword: encrypted_new_pw,
-      };
+      //const encrypted_old_pw = await encryptPassword(old_password);
+      //const encrypted_new_pw = await encryptPassword(new_password);
 
       if (passwordConditions.some(e=>e===false)) {
         onChangePageVariant(PageVariant.InvalidNewPassword);
@@ -66,7 +60,11 @@ export function ProfilePageResetPasswordController() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(resetData),
+          body: JSON.stringify({
+            "email": userEmail,
+            "oldPassword": passwordText,
+            "newPassword": repasswordText
+          }),
         });
 
         const serverResponse = await response.json();
@@ -76,8 +74,10 @@ export function ProfilePageResetPasswordController() {
           onChangePageVariant(PageVariant.ChangeSuccess);
         } else {
           console.log("WrongOldPassword");
-          console.log(encrypted_old_pw);
-          console.log(response.json());
+          console.log(serverResponse);
+          console.log(userEmail);
+          console.log(passwordText);
+          console.log(repasswordText);
           onChangePageVariant(PageVariant.WrongOldPassword);
         }
       } catch (error) {
