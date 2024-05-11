@@ -1,8 +1,13 @@
 // Enums used for pages that involve password
 
 export const PageVariant = {
-  NewPassword: 'Set a new password',
+  NewPassword: '',
+  WrongOldPassword: 'Your old password is incorrect.',
   ChangeSuccess: 'Password changed successfully!',
+  NetworkFailure: 'No network connection, please try again.',
+  UnknownError: 'An unknown error has occurred, please try again.',
+  NewPasswordDontMatch: 'Your new password dose not match, please try again.',
+  InvalidNewPassword: 'Your new password is invalid.'
 };
 
 export const Authentication = {

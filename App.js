@@ -5,6 +5,7 @@ import { SignupPageDefaultController } from './src/controllers/signup_page/Defau
 import { BottomTabNavigator } from './src/component/BottomTabNav';
 import { CalendarPageController } from './src/controllers';
 import ContextApp from './src/views/ContextApp';
+import 'react-native-reanimated';
 
 const Stack = createNativeStackNavigator();
 
