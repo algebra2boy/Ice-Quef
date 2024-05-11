@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ProfilePageResetPassword } from '../../views/profile_page/ResetPassword';
 import { PageVariant } from '../../props/PasswordEnum';
+import { UserContext } from '../../props/UserInfo';
+import encryptPassword from '../../props/encrypt';
+import ServerAddress from '../../props/Server';
 
 /**
  * The controller for reset password page. It controls:
@@ -34,10 +37,47 @@ export function ProfilePageResetPasswordController() {
   const [confirmPasswordCondition, setConfirmPasswordCondition] = useState(true);
 
   // When the "Next" button in page 1 is pressed
-  const verifyUser = () => {};
+  const verifyUser = () => {
+  };
 
   // When the "Next" button in page 2 is pressed
-  const setNewPassword = newPassword => {};
+  const setNewPassword = async (old_password, new_password) => {
+
+    const userEmail = useContext(UserContext);
+    try {
+      const encrypted_old_pw = await encryptPassword(old_password);
+      const encrypted_new_pw = await encryptPassword(new_password);
+
+      const resetData = {
+        email: userEmail,
+        oldPassword: encrypted_old_pw,
+        newPassword: encrypted_new_pw
+      };
+
+      try {
+        const response = await fetch(ServerAddress() + 'api/auth/reset', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(resetData)
+        });
+
+        const serverResponse = await response.json();
+
+        if (response.ok){
+          console.log("Ok");
+        }
+        else{
+          console.log("Failed");
+        }
+      } catch (error){
+        console.error(error);
+      }
+    } catch (error){
+      console.error(error);
+    }
+  };
 
   // When the "Next" button in page 3 is pressed
   // Just go back to profile page
