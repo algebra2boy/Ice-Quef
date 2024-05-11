@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { BasePage } from '../../style/BasePage';
+import { ThemeContext } from '../../style/AppTheme';
 import { KolynTitleLabel, KolynButton, KolynTextfield, KolynTextLabel } from '../../component';
-import { passwordHint, confirmPasswordHint, PageVariant } from '../../props/PasswordEnum';
-import { PasswordHintText, ConfirmPasswordHintText } from '../../component/PasswordHintText';
+import { passwordHint, PageVariant } from '../../props/PasswordEnum';
+import { PasswordHintText } from '../../component/PasswordHintText';
 import { checkPassword, checkConfirmPassword } from '../../props/PasswordSetter';
 import { kolynBigSector, kolynSmallSector } from '../../style/KolynStyleKit';
 
@@ -28,13 +30,16 @@ export function ProfilePageResetPassword(props) {
   const onChangeReRePasswordText = props.onChangeReRePasswordText;
   // The current page
   const pageVariant = props.pageVariant;
-  const onChangePageVariant = props.onChangePageVariant;
   // For setting a new password
   const passwordConditions = props.passwordConditions;
   const setPasswordConditions = props.setPasswordConditions;
-  const confirmPasswordCondition = props.confirmPasswordCondition;
   const setConfirmPasswordCondition = props.setConfirmPasswordCondition;
 
+  const setNewPassword = props.setNewPassword;
+
+  // For the following conditional rendering condition,
+  // if the page is not success, it must be still staying
+  // in the change password page
   return (
     <BasePage
       components={
@@ -50,7 +55,7 @@ export function ProfilePageResetPassword(props) {
             <View style={kolynBigSector()}>
               <KolynTitleLabel title="Change password" />
 
-              {pageVariant == PageVariant.NewPassword && (
+              {pageVariant != PageVariant.ChangeSuccess && (
                 <View>
                   <KolynTextLabel text="Enter your old password" />
                   <KolynTextfield
@@ -59,7 +64,7 @@ export function ProfilePageResetPassword(props) {
                     value={passwordText}
                     isSecure={true}
                   />
-                  <KolynTextLabel text={pageVariant} />
+                  <KolynTextLabel text="Enter your new password" />
 
                   <KolynTextfield
                     placeholder="Enter password"
@@ -99,10 +104,12 @@ export function ProfilePageResetPassword(props) {
                     value={rerepasswordText}
                     isSecure={true}
                   />
-                  <ConfirmPasswordHintText
-                    confirmPasswordHint={confirmPasswordHint}
-                    confirmPasswordCondition={confirmPasswordCondition}
-                  />
+
+                  <View>
+                    <Text style={themedStyles.hintTextError}>
+                      {pageVariant}
+                    </Text>
+                  </View>
                 </View>
               )}
 
@@ -114,12 +121,10 @@ export function ProfilePageResetPassword(props) {
             </View>
 
             <View style={kolynSmallSector()}>
-              {pageVariant == PageVariant.NewPassword && (
+              {pageVariant != PageVariant.ChangeSuccess && (
                 <View>
                   <KolynButton
-                    onPress={() => {
-                      onChangePageVariant(PageVariant.ChangeSuccess);
-                    }}
+                    onPress={setNewPassword}
                     text={'Next'}
                   />
                 </View>
@@ -156,10 +161,20 @@ export function ProfilePageResetPassword(props) {
 }
 
 function ThemedStyles() {
+  const themeManager = useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
   return StyleSheet.create({
     root: {
       alignItems: 'center',
       padding: 20,
+    },
+
+    hintTextError: {
+      color: currentTheme.errorColor,
+      marginVertical: 5,
+      fontFamily: currentTheme.mainFont,
+      fontSize: currentTheme.fontSizes.tiny,
     },
   });
 }
