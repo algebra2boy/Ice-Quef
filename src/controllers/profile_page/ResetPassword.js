@@ -41,10 +41,9 @@ export function ProfilePageResetPasswordController() {
   // When the "Next" button in page 1 is pressed
   const setNewPassword = async () => {
     try {
-      //const encrypted_old_pw = await encryptPassword(old_password);
-      //const encrypted_new_pw = await encryptPassword(new_password);
 
-      if (passwordConditions.some(e=>e===false)) {
+
+      if (passwordConditions.some(e => e === false)) {
         onChangePageVariant(PageVariant.InvalidNewPassword);
         return;
       }
@@ -54,27 +53,29 @@ export function ProfilePageResetPasswordController() {
         return;
       }
 
+      const encrypted_old_pw = await encryptPassword(passwordText);
+      const encrypted_new_pw = await encryptPassword(repasswordText);
       try {
         const response = await fetch(ServerAddress() + 'api/auth/reset', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            "email": userEmail,
-            "oldPassword": passwordText,
-            "newPassword": repasswordText,
-            "isTeacher": false
-          }),
+            'email': userEmail,
+            'oldPassword': encrypted_old_pw,
+            'newPassword': encrypted_new_pw,
+            'isTeacher': false
+          })
         });
 
         const serverResponse = await response.json();
 
         if (response.ok) {
-          console.log("Change sucesss");
+          console.log('Change sucesss');
           onChangePageVariant(PageVariant.ChangeSuccess);
         } else {
-          console.log("WrongOldPassword");
+          console.log('WrongOldPassword');
           console.log(serverResponse);
           console.log(userEmail);
           console.log(passwordText);
@@ -82,7 +83,7 @@ export function ProfilePageResetPasswordController() {
           onChangePageVariant(PageVariant.WrongOldPassword);
         }
       } catch (error) {
-        console.log("NetworkFailure");
+        console.log('NetworkFailure');
         onChangePageVariant(PageVariant.NetworkFailure);
       }
     } catch (error) {
