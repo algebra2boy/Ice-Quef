@@ -253,10 +253,17 @@ export const ThemeProvider = ({ children }) => {
    */
   const changeToStoredTheme = async () => {
     if (Platform.OS === 'web') return;
-    await writeIndexToThemeFile(0);
-    await readFromThemeFileToGetIndex().then(index => {
-      setTheme(themes[parseInt(index)]);
-    });
+    await readFromThemeFileToGetIndex().then(
+      index => {
+        if (index === undefined) {
+          writeIndexToThemeFile(0);
+          setTheme(themes[parseInt(0)]);
+        }
+        else {
+          setTheme(themes[parseInt(index)]);
+        }
+      }
+    );
   };
 
   const shouldUseUmassIcon = () => {
